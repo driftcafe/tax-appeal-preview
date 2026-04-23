@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { CTAButton } from "@/components/CTAButton";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { sampleOpportunity } from "@/data/opportunity";
@@ -66,10 +65,12 @@ const Lookup = () => {
             />
           </div>
 
-          <CTAButton onClick={() => undefined}>
-            <button type="submit" className="contents">Check my property</button>
-          </CTAButton>
-          {/* Submit also via form Enter; the CTA wraps an inner submit button for accessibility */}
+          <button
+            type="submit"
+            className="inline-flex items-center justify-center rounded-md bg-accent px-6 py-3 text-base font-medium text-accent-foreground shadow-sm transition-colors hover:bg-accent-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          >
+            Check my property
+          </button>
         </form>
 
         <div className="mt-10">
