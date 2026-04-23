@@ -13,6 +13,10 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        serif: ['Fraunces', 'ui-serif', 'Georgia', 'serif'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -38,6 +42,15 @@ export default {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
+          hover: "hsl(var(--accent-hover))",
+        },
+        confidence: {
+          strong: "hsl(var(--confidence-strong))",
+          "strong-bg": "hsl(var(--confidence-strong-bg))",
+          moderate: "hsl(var(--confidence-moderate))",
+          "moderate-bg": "hsl(var(--confidence-moderate-bg))",
+          preliminary: "hsl(var(--confidence-preliminary))",
+          "preliminary-bg": "hsl(var(--confidence-preliminary-bg))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
