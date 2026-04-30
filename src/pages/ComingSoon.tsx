@@ -1,10 +1,20 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { SEO } from "@/components/SEO";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 
-const ComingSoon = () => (
+const ComingSoon = () => {
+  const { pathname } = useLocation();
+  return (
   <div className="min-h-screen bg-background text-foreground">
+    <SEO
+      title="Coming Soon"
+      description="This page is coming soon to TaxAppeal AI."
+      path={pathname}
+      noindex
+    />
     <SiteHeader />
+    <main>
     <section className="container mx-auto max-w-2xl px-6 py-32 text-center">
       <p className="text-sm uppercase tracking-wider text-muted-foreground">Coming soon</p>
       <h1 className="mt-3 font-serif text-4xl text-primary sm:text-5xl">
@@ -22,8 +32,10 @@ const ComingSoon = () => (
         ← Back to home
       </Link>
     </section>
+    </main>
     <SiteFooter />
   </div>
-);
+  );
+};
 
 export default ComingSoon;

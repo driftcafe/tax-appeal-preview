@@ -1,4 +1,5 @@
 import { Link, useParams } from "react-router-dom";
+import { SEO } from "@/components/SEO";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 
@@ -25,6 +26,12 @@ const Result = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEO
+        title="Your Property Tax Analysis"
+        description="Personalized property tax appeal analysis with comparable properties and estimated savings."
+        path="/r/sample"
+        noindex
+      />
       <SiteHeader />
 
       <section className="container mx-auto max-w-4xl px-6 pt-16 pb-12">
