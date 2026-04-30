@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { SEO } from "@/components/SEO";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import {
@@ -89,14 +90,83 @@ const Index = () => {
     navigate("/r/sample-token");
   };
 
+  const orgJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "TaxAppeal AI",
+    url: "https://taxappeal.ai",
+    logo: "https://taxappeal.ai/favicon.ico",
+    description:
+      "AI-powered residential property tax appeal service for Cook County and the Illinois collar counties.",
+    areaServed: counties.map((c) => ({
+      "@type": "AdministrativeArea",
+      name: `${c} County, Illinois`,
+    })),
+    contactPoint: {
+      "@type": "ContactPoint",
+      email: "hello@taxappeal.ai",
+      contactType: "customer support",
+      areaServed: "US-IL",
+    },
+  };
+
+  const websiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "TaxAppeal AI",
+    url: "https://taxappeal.ai",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: "https://taxappeal.ai/?address={address}",
+      "query-input": "required name=address",
+    },
+  };
+
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "How much can I save on my Illinois property taxes?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Successful Cook County and collar county appeals typically reduce assessed value by 5–15%, translating to several hundred to a few thousand dollars in year-one tax savings depending on your tax rate.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What happens if my property tax appeal is denied?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "On our AppealManaged plan you pay nothing if we don't reduce your assessment. Our flat-fee AppealReady packet is yours regardless of outcome.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Do I need a lawyer to appeal my property tax assessment?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "No. Homeowners can file Board of Review appeals on their own behalf in every Illinois county we serve. PTAB-stage escalation is handled by partner attorneys when applicable.",
+        },
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEO
+        title="TaxAppeal AI — Lower Your Illinois Property Taxes"
+        description="AI-powered property tax appeals for Cook, DuPage, Lake, Will, Kane, and McHenry counties. Free analysis in under 5 minutes — pay nothing unless we save you money."
+        path="/"
+        jsonLd={[orgJsonLd, websiteJsonLd, faqJsonLd]}
+      />
       <SiteHeader />
-
+      <main>
       {/* Hero */}
-      <section className="container mx-auto max-w-5xl px-6 pt-16 pb-20 sm:pt-24">
-        <h1 className="font-serif text-4xl leading-[1.05] text-primary sm:text-5xl md:text-6xl">
-          See if you're overpaying on property taxes.
+      <section aria-labelledby="hero-heading" className="container mx-auto max-w-5xl px-6 pt-16 pb-20 sm:pt-24">
+        <h1 id="hero-heading" className="font-serif text-4xl leading-[1.05] text-primary sm:text-5xl md:text-6xl">
+          See if you're overpaying on Illinois property taxes.
         </h1>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
           We compare your home to similar properties in your township and tell
@@ -332,6 +402,7 @@ const Index = () => {
         </div>
       </section>
 
+      </main>
       <SiteFooter />
     </div>
   );
