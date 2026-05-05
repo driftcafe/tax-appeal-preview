@@ -34,9 +34,9 @@ const Pricing = () => (
           One flat fee. No percentage of your savings.
         </h1>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-          Most appeal firms charge 30–50% of your year-one tax savings. We don't.
-          You pay once for the report and the editable template — and you keep
-          100% of any reduction.
+          Many appeal firms charge a percentage of your year-one tax savings.
+          We don't. You pay once for the report and the editable template — and
+          you keep 100% of any reduction.
         </p>
       </section>
 
