@@ -28,7 +28,7 @@ const steps = [
   {
     n: "05",
     h: "Receive your full report and editable template.",
-    p: "You get the full Data Report (PDF) and a pre-filled, editable appeal template formatted for your jurisdiction — labeled \u201CDRAFT TEMPLATE — HOMEOWNER MUST REVIEW, EDIT, AND FILE.\u201D Factual fields (PIN, address, assessed value) are pre-populated. The rest is yours to complete.",
+    p: "You get the full Data Report (PDF) and a pre-filled, editable appeal template formatted for your jurisdiction — labeled "DRAFT TEMPLATE — HOMEOWNER MUST REVIEW, EDIT, AND FILE." Factual fields (PIN, address, assessed value) are pre-populated. The rest is yours to complete.",
   },
   {
     n: "06",
@@ -80,7 +80,7 @@ const HowItWorks = () => (
                 Data Report
               </p>
               <p className="mt-2 text-sm leading-relaxed text-foreground/80">
-                Read-only PDF. Labeled \u201CFOR INFORMATIONAL PURPOSES ONLY.\u201D Shows comparable properties,
+                Read-only PDF. Labeled "FOR INFORMATIONAL PURPOSES ONLY." Shows comparable properties,
                 ratios, and side-by-side comparisons. You don't file this with anyone.
               </p>
             </div>
@@ -89,7 +89,7 @@ const HowItWorks = () => (
                 Editable Template
               </p>
               <p className="mt-2 text-sm leading-relaxed text-foreground/80">
-                Editable PDF or Word document. Labeled \u201CHOMEOWNER MUST REVIEW, EDIT, AND FILE.\u201D
+                Editable PDF or Word document. Labeled "HOMEOWNER MUST REVIEW, EDIT, AND FILE."
                 Only factual fields are pre-filled; you complete and submit it yourself.
               </p>
             </div>
