@@ -4,7 +4,7 @@ export const SiteHeader = ({ minimal = false }: { minimal?: boolean }) => (
   <header className="border-b border-border/60 bg-background">
     <div className="container mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
       <Link to="/" className="font-serif text-lg font-semibold text-primary">
-        TaxAppeal<span className="text-accent">.</span>AI
+        Property Tax Appeal<span className="text-accent"> AI</span>
       </Link>
       {!minimal && (
         <nav className="hidden items-center gap-8 text-sm text-muted-foreground sm:flex">
