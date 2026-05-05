@@ -10,6 +10,8 @@ import ComingSoon from "./pages/ComingSoon.tsx";
 import HowItWorks from "./pages/HowItWorks.tsx";
 import Pricing from "./pages/Pricing.tsx";
 import Methodology from "./pages/Methodology.tsx";
+import FAQ from "./pages/FAQ.tsx";
+import Counties from "./pages/Counties.tsx";
 
 const queryClient = new QueryClient();
 
@@ -26,8 +28,8 @@ const App = () => (
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/methodology" element={<Methodology />} />
-          <Route path="/counties" element={<ComingSoon />} />
-          <Route path="/faq" element={<ComingSoon />} />
+          <Route path="/counties" element={<Counties />} />
+          <Route path="/faq" element={<FAQ />} />
           <Route path="/about" element={<ComingSoon />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
