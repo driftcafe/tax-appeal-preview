@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ChevronDown, ExternalLink } from "lucide-react";
 
 const countyLinks = [
-  { name: "Cook", url: "https://www.cookcountyassessor.com/address-search" },
+  { name: "Cook", url: "https://www.cookcountyassessor.com/pin" },
   { name: "DuPage", url: "https://www.dupagecounty.gov/treasurer/property_tax_lookup/" },
   { name: "Lake", url: "https://assessor.lakecountyil.gov/" },
   { name: "Will", url: "https://willcountysoa.com/PropertySearch" },
