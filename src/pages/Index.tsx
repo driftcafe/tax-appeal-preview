@@ -25,7 +25,7 @@ const problems = [
   },
   {
     h: "Contingency firms take a cut of your savings.",
-    p: "Many firms charge 30–50% of your year-one savings. We don't. We're a flat-fee document preparation service — you keep 100% of any reduction.",
+    p: "Many appeal firms charge a percentage of your year-one savings. We don't. We're a flat-fee document preparation service — you keep 100% of any reduction.",
   },
 ];
 
