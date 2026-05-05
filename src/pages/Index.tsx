@@ -4,7 +4,9 @@ import { SEO } from "@/components/SEO";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { PinHelper } from "@/components/PinHelper";
-import { looksLikePin, normalizePin } from "@/lib/pin";
+import { normalizePin } from "@/lib/pin";
+import { api, ApiError } from "@/lib/api";
+import { saveLookup } from "@/lib/lookupCache";
 import {
   MapPin,
   FileText,
@@ -71,19 +73,36 @@ const faqs = [
 
 const Index = () => {
   const [query, setQuery] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const trimmed = query.trim();
     if (!trimmed) return;
-    const params = new URLSearchParams();
-    if (looksLikePin(trimmed)) {
-      params.set("pin", normalizePin(trimmed));
-    } else {
-      params.set("address", trimmed);
+    const pin = normalizePin(trimmed);
+    if (!/^\d{14}$/.test(pin)) {
+      setError("Enter a 14-digit Cook County PIN (with or without dashes).");
+      return;
     }
-    navigate(`/r/sample-token?${params.toString()}`);
+    setError(null);
+    setSubmitting(true);
+    try {
+      const data = await api.comparables(pin);
+      saveLookup(data);
+      navigate(`/comparables/${data.lookup_id}`);
+    } catch (err) {
+      if (err instanceof ApiError) {
+        if (err.status === 404) setError("We couldn't find that PIN. Double-check the format and try again.");
+        else if (err.status === 422) setError(err.body?.hint ?? "No structural characteristics on file for this PIN.");
+        else if (err.status === 400) setError("Please enter a valid PIN.");
+        else setError("Something went wrong. Please try again.");
+      } else {
+        setError("Network error. Please try again.");
+      }
+      setSubmitting(false);
+    }
   };
 
   const orgJsonLd = {
@@ -180,22 +199,24 @@ const Index = () => {
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="PIN (e.g. 05-21-300-012-0000) or property address"
-              aria-label="Your PIN or property address"
+              placeholder="PIN (e.g. 16-19-213-035-0000)"
+              aria-label="Your Property Index Number"
               className="h-14 w-full rounded-md border border-input bg-card pl-12 pr-4 text-base text-foreground placeholder:text-muted-foreground/60 focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30 sm:text-lg"
             />
           </div>
           <button
             type="submit"
+            disabled={submitting}
             className="inline-flex h-14 items-center justify-center gap-2 rounded-md bg-accent px-7 text-base font-medium text-accent-foreground shadow-sm transition-colors hover:bg-accent-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:text-lg"
           >
-            Get started
+            {submitting ? "Checking…" : "Get started"}
             <ArrowRight className="h-5 w-5" />
           </button>
         </form>
+        {error && <p className="mt-3 text-sm text-destructive">{error}</p>}
         <PinHelper />
         <p className="mt-3 text-sm text-muted-foreground">
-          Your PIN is the most accurate way to pull your assessment. Address-only lookups may need a PIN to finish. Preview free; full report and editable template: $149 flat fee.
+          Enter your 14-digit Cook County Property Index Number. Comparison preview is free; full appeal packet is $149 flat.
         </p>
       </section>
 
