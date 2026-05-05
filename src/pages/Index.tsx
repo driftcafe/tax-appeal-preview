@@ -5,8 +5,8 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import {
   MapPin,
-  Clock,
-  Target,
+  FileText,
+  Receipt,
   ArrowRight,
   CheckCircle2,
   Search,
@@ -16,68 +16,55 @@ const counties = ["Cook", "DuPage", "Lake", "Will", "Kane", "McHenry"];
 
 const problems = [
   {
-    h: "Most homeowners are overpaying.",
-    p: "Roughly 30–60% of properties in the Chicago metro are over-assessed in any given year. Most owners never know.",
+    h: "Assessments don't always match the market.",
+    p: "Two homes on the same block can be assessed very differently. Most owners never check, because pulling the comparable data is tedious.",
   },
   {
-    h: "Filing an appeal is intimidating.",
-    p: "Forms, deadlines, comparable selection, hearings — the process was built for professionals, not homeowners.",
+    h: "The appeal forms are public — the work is the gathering.",
+    p: "Counties publish the forms and the data. The friction is finding comparable properties, organizing the numbers, and filling in the right fields.",
   },
   {
-    h: "Traditional firms are slow and opaque.",
-    p: "Most charge 50% contingency, take days to produce evidence, and don't show their work.",
+    h: "Contingency firms take a cut of your savings.",
+    p: "Many firms charge 30–50% of your year-one savings. We don't. We're a flat-fee document preparation service — you keep 100% of any reduction.",
   },
 ];
 
-const pillars = [
+const steps = [
   {
-    h: "Pay less, save more.",
-    p: "Our flat-fee tier starts at $149 — the most affordable way to file an evidence-backed appeal. Our managed contingency is 30%, lower than the 40–50% most firms charge.",
+    h: "Enter your address.",
+    p: "We look up your Property Index Number (PIN) and pull your current assessed value from public county records.",
   },
   {
-    h: "Radical transparency.",
-    p: "We show you exactly which comparable properties we selected, what adjustments we applied, and why we recommend a specific appeal value. Every customer gets an annotated report.",
+    h: "Get your comparison report.",
+    p: "We use regression analysis on public assessment and sales data to identify comparable properties, then organize the numbers into a clear side-by-side report. Preview key findings before paying.",
   },
   {
-    h: "Speed.",
-    p: "AI-generated evidence packets are delivered in under 5 minutes from address entry. Most firms take 2–3 business days, which matters during peak filing season.",
-  },
-  {
-    h: "Accuracy.",
-    p: "Our ML-powered comparable selection achieves a sub-3% error rate predicting market values, vs. the 10%+ error rate typical of manual selection. The model is continuously retrained on real appeal outcome data.",
-  },
-  {
-    h: "End-to-end digital.",
-    p: "Online signup, instant analysis, digital packet delivery, electronic filing, real-time status dashboard, automatic notifications. No office visits. No phone tag.",
+    h: "Review, edit, and file yourself.",
+    p: "Download the full report and a pre-filled, editable appeal template for your jurisdiction. You review the data, edit anything you want to change, and file it with your local board of review. We do not file on your behalf.",
   },
 ];
 
 const tiers = [
   {
-    name: "AppealReady",
+    name: "Assessment Comparison Report + Appeal Template",
     price: "$149",
-    suffix: "flat",
-    body: "DIY evidence packet, ready in 5 minutes.",
-  },
-  {
-    name: "AppealManaged",
-    price: "30%",
-    suffix: "contingency · $0 upfront",
-    body: "Full-service appeal. You pay only if we save you money.",
+    suffix: "flat fee · one-time",
+    body: "Comparable property data report, pre-filled editable appeal template, and jurisdiction-specific filing instructions. No percentage of savings, no hidden costs.",
     popular: true,
   },
   {
-    name: "AppealPremium",
-    price: "$499",
-    suffix: "+ 35% contingency",
-    body: "White-glove for high-value and commercial properties. Includes PTAB escalation.",
+    name: "Annual Tax Watch",
+    price: "$19–$29",
+    suffix: "per year",
+    body: "Annual monitoring of your assessed value, automated alerts when a new assessment is published, and a year-over-year comparison report.",
   },
 ];
 
 const faqs = [
-  "How much can I actually save?",
-  "What happens if my appeal is denied?",
-  "Is this legal? Do I need a lawyer?",
+  "Is this legal advice?",
+  "Do you file the appeal for me?",
+  "How do you find comparable properties?",
+  "Do you guarantee my taxes will be reduced?",
 ];
 
 const Index = () => {
@@ -93,18 +80,18 @@ const Index = () => {
   const orgJsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "TaxAppeal AI",
-    url: "https://taxappeal.ai",
-    logo: "https://taxappeal.ai/favicon.ico",
+    name: "Property Tax Appeal AI LLC",
+    url: "https://propertytaxappealai.com",
+    logo: "https://propertytaxappealai.com/favicon.ico",
     description:
-      "AI-powered residential property tax appeal service for Cook County and the Illinois collar counties.",
+      "Data analysis and document preparation service for residential property tax assessments. Not a law firm. Launching in Illinois in June 2026.",
     areaServed: counties.map((c) => ({
       "@type": "AdministrativeArea",
       name: `${c} County, Illinois`,
     })),
     contactPoint: {
       "@type": "ContactPoint",
-      email: "hello@taxappeal.ai",
+      email: "hello@propertytaxappealai.com",
       contactType: "customer support",
       areaServed: "US-IL",
     },
@@ -113,11 +100,11 @@ const Index = () => {
   const websiteJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "TaxAppeal AI",
-    url: "https://taxappeal.ai",
+    name: "Property Tax Appeal AI",
+    url: "https://propertytaxappealai.com",
     potentialAction: {
       "@type": "SearchAction",
-      target: "https://taxappeal.ai/?address={address}",
+      target: "https://propertytaxappealai.com/?address={address}",
       "query-input": "required name=address",
     },
   };
@@ -128,26 +115,26 @@ const Index = () => {
     mainEntity: [
       {
         "@type": "Question",
-        name: "How much can I save on my Illinois property taxes?",
+        name: "Is this legal advice?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Successful Cook County and collar county appeals typically reduce assessed value by 5–15%, translating to several hundred to a few thousand dollars in year-one tax savings depending on your tax rate.",
+          text: "No. Property Tax Appeal AI LLC is a data analysis and document preparation service. We organize publicly available property data into reports and provide editable appeal templates. We do not interpret the law, recommend legal strategies, or predict outcomes. If you need legal advice, please consult a licensed attorney in your jurisdiction.",
         },
       },
       {
         "@type": "Question",
-        name: "What happens if my property tax appeal is denied?",
+        name: "Do you file the appeal for me?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "On our AppealManaged plan you pay nothing if we don't reduce your assessment. Our flat-fee AppealReady packet is yours regardless of outcome.",
+          text: "No. We provide a pre-filled, editable appeal template and step-by-step filing instructions. You are responsible for reviewing the template, making any changes, and filing it with the appropriate board of review. We do not submit, e-file, or transmit any documents on your behalf.",
         },
       },
       {
         "@type": "Question",
-        name: "Do I need a lawyer to appeal my property tax assessment?",
+        name: "Do you guarantee my taxes will be reduced?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "No. Homeowners can file Board of Review appeals on their own behalf in every Illinois county we serve. PTAB-stage escalation is handled by partner attorneys when applicable.",
+          text: "No. We provide data analysis and document preparation. Whether your appeal succeeds depends on many factors, including the strength of comparable evidence and the decisions of the reviewing body. We cannot guarantee any outcome.",
         },
       },
     ],
@@ -156,8 +143,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEO
-        title="TaxAppeal AI — Lower Your Illinois Property Taxes"
-        description="AI-powered property tax appeals for Cook, DuPage, Lake, Will, Kane, and McHenry counties. Free analysis in under 5 minutes — pay nothing unless we save you money."
+        title="Property Tax Appeal AI — Compare Your Assessment to Comparable Homes"
+        description="Compare your property tax assessment to similar homes using public county records. Comparison report plus an editable appeal template you review, edit, and file yourself. Flat $149."
         path="/"
         jsonLd={[orgJsonLd, websiteJsonLd, faqJsonLd]}
       />
@@ -166,12 +153,12 @@ const Index = () => {
       {/* Hero */}
       <section aria-labelledby="hero-heading" className="container mx-auto max-w-5xl px-6 pt-16 pb-20 sm:pt-24">
         <h1 id="hero-heading" className="font-serif text-4xl leading-[1.05] text-primary sm:text-5xl md:text-6xl">
-          See if you're overpaying on Illinois property taxes.
+          Is your property tax assessment higher than it should be?
         </h1>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
-          We compare your home to similar properties in your township and tell
-          you, in plain dollars, whether your assessment is out of line.
-          Available in Cook, DuPage, Lake, Will, Kane, and McHenry counties.
+          Compare your home's assessed value to similar properties using public
+          county records. You get a detailed comparison report and an editable
+          appeal template — ready for you to review, edit, and file yourself.
         </p>
 
         <form
@@ -193,12 +180,12 @@ const Index = () => {
             type="submit"
             className="inline-flex h-14 items-center justify-center gap-2 rounded-md bg-accent px-7 text-base font-medium text-accent-foreground shadow-sm transition-colors hover:bg-accent-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:text-lg"
           >
-            See my analysis
+            Enter your address to get started
             <ArrowRight className="h-5 w-5" />
           </button>
         </form>
         <p className="mt-3 text-sm text-muted-foreground">
-          Free analysis. No account required to see if you're overpaying.
+          Preview key findings free. Full report and editable template: $149 flat fee. No percentage of savings.
         </p>
       </section>
 
@@ -208,15 +195,15 @@ const Index = () => {
           <div className="flex flex-col items-start gap-3 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-2">
               <MapPin className="h-4 w-4 text-primary/70" />
-              Serving 6 Illinois counties
+              Built on public county records
             </div>
             <div className="flex items-center gap-2">
-              <Target className="h-4 w-4 text-primary/70" />
-              Sub-3% valuation error rate
+              <Receipt className="h-4 w-4 text-primary/70" />
+              Flat $149 — no percentage of savings
             </div>
             <div className="flex items-center gap-2">
-              <Clock className="h-4 w-4 text-primary/70" />
-              Reports delivered in under 5 minutes
+              <FileText className="h-4 w-4 text-primary/70" />
+              You review, edit, and file
             </div>
           </div>
         </div>
@@ -236,14 +223,15 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Five pillars */}
+      {/* How it works */}
       <section className="border-t border-border/60 bg-secondary/40">
         <div className="container mx-auto max-w-5xl px-6 py-20">
-          <h2 className="font-serif text-3xl text-primary sm:text-4xl">
-            How TaxAppeal AI is different.
-          </h2>
-          <div className="mt-12 grid gap-x-12 gap-y-10 md:grid-cols-2">
-            {pillars.map((p, i) => (
+          <h2 className="font-serif text-3xl text-primary sm:text-4xl">How it works.</h2>
+          <p className="mt-3 max-w-2xl text-base text-muted-foreground">
+            Three steps. Public data in. A report and an editable template out. You stay in control.
+          </p>
+          <div className="mt-12 grid gap-x-12 gap-y-10 md:grid-cols-3">
+            {steps.map((p, i) => (
               <div key={p.h} className="flex gap-5">
                 <div className="font-serif text-2xl text-accent tabular-nums">
                   {String(i + 1).padStart(2, "0")}
@@ -260,12 +248,12 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Sample evidence packet */}
+      {/* Sample data report */}
       <section className="container mx-auto max-w-5xl px-6 py-20">
-        <h2 className="font-serif text-3xl text-primary sm:text-4xl">See the work.</h2>
+        <h2 className="font-serif text-3xl text-primary sm:text-4xl">See the data.</h2>
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
-          Every customer receives a packet like this. The methodology link
-          points to the actual public assessor data we used.
+          Every customer receives a Data Report like this — read-only, sourced
+          entirely from public county assessment and sales records.
         </p>
 
         {/* Stylized packet mockup */}
@@ -273,7 +261,7 @@ const Index = () => {
           {/* Packet header */}
           <div className="border-b border-border bg-secondary/40 px-6 py-5">
             <p className="text-xs uppercase tracking-wider text-muted-foreground">
-              Evidence packet · 2025 assessment
+              Data Report — For Informational Purposes Only
             </p>
             <p className="mt-1 font-serif text-lg text-primary">
               742 Hawthorne Ln, Wheaton, IL 60187 · DuPage County
@@ -305,15 +293,15 @@ const Index = () => {
           <div className="flex flex-col gap-2 border-t border-border bg-secondary/30 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-xs uppercase tracking-wider text-muted-foreground">
-                Appeal recommendation
+                Comparison summary
               </p>
               <p className="mt-1 font-serif text-base text-primary">
-                We believe the subject is over-assessed by approximately{" "}
-                <span className="text-accent">$18,200</span>.
+                Subject's assessed value is{" "}
+                <span className="text-accent">$18,200</span> above the median of these comparables.
               </p>
             </div>
-            <p className="text-sm text-muted-foreground">
-              Estimated year-one tax savings: <span className="text-foreground tabular-nums">~$1,420</span>
+            <p className="max-w-xs text-sm text-muted-foreground">
+              The homeowner reviews this data and decides whether to file. No outcome is guaranteed.
             </p>
           </div>
         </div>
@@ -325,11 +313,11 @@ const Index = () => {
           <div className="flex flex-wrap items-end justify-between gap-4">
             <h2 className="font-serif text-3xl text-primary sm:text-4xl">Pricing</h2>
             <a href="/pricing" className="text-sm font-medium text-primary hover:underline">
-              Compare plans →
+              See full details →
             </a>
           </div>
 
-          <div className="mt-10 grid gap-5 md:grid-cols-3">
+          <div className="mt-10 grid gap-5 md:grid-cols-2">
             {tiers.map((t) => (
               <div
                 key={t.name}
@@ -351,12 +339,19 @@ const Index = () => {
               </div>
             ))}
           </div>
+          <p className="mt-6 text-xs text-muted-foreground">
+            Standard markets: $149. High-value markets (e.g., New Jersey at launch expansion): $199.
+          </p>
         </div>
       </section>
 
       {/* Counties served */}
       <section className="container mx-auto max-w-5xl px-6 py-20">
-        <h2 className="font-serif text-3xl text-primary sm:text-4xl">Counties we serve</h2>
+        <h2 className="font-serif text-3xl text-primary sm:text-4xl">Where we're launching</h2>
+        <p className="mt-4 max-w-2xl text-base text-muted-foreground">
+          Property Tax Appeal AI launches in Illinois in <strong className="text-foreground">June 2026</strong>,
+          starting with Cook County and the collar counties. Midwest expansion to follow.
+        </p>
         <div className="mt-8 flex flex-wrap gap-3">
           {counties.map((c) => (
             <span
@@ -371,7 +366,7 @@ const Index = () => {
         <p className="mt-6 text-sm text-muted-foreground">
           Don't see your county?{" "}
           <a href="/counties" className="font-medium text-primary hover:underline">
-            Join the waitlist →
+            Join the notify list →
           </a>
         </p>
       </section>
