@@ -6,10 +6,11 @@ export const SiteFooter = ({ extraDisclaimer }: { extraDisclaimer?: string }) =>
       <div className="grid gap-10 md:grid-cols-4">
         <div className="md:col-span-2">
           <p className="font-serif text-lg font-semibold text-primary">
-            TaxAppeal<span className="text-accent">.</span>AI
+            Property Tax Appeal<span className="text-accent"> AI</span>
           </p>
           <p className="mt-3 max-w-sm text-sm leading-relaxed">
-            AI-powered property tax appeals for Cook County and the Illinois collar counties.
+            A data analysis and document preparation service for residential
+            property tax assessments. We are not a law firm.
           </p>
         </div>
         <div>
@@ -26,19 +27,28 @@ export const SiteFooter = ({ extraDisclaimer }: { extraDisclaimer?: string }) =>
           <ul className="mt-3 space-y-2">
             <li><Link to="/about" className="hover:text-primary">About</Link></li>
             <li><Link to="/faq" className="hover:text-primary">FAQ</Link></li>
-            <li><a href="mailto:hello@taxappeal.ai" className="hover:text-primary">Contact</a></li>
+            <li><a href="mailto:hello@propertytaxappealai.com" className="hover:text-primary">Contact</a></li>
             <li><Link to="/coming-soon" className="hover:text-primary">Privacy</Link></li>
             <li><Link to="/coming-soon" className="hover:text-primary">Terms</Link></li>
           </ul>
         </div>
       </div>
-      <p className="mt-10 max-w-4xl text-xs leading-relaxed">
-        © {new Date().getFullYear()} TaxAppeal AI. We are not a law firm and do not
-        provide legal advice. We provide appeal preparation and filing services for
-        residential property tax assessments in participating Illinois counties.
-        PTAB-stage representation is provided through our partner attorneys.
-        {extraDisclaimer ? ` ${extraDisclaimer}` : ""}
-      </p>
+      <div className="mt-10 max-w-4xl space-y-3 text-xs leading-relaxed">
+        <p>
+          Property Tax Appeal AI LLC provides data analysis and document
+          preparation services only. We do not provide legal advice, legal
+          representation, or tax consulting. Use of this service does not create
+          an attorney-client relationship. Homeowners are solely responsible for
+          reviewing, editing, and filing all appeal documents.
+        </p>
+        <p>
+          No tax reduction is guaranteed. Past results are not indicative of
+          future outcomes. All data is derived from publicly available
+          government records.
+          {extraDisclaimer ? ` ${extraDisclaimer}` : ""}
+        </p>
+        <p>© {new Date().getFullYear()} Property Tax Appeal AI LLC. All rights reserved.</p>
+      </div>
     </div>
   </footer>
 );

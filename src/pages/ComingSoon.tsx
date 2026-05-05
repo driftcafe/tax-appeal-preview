@@ -9,7 +9,7 @@ const ComingSoon = () => {
   <div className="min-h-screen bg-background text-foreground">
     <SEO
       title="Coming Soon"
-      description="This page is coming soon to TaxAppeal AI."
+      description="This page is coming soon to Property Tax Appeal AI."
       path={pathname}
       noindex
     />
@@ -21,9 +21,8 @@ const ComingSoon = () => {
         We're building this next.
       </h1>
       <p className="mt-6 text-lg text-muted-foreground">
-        Sign-in, the customer dashboard, and a few other pages live in our app
-        at <span className="text-foreground">app.taxappeal.ai</span> and aren't
-        wired up here yet.
+        We're launching in Illinois in June 2026. This page will be live before
+        then. Check back soon.
       </p>
       <Link
         to="/"
