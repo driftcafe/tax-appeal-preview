@@ -29,12 +29,13 @@ const Methodology = () => (
         </p>
       </section>
 
-      <Section title="1. Address-to-PIN resolution">
+      <Section title="1. PIN entry">
         <p>
-          You enter your address. The system queries your county assessor's public records to
-          resolve it to a Property Index Number (PIN). If the automated lookup fails, we fall
-          back to a structured search of the assessor's website, then to a manual PIN entry
-          field if needed.
+          You enter your Property Index Number (PIN) — the canonical key your county uses
+          to identify your parcel. It's printed on your most recent property tax bill or
+          assessment notice, and you can also look it up on your county assessor's site.
+          We use the PIN directly because address-to-PIN matching is not reliable enough
+          to drive an assessment comparison.
         </p>
       </Section>
 
