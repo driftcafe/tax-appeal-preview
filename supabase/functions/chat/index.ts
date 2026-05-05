@@ -1,4 +1,8 @@
-import { corsHeaders } from "https://esm.sh/@supabase/supabase-js@2.95.0/cors";
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
+};
 
 const SYSTEM_PROMPT = `You are the support assistant for Property Tax Appeal AI LLC, a data analysis and document preparation service for residential property tax assessments. You answer FAQ-style questions only.
 
