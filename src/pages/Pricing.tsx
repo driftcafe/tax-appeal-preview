@@ -5,7 +5,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { Check, ArrowRight } from "lucide-react";
 
 const corePackage = [
-  "Automated PIN lookup from your address",
+  "Direct PIN entry — pulls your assessment from public county records",
   "Comparable-property Data Report (read-only PDF)",
   "Pre-filled, editable appeal template for your jurisdiction",
   "Step-by-step filing instructions",
@@ -68,7 +68,7 @@ const Pricing = () => (
               to="/"
               className="mt-7 inline-flex items-center gap-2 rounded-md bg-accent px-5 py-3 text-sm font-medium text-accent-foreground hover:bg-accent-hover"
             >
-              Enter your address <ArrowRight className="h-4 w-4" />
+              Enter your PIN <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
 
