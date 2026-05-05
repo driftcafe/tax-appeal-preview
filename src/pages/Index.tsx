@@ -35,8 +35,8 @@ const problems = [
 
 const steps = [
   {
-    h: "Enter your address.",
-    p: "We look up your Property Index Number (PIN) and pull your current assessed value from public county records.",
+    h: "Enter your PIN.",
+    p: "Enter your Property Index Number — found on your most recent property tax bill or assessment notice. We pull your current assessed value and property characteristics from public county records.",
   },
   {
     h: "Get your comparison report.",
@@ -132,8 +132,8 @@ const Index = () => {
     url: "https://propertytaxappealai.com",
     potentialAction: {
       "@type": "SearchAction",
-      target: "https://propertytaxappealai.com/?address={address}",
-      "query-input": "required name=address",
+      target: "https://propertytaxappealai.com/?pin={pin}",
+      "query-input": "required name=pin",
     },
   };
 
