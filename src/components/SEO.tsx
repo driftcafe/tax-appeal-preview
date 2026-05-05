@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 
-const SITE_URL = "https://taxappeal.ai";
+const SITE_URL = "https://propertytaxappealai.com";
 const DEFAULT_OG = "https://county-tax-fix.lovable.app/og-image.png";
 
 type SEOProps = {
@@ -21,7 +21,7 @@ export const SEO = ({
   jsonLd,
 }: SEOProps) => {
   const url = `${SITE_URL}${path}`;
-  const fullTitle = title.includes("TaxAppeal AI") ? title : `${title} | TaxAppeal AI`;
+  const fullTitle = title.includes("Property Tax Appeal AI") ? title : `${title} | Property Tax Appeal AI`;
   const blocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 
   return (
@@ -32,7 +32,7 @@ export const SEO = ({
       {noindex && <meta name="robots" content="noindex,nofollow" />}
 
       <meta property="og:type" content="website" />
-      <meta property="og:site_name" content="TaxAppeal AI" />
+      <meta property="og:site_name" content="Property Tax Appeal AI" />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={url} />
