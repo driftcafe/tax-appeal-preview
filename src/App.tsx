@@ -5,7 +5,6 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
 import NotFound from "./pages/NotFound.tsx";
-import Result from "./pages/Result.tsx";
 import ComingSoon from "./pages/ComingSoon.tsx";
 import HowItWorks from "./pages/HowItWorks.tsx";
 import Pricing from "./pages/Pricing.tsx";
@@ -13,6 +12,11 @@ import Methodology from "./pages/Methodology.tsx";
 import FAQ from "./pages/FAQ.tsx";
 import Counties from "./pages/Counties.tsx";
 import SignIn from "./pages/SignIn.tsx";
+import Comparables from "./pages/Comparables.tsx";
+import Signup from "./pages/Signup.tsx";
+import Success from "./pages/Success.tsx";
+import CheckoutCancelled from "./pages/CheckoutCancelled.tsx";
+import Report from "./pages/Report.tsx";
 
 const queryClient = new QueryClient();
 
@@ -24,7 +28,11 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/r/:token" element={<Result />} />
+          <Route path="/comparables/:lookupId" element={<Comparables />} />
+          <Route path="/signup/:lookupId" element={<Signup />} />
+          <Route path="/success" element={<Success />} />
+          <Route path="/checkout-cancelled" element={<CheckoutCancelled />} />
+          <Route path="/r/:token" element={<Report />} />
           <Route path="/coming-soon" element={<ComingSoon />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/pricing" element={<Pricing />} />
