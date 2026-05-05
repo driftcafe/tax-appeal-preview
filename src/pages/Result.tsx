@@ -1,7 +1,10 @@
-import { Link, useParams } from "react-router-dom";
+import { useState } from "react";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import { SEO } from "@/components/SEO";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { PinHelper } from "@/components/PinHelper";
+import { looksLikePin, normalizePin } from "@/lib/pin";
 
 const sample = {
   address: "742 Hawthorne Ln, Wheaton, IL 60187",
@@ -20,7 +23,25 @@ const sample = {
 
 const Result = () => {
   useParams<{ token: string }>();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pin = searchParams.get("pin");
+  const addressParam = searchParams.get("address");
+  const [pinInput, setPinInput] = useState("");
+  const [pinError, setPinError] = useState<string | null>(null);
   const s = sample;
+
+  const submitPin = (e: React.FormEvent) => {
+    e.preventDefault();
+    const v = pinInput.trim();
+    if (!looksLikePin(v)) {
+      setPinError("That doesn't look like a valid PIN. It should be 10–18 digits.");
+      return;
+    }
+    setPinError(null);
+    const next = new URLSearchParams(searchParams);
+    next.set("pin", normalizePin(v));
+    setSearchParams(next, { replace: true });
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -36,10 +57,47 @@ const Result = () => {
         <p className="text-sm uppercase tracking-wider text-muted-foreground">
           Data Report — For Informational Purposes Only · {s.county} County
         </p>
+        {(pin || addressParam) && (
+          <p className="mt-2 text-sm text-muted-foreground">
+            {pin ? <>PIN: <span className="text-foreground tabular-nums">{pin}</span></> : null}
+            {addressParam && !pin ? <>Address: <span className="text-foreground">{addressParam}</span></> : null}
+          </p>
+        )}
         <h1 className="mt-3 font-serif text-3xl leading-tight text-primary sm:text-5xl">
           Your assessed value is{" "}
           <span className="text-accent">${s.gap.toLocaleString()}</span> above the median of comparable homes.
         </h1>
+
+        {addressParam && !pin && (
+          <div className="mt-8 rounded-lg border border-accent bg-card p-5">
+            <p className="font-serif text-lg text-primary">
+              Enter your PIN to generate this report
+            </p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              We use your county's Property Index Number (PIN) as the canonical
+              key for your assessment. Address-only lookups aren't automated yet.
+            </p>
+            <form onSubmit={submitPin} className="mt-4 flex flex-col gap-3 sm:flex-row">
+              <input
+                type="text"
+                value={pinInput}
+                onChange={(e) => setPinInput(e.target.value)}
+                placeholder="e.g. 05-21-300-012-0000"
+                aria-label="Property Index Number"
+                className="h-11 flex-1 rounded-md border border-input bg-background px-3 text-base text-foreground placeholder:text-muted-foreground/60 focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30"
+              />
+              <button
+                type="submit"
+                className="inline-flex h-11 items-center justify-center rounded-md bg-accent px-5 text-sm font-medium text-accent-foreground hover:bg-accent-hover"
+              >
+                Continue
+              </button>
+            </form>
+            {pinError && <p className="mt-2 text-sm text-destructive">{pinError}</p>}
+            <PinHelper />
+          </div>
+        )}
+
         <p className="mt-6 max-w-3xl text-lg leading-relaxed text-muted-foreground">
           The property at <span className="text-foreground">{s.address}</span> in{" "}
           {s.township} Township, {s.county} County has a current assessed value of{" "}

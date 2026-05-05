@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { SEO } from "@/components/SEO";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { PinHelper } from "@/components/PinHelper";
+import { looksLikePin, normalizePin } from "@/lib/pin";
 import {
   MapPin,
   FileText,
@@ -68,13 +70,20 @@ const faqs = [
 ];
 
 const Index = () => {
-  const [address, setAddress] = useState("");
+  const [query, setQuery] = useState("");
   const navigate = useNavigate();
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // For now, every input routes to the stub result page
-    navigate("/r/sample-token");
+    const trimmed = query.trim();
+    if (!trimmed) return;
+    const params = new URLSearchParams();
+    if (looksLikePin(trimmed)) {
+      params.set("pin", normalizePin(trimmed));
+    } else {
+      params.set("address", trimmed);
+    }
+    navigate(`/r/sample-token?${params.toString()}`);
   };
 
   const orgJsonLd = {
@@ -169,10 +178,10 @@ const Index = () => {
             <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground/70" />
             <input
               type="text"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              placeholder="123 Main St, Wheaton, IL 60187"
-              aria-label="Your home address"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="PIN (e.g. 05-21-300-012-0000) or property address"
+              aria-label="Your PIN or property address"
               className="h-14 w-full rounded-md border border-input bg-card pl-12 pr-4 text-base text-foreground placeholder:text-muted-foreground/60 focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30 sm:text-lg"
             />
           </div>
@@ -180,12 +189,13 @@ const Index = () => {
             type="submit"
             className="inline-flex h-14 items-center justify-center gap-2 rounded-md bg-accent px-7 text-base font-medium text-accent-foreground shadow-sm transition-colors hover:bg-accent-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:text-lg"
           >
-            Enter your address to get started
+            Get started
             <ArrowRight className="h-5 w-5" />
           </button>
         </form>
+        <PinHelper />
         <p className="mt-3 text-sm text-muted-foreground">
-          Preview key findings free. Full report and editable template: $149 flat fee. No percentage of savings.
+          Your PIN is the most accurate way to pull your assessment. Address-only lookups may need a PIN to finish. Preview free; full report and editable template: $149 flat fee.
         </p>
       </section>
 
