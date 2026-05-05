@@ -13,7 +13,7 @@ export const SiteHeader = ({ minimal = false }: { minimal?: boolean }) => (
           <Link to="/methodology" className="hover:text-primary">Methodology</Link>
           <Link to="/counties" className="hover:text-primary">Counties</Link>
           <Link to="/faq" className="hover:text-primary">FAQ</Link>
-          <Link to="/coming-soon" className="text-primary hover:underline">Sign in</Link>
+          <Link to="/signin" className="text-primary hover:underline">Sign in</Link>
         </nav>
       )}
     </div>

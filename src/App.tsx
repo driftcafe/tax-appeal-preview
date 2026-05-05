@@ -12,6 +12,7 @@ import Pricing from "./pages/Pricing.tsx";
 import Methodology from "./pages/Methodology.tsx";
 import FAQ from "./pages/FAQ.tsx";
 import Counties from "./pages/Counties.tsx";
+import SignIn from "./pages/SignIn.tsx";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/counties" element={<Counties />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/about" element={<ComingSoon />} />
+          <Route path="/signin" element={<SignIn />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
