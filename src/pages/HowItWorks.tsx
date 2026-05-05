@@ -28,7 +28,7 @@ const steps = [
   {
     n: "05",
     h: "Receive your full report and editable template.",
-    p: "You get the full Data Report (PDF) and a pre-filled, editable appeal template formatted for your jurisdiction — labeled "DRAFT TEMPLATE — HOMEOWNER MUST REVIEW, EDIT, AND FILE." Factual fields (PIN, address, assessed value) are pre-populated. The rest is yours to complete.",
+    p: 'You get the full Data Report (PDF) and a pre-filled, editable appeal template formatted for your jurisdiction — labeled "DRAFT TEMPLATE — HOMEOWNER MUST REVIEW, EDIT, AND FILE." Factual fields (PIN, address, assessed value) are pre-populated. The rest is yours to complete.',
   },
   {
     n: "06",
