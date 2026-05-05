@@ -7,8 +7,8 @@ import { ArrowRight } from "lucide-react";
 const steps = [
   {
     n: "01",
-    h: "Enter your address.",
-    p: "We resolve your address to a Property Index Number (PIN) by querying your county assessor's public database, and pull your current assessed value, property characteristics, and recent sales history.",
+    h: "Enter your PIN.",
+    p: "Enter your Property Index Number — found on your most recent property tax bill or assessment notice, or via your county assessor's lookup site. We pull your current assessed value, property characteristics, and recent sales history directly from public county records.",
   },
   {
     n: "02",
@@ -41,7 +41,7 @@ const HowItWorks = () => (
   <div className="min-h-screen bg-background text-foreground">
     <SEO
       title="How It Works"
-      description="Six steps from address entry to a filed appeal: comparison report, editable template, and you stay in control. Flat $149."
+      description="Six steps from PIN entry to a filed appeal: comparison report, editable template, and you stay in control. Flat $149."
       path="/how-it-works"
     />
     <SiteHeader />
@@ -100,7 +100,7 @@ const HowItWorks = () => (
           to="/"
           className="mt-10 inline-flex items-center gap-2 rounded-md bg-accent px-6 py-3 text-base font-medium text-accent-foreground hover:bg-accent-hover"
         >
-          Enter your address to start <ArrowRight className="h-4 w-4" />
+          Enter your PIN to start <ArrowRight className="h-4 w-4" />
         </Link>
       </section>
     </main>
