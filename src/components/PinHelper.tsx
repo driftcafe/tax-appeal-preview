@@ -2,12 +2,12 @@ import { useState } from "react";
 import { ChevronDown, ExternalLink } from "lucide-react";
 
 const countyLinks = [
-  { name: "Cook", url: "https://www.cookcountyassessor.com/pin" },
-  { name: "DuPage", url: "https://www.dupagecounty.gov/treasurer/property_tax_lookup/" },
-  { name: "Lake", url: "https://assessor.lakecountyil.gov/" },
-  { name: "Will", url: "https://willcountysoa.com/PropertySearch" },
-  { name: "Kane", url: "https://www.kaneassessor.org/PropertySearch.aspx" },
-  { name: "McHenry", url: "https://www.mchenrycountyil.gov/county-government/departments-a-i/assessments" },
+  { name: "Cook", url: "https://www.cookcountyassessoril.gov/" },
+  { name: "DuPage", url: "https://propertylookup.dupagecounty.gov/forms/htmlframe.aspx?mode=content/home.htm" },
+  { name: "Lake", url: "https://tax.lakecountyil.gov/search/commonsearch.aspx?mode=realprop" },
+  { name: "Will", url: "https://willcountysoa.com/" },
+  { name: "Kane", url: "https://treasurer.kanecountyil.gov/" },
+  { name: "McHenry", url: "https://mchenryil.devnetwedge.com/" },
 ];
 
 export const PinHelper = () => {
