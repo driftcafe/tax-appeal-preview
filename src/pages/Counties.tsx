@@ -3,12 +3,12 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 
 const launchCounties = [
-  { name: "Cook County", note: "Assessor's Office and Board of Review forms supported." },
-  { name: "DuPage County", note: "Board of Review template supported." },
-  { name: "Lake County", note: "Board of Review template supported." },
-  { name: "Will County", note: "Board of Review template supported." },
-  { name: "Kane County", note: "Board of Review template supported." },
-  { name: "McHenry County", note: "Board of Review template supported." },
+  { name: "Cook County", note: "Assessor's Office and Board of Review forms supported.", url: "https://www.cookcountyassessor.com/" },
+  { name: "DuPage County", note: "Board of Review template supported.", url: "https://www.dupagecounty.gov/government/departments/supervisor_of_assessments/" },
+  { name: "Lake County", note: "Board of Review template supported.", url: "https://www.lakecountyil.gov/220/Chief-County-Assessment-Office" },
+  { name: "Will County", note: "Board of Review template supported.", url: "https://www.willcountysoa.com/" },
+  { name: "Kane County", note: "Board of Review template supported.", url: "https://www.kanecountyassessments.org/" },
+  { name: "McHenry County", note: "Board of Review template supported.", url: "https://www.mchenrycountyil.gov/county-government/departments-j-z/assessments" },
 ];
 
 const Counties = () => (
@@ -36,7 +36,14 @@ const Counties = () => (
         <ul className="divide-y divide-border rounded-lg border border-border">
           {launchCounties.map((c) => (
             <li key={c.name} className="flex flex-col gap-1 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
-              <span className="font-serif text-xl text-primary">{c.name}</span>
+              <a
+                href={c.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-serif text-xl text-primary hover:underline"
+              >
+                {c.name} →
+              </a>
               <span className="text-sm text-muted-foreground">{c.note}</span>
             </li>
           ))}
