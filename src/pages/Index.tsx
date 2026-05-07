@@ -325,9 +325,25 @@ const Index = () => {
               <p className="text-xs font-semibold uppercase tracking-wider text-accent">Available now</p>
               <p className="mt-2 text-lg font-semibold text-primary">Illinois</p>
               <ul className="mt-4 grid grid-cols-2 gap-2 text-sm text-foreground/90">
-                {["Cook", "DuPage", "Lake", "Will", "Kane", "McHenry", "Select downstate"].map((c) => (
-                  <li key={c} className="inline-flex items-center gap-1.5">
-                    <Check className="h-4 w-4 text-accent" /> {c} County
+                {[
+                  { name: "Cook", url: "https://www.cookcountyassessor.com/" },
+                  { name: "DuPage", url: "https://www.dupagecounty.gov/government/departments/supervisor_of_assessments/" },
+                  { name: "Lake", url: "https://www.lakecountyil.gov/220/Chief-County-Assessment-Office" },
+                  { name: "Will", url: "https://www.willcountysoa.com/" },
+                  { name: "Kane", url: "https://www.kanecountyassessments.org/" },
+                  { name: "McHenry", url: "https://www.mchenrycountyil.gov/county-government/departments-j-z/assessments" },
+                  { name: "Select downstate", url: "/counties" },
+                ].map((c) => (
+                  <li key={c.name} className="inline-flex items-center gap-1.5">
+                    <Check className="h-4 w-4 text-accent" />
+                    <a
+                      href={c.url}
+                      target={c.url.startsWith("http") ? "_blank" : undefined}
+                      rel={c.url.startsWith("http") ? "noopener noreferrer" : undefined}
+                      className="hover:text-primary hover:underline"
+                    >
+                      {c.name} County
+                    </a>
                   </li>
                 ))}
               </ul>
