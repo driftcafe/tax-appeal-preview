@@ -3,12 +3,12 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 
 const launchCounties = [
-  { name: "Cook County", note: "Assessor's Office and Board of Review forms supported.", url: "https://www.cookcountyassessor.com/" },
-  { name: "DuPage County", note: "Board of Review template supported.", url: "https://www.dupagecounty.gov/government/departments/supervisor_of_assessments/" },
-  { name: "Lake County", note: "Board of Review template supported.", url: "https://www.lakecountyil.gov/220/Chief-County-Assessment-Office" },
-  { name: "Will County", note: "Board of Review template supported.", url: "https://www.willcountysoa.com/" },
-  { name: "Kane County", note: "Board of Review template supported.", url: "https://www.kanecountyassessments.org/" },
-  { name: "McHenry County", note: "Board of Review template supported.", url: "https://www.mchenrycountyil.gov/county-government/departments-j-z/assessments" },
+  { name: "Cook County", note: "Assessor's Office and Board of Review forms supported.", url: "https://www.cookcountyassessoril.gov/" },
+  { name: "DuPage County", note: "Board of Review template supported.", url: "https://propertylookup.dupagecounty.gov/forms/htmlframe.aspx?mode=content/home.htm" },
+  { name: "Lake County", note: "Board of Review template supported.", url: "https://tax.lakecountyil.gov/search/commonsearch.aspx?mode=realprop" },
+  { name: "Will County", note: "Board of Review template supported.", url: "https://willcountysoa.com/" },
+  { name: "Kane County", note: "Board of Review template supported.", url: "https://treasurer.kanecountyil.gov/" },
+  { name: "McHenry County", note: "Board of Review template supported.", url: "https://mchenryil.devnetwedge.com/" },
 ];
 
 const Counties = () => (
