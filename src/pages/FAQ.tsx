@@ -1,66 +1,41 @@
 import { SEO } from "@/components/SEO";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const faqs = [
-  {
-    q: "Is this legal advice?",
-    a: "No. Property Tax Appeal AI LLC is not a law firm and does not provide legal advice, legal representation, or tax consulting. We provide data analysis and document preparation services only. Use of this service does not create an attorney-client relationship.",
-  },
-  {
-    q: "Do you file the appeal for me?",
-    a: "No. We prepare a Data Report and a pre-filled, editable appeal template. You are solely responsible for reviewing, editing, signing, and filing the appeal with the appropriate county office by the applicable deadline.",
-  },
-  {
-    q: "Do you guarantee my taxes will be reduced?",
-    a: "No. No outcome is guaranteed. Whether your assessment is reduced is decided by the county assessor or board of review based on the evidence and arguments you submit.",
-  },
-  {
-    q: "How much does it cost?",
-    a: "A flat $149 for the Assessment Comparison Report and editable appeal template ($199 in select high-value markets). There is no percentage of savings, no contingency fee, and no hidden charges. Optional Tax Watch monitoring is $19–$29 per year.",
-  },
-  {
-    q: "What data do you use?",
-    a: "Publicly available county assessor records, recorded property transfers, and public property characteristic data. We do not use proprietary or non-public sources, and we do not independently verify the underlying government data.",
-  },
-  {
-    q: "How do you choose the comparable properties?",
-    a: "We use regression analysis on public assessment and sales data, evaluating square footage, lot size, year built, bedroom and bathroom count, property class, and geographic proximity to identify 5–10 statistically similar properties.",
-  },
-  {
-    q: "Where do you operate?",
-    a: "We are launching in Cook County and the Illinois collar counties (DuPage, Lake, Will, Kane, McHenry) in June 2026, with Midwest expansion to follow.",
-  },
-  {
-    q: "What if my data doesn't suggest an issue?",
-    a: "Before you pay, you'll see a preview of the comparison. If the data doesn't suggest your assessment is out of line with comparable properties, you don't pay.",
-  },
+  { q: "Is this legal advice?", a: "No. TaxAppeal.app prepares data and documents for homeowners filing pro se. We do not provide legal advice or representation." },
+  { q: "Do you guarantee my taxes will go down?", a: "No. Outcomes depend on county review, evidence quality, and local rules. We provide data, analysis, and organized documents to support your filing." },
+  { q: "What does \"lack of uniformity\" mean?", a: "Your home may be assessed more aggressively than similar nearby homes. Illinois law allows appeals based on this." },
+  { q: "Will the county punish me for appealing?", a: "No. Appeals are a routine, lawful process used by thousands of Illinois homeowners every year." },
+  { q: "What if I miss the deadline?", a: "You'd have to wait until next year. Tax Watch sends township-specific reminders so you don't miss it." },
+  { q: "What's the difference between $149 and $399?", a: "The $149 toolkit gives you everything you need to file. The $399 tier adds AI-driven analysis, comp quality ranking, risk flags, and a polished report — recommended if you want extra confidence before submitting." },
+  { q: "Can I get a refund?", a: "Yes, within 7 days if you haven't downloaded your packet." },
 ];
+
+const faqJsonLd = {
+  "@context": "https://schema.org", "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+};
 
 const FAQ = () => (
   <div className="min-h-screen bg-background text-foreground">
-    <SEO
-      title="FAQ"
-      description="Answers to common questions about Property Tax Appeal AI — pricing, what we do and don't do, data sources, and where we operate."
-      path="/faq"
-    />
+    <SEO title="FAQ — TaxAppeal.app" description="Common questions about TaxAppeal.app — pricing, refunds, deadlines, and what we do and don't do." path="/faq" jsonLd={[faqJsonLd]} />
     <SiteHeader />
     <main>
       <section className="container mx-auto max-w-3xl px-6 pt-16 pb-6 sm:pt-24">
-        <p className="text-sm uppercase tracking-wider text-muted-foreground">FAQ</p>
-        <h1 className="mt-3 font-serif text-4xl leading-tight text-primary sm:text-5xl">
-          Questions, plainly answered.
-        </h1>
+        <p className="text-sm font-semibold uppercase tracking-wider text-accent">FAQ</p>
+        <h1 className="mt-2 text-4xl font-bold tracking-tight text-primary sm:text-5xl">Questions, plainly answered.</h1>
       </section>
       <section className="container mx-auto max-w-3xl px-6 py-10">
-        <dl className="space-y-10">
+        <Accordion type="single" collapsible className="divide-y divide-border border-y border-border">
           {faqs.map((f) => (
-            <div key={f.q}>
-              <dt className="font-serif text-xl text-primary sm:text-2xl">{f.q}</dt>
-              <dd className="mt-3 text-base leading-relaxed text-muted-foreground">{f.a}</dd>
-            </div>
+            <AccordionItem key={f.q} value={f.q} className="border-0">
+              <AccordionTrigger className="text-left text-base font-medium text-primary">{f.q}</AccordionTrigger>
+              <AccordionContent className="text-base leading-relaxed text-muted-foreground">{f.a}</AccordionContent>
+            </AccordionItem>
           ))}
-        </dl>
+        </Accordion>
       </section>
     </main>
     <SiteFooter />
