@@ -44,6 +44,11 @@ export default {
           foreground: "hsl(var(--accent-foreground))",
           hover: "hsl(var(--accent-hover))",
         },
+        score: {
+          poor: "hsl(var(--score-poor))",
+          mid: "hsl(var(--score-mid))",
+          good: "hsl(var(--score-good))",
+        },
         confidence: {
           strong: "hsl(var(--confidence-strong))",
           "strong-bg": "hsl(var(--confidence-strong-bg))",
