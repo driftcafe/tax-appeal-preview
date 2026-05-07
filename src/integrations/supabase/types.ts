@@ -14,7 +14,57 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      fairness_emails: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          lookup_id: string
+          pin: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          lookup_id: string
+          pin: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          lookup_id?: string
+          pin?: string
+        }
+        Relationships: []
+      }
+      waitlist: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          lookup_id: string | null
+          pin: string | null
+          tier: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          lookup_id?: string | null
+          pin?: string | null
+          tier: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          lookup_id?: string | null
+          pin?: string | null
+          tier?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
