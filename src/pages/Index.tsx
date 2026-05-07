@@ -326,12 +326,12 @@ const Index = () => {
               <p className="mt-2 text-lg font-semibold text-primary">Illinois</p>
               <ul className="mt-4 grid grid-cols-2 gap-2 text-sm text-foreground/90">
                 {[
-                  { name: "Cook", url: "https://www.cookcountyassessor.com/" },
-                  { name: "DuPage", url: "https://www.dupagecounty.gov/government/departments/supervisor_of_assessments/" },
-                  { name: "Lake", url: "https://www.lakecountyil.gov/220/Chief-County-Assessment-Office" },
-                  { name: "Will", url: "https://www.willcountysoa.com/" },
-                  { name: "Kane", url: "https://www.kanecountyassessments.org/" },
-                  { name: "McHenry", url: "https://www.mchenrycountyil.gov/county-government/departments-j-z/assessments" },
+                  { name: "Cook", url: "https://www.cookcountyassessoril.gov/" },
+                  { name: "DuPage", url: "https://propertylookup.dupagecounty.gov/forms/htmlframe.aspx?mode=content/home.htm" },
+                  { name: "Lake", url: "https://tax.lakecountyil.gov/search/commonsearch.aspx?mode=realprop" },
+                  { name: "Will", url: "https://willcountysoa.com/" },
+                  { name: "Kane", url: "https://treasurer.kanecountyil.gov/" },
+                  { name: "McHenry", url: "https://mchenryil.devnetwedge.com/" },
                   { name: "Select downstate", url: "/counties" },
                 ].map((c) => (
                   <li key={c.name} className="inline-flex items-center gap-1.5">
