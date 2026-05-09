@@ -1,15 +1,11 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { SEO } from "@/components/SEO";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
-import { PinHelper } from "@/components/PinHelper";
+import { PropertySearch } from "@/components/PropertySearch";
 import { SavingsCalculator } from "@/components/SavingsCalculator";
 import { UniformityHeatmap } from "@/components/UniformityHeatmap";
 import { WaitlistModal } from "@/components/WaitlistModal";
-import { normalizePin } from "@/lib/pin";
-import { api, ApiError } from "@/lib/api";
-import { saveLookup } from "@/lib/lookupCache";
 import {
   Accordion,
   AccordionContent,
@@ -17,7 +13,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import {
-  Search, ArrowRight, Check, Home, BarChart3, FileText, ShieldCheck, Zap, Sparkles,
+  ArrowRight, Check, Home, BarChart3, FileText, ShieldCheck, Zap, Sparkles,
 } from "lucide-react";
 
 const trustBullets = [
@@ -72,38 +68,8 @@ const faqs = [
 ];
 
 const Index = () => {
-  const [query, setQuery] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [premiumOpen, setPremiumOpen] = useState(false);
   const [taxWatchOpen, setTaxWatchOpen] = useState(false);
-  const navigate = useNavigate();
-
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const trimmed = query.trim();
-    if (!trimmed) return;
-    const pin = normalizePin(trimmed);
-    if (!/^\d{14}$/.test(pin)) {
-      setError("Enter a 14-digit Cook County PIN (with or without dashes).");
-      return;
-    }
-    setError(null);
-    setSubmitting(true);
-    try {
-      const data = await api.comparables(pin);
-      saveLookup(data);
-      navigate(`/comparables/${data.lookup_id}`);
-    } catch (err) {
-      if (err instanceof ApiError) {
-        if (err.status === 404) setError("We couldn't find that PIN. Double-check and try again.");
-        else if (err.status === 422) setError(err.body?.hint ?? "No structural characteristics on file for this PIN.");
-        else if (err.status === 400) setError("Please enter a valid PIN.");
-        else setError("Something went wrong. Please try again.");
-      } else setError("Network error. Please try again.");
-      setSubmitting(false);
-    }
-  };
 
   const orgJsonLd = {
     "@context": "https://schema.org", "@type": "Organization",
@@ -138,29 +104,9 @@ const Index = () => {
               The average homeowner keeps <span className="font-semibold text-primary">$3,701</span> using us instead.
             </p>
 
-            <form onSubmit={onSubmit} className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-stretch">
-              <div className="relative flex-1">
-                <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground/70" />
-                <input
-                  type="text"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Property Index Number (e.g. 16-19-213-035-0000)"
-                  aria-label="Your Property Index Number"
-                  className="h-14 w-full rounded-lg border border-input bg-card pl-12 pr-4 text-base text-foreground placeholder:text-muted-foreground/60 focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30 sm:text-lg"
-                />
-              </div>
-              <button
-                type="submit"
-                disabled={submitting}
-                className="inline-flex h-14 items-center justify-center gap-2 rounded-lg bg-accent px-7 text-base font-semibold text-accent-foreground shadow-sm transition-colors hover:bg-accent-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:text-lg"
-              >
-                {submitting ? "Checking…" : "Check my property"}
-                <ArrowRight className="h-5 w-5" />
-              </button>
-            </form>
-            {error && <p className="mt-3 text-sm text-destructive">{error}</p>}
-            <PinHelper />
+            <div className="mt-8">
+              <PropertySearch />
+            </div>
 
             {/* Trust strip */}
             <ul className="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground">
