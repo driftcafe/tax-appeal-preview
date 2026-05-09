@@ -87,6 +87,24 @@ export type ReportResponse = {
   filing: { county: string; form_name: string; deadline_iso: string };
 };
 
+export type ParcelSearchResult = {
+  county: string;
+  pin: string;
+  pin_formatted: string;
+  site_address: string;
+  owner_name: string | null;
+  township: string | null;
+  property_class: string | null;
+  assessed_value: number | null;
+  serviceable: boolean;
+  display_name: string;
+};
+
+export type ParcelSearchResponse = {
+  count: number;
+  results: ParcelSearchResult[];
+};
+
 export class ApiError extends Error {
   status: number;
   body: any;
@@ -138,4 +156,9 @@ export const api = {
     }),
   reportByToken: (share_token: string) =>
     request<ReportResponse>(`/api/reports/${encodeURIComponent(share_token)}`),
+  parcelSearch: (q: string, limit = 8, signal?: AbortSignal) =>
+    request<ParcelSearchResponse>(
+      `/api/parcels/search?q=${encodeURIComponent(q)}&limit=${limit}`,
+      { method: "GET", signal },
+    ),
 };
