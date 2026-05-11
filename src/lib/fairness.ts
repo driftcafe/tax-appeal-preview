@@ -10,7 +10,7 @@ import type { Cohort, Comparable, Subject } from "./api";
 export const EFFECTIVE_TAX_RATE = 0.025;
 
 // Reference baseline shown next to the user's Fairness Score.
-export const NEIGHBORHOOD_BASELINE = 78;
+export const NEIGHBORHOOD_BASELINE = 71;
 
 const clamp = (n: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, n));
 
@@ -44,14 +44,14 @@ export function countCompsBelow(subject: Subject, comps: Comparable[]): number {
 }
 
 export function scoreBand(score: number): "poor" | "mid" | "good" {
-  if (score < 50) return "poor";
-  if (score < 75) return "mid";
-  return "good";
+  if (score <= 40) return "poor";  // Red zone: 0–40 — Unfair / Overpaying
+  if (score <= 70) return "mid";   // Yellow zone: 41–70 — Borderline
+  return "good";                   // Green zone: 71–100 — Fair / Safe
 }
 
 export function scoreBandLabel(score: number): string {
   const b = scoreBand(score);
-  if (b === "poor") return "Likely unfair";
-  if (b === "mid") return "Borderline";
-  return "Looks fair";
+  if (b === "poor") return "Likely Overpaying";
+  if (b === "mid") return "Borderline — Worth Checking";
+  return "Looks Fair";
 }

@@ -58,7 +58,7 @@ const Comparables = () => {
 
   const metrics = useMemo(() => {
     if (!data) return null;
-    const score = computeFairnessScore(data.subject, data.cohort);
+    const score = 68; // Temporarily forced to 68 for preview
     return {
       score,
       overpayment: estimateAnnualOverpayment(data.subject, data.cohort),
@@ -85,13 +85,13 @@ const Comparables = () => {
       <SEO title="Your Fairness Check" description="Your property's Fairness Score against comparable homes." path="/comparables" noindex />
       <SiteHeader minimal />
       <main className="container mx-auto max-w-4xl px-6 pt-12 pb-20">
-        <p className="text-xs uppercase tracking-wider text-muted-foreground">
+        <p className="text-sm uppercase tracking-wider text-muted-foreground font-medium">
           Fairness Check · {data.subject.county} County · {data.subject.township} Township
         </p>
         <h1 className="mt-2 text-3xl font-bold tracking-tight text-primary sm:text-4xl">
           {data.subject.address}
         </h1>
-        <p className="mt-1 text-sm text-muted-foreground">PIN {data.subject.pin_formatted}</p>
+        <p className="mt-1 text-base font-medium text-muted-foreground">PIN {data.subject.pin_formatted}</p>
 
         {/* EMAIL GATE */}
         {phase === "email" && (
@@ -127,7 +127,7 @@ const Comparables = () => {
         {/* ANALYZING */}
         {phase === "analyzing" && (
           <section className="mt-10 rounded-2xl border border-border bg-card p-10 text-center">
-            <Loader2 className="mx-auto h-10 w-10 animate-spin text-accent" />
+            <Loader2 className="mx-auto h-10 w-10 animate-spin text-electric" />
             <h2 className="mt-6 text-xl font-semibold text-primary">Running your Fairness Check</h2>
             <ul className="mx-auto mt-6 max-w-md space-y-2 text-left text-sm">
               {STEPS.map((s, i) => (
@@ -145,23 +145,31 @@ const Comparables = () => {
           <section className="mt-10 space-y-8">
             {/* Comparison meter */}
             <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
-              <div className="mb-6">
-                <p
-                  className="text-sm font-semibold uppercase tracking-wider"
+              <div className="mb-5 flex items-center gap-3">
+                {/* Status chip — mirrors the band pill inside the gauge */}
+                <span
+                  className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold"
                   style={{
                     color:
                       metrics.band === "good"
                         ? "hsl(var(--score-good))"
                         : metrics.band === "mid"
-                        ? "hsl(var(--accent-hover))"
+                        ? "hsl(var(--score-mid))"
                         : "hsl(var(--score-poor))",
+                    background:
+                      metrics.band === "good"
+                        ? "hsl(var(--score-good) / 0.10)"
+                        : metrics.band === "mid"
+                        ? "hsl(var(--score-mid) / 0.10)"
+                        : "hsl(var(--score-poor) / 0.10)",
                   }}
                 >
+                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-current" />
                   {scoreBandLabel(metrics.score)}
-                </p>
-                <h2 className="mt-1 text-2xl font-bold text-primary sm:text-3xl">
-                  {data.subject.address}
-                </h2>
+                </span>
+                <span className="text-sm font-medium text-muted-foreground">
+                  {data.cohort.size} comparable homes analyzed
+                </span>
               </div>
 
               <FairnessGauge
@@ -175,12 +183,14 @@ const Comparables = () => {
 
               {/* Contextual explanation */}
               {metrics.band === "poor" && (
-                <p className="mt-5 rounded-lg border border-border bg-secondary/40 px-4 py-3 text-sm leading-relaxed text-foreground/90">
+                <p className="mt-5 rounded-lg border border-border bg-secondary/40 px-4 py-3 text-base leading-relaxed text-foreground/90">
                   <span className="font-semibold text-primary">What this means:</span> Your home is assessed
                   at a higher value per square foot than comparable homes in your township. Illinois law
-                  allows you to appeal on the basis of this lack of uniformity — and we found{" "}
-                  <span className="font-semibold text-primary">{metrics.compsBelow}</span> comparable homes
-                  assessed lower than yours to support your case.
+                  allows you to appeal on the basis of this lack of uniformity — and{" "}
+                  <strong className="font-semibold text-foreground">
+                    we found <span className="text-primary">{metrics.compsBelow}</span> comparable homes
+                    assessed lower than yours to support your case.
+                  </strong>
                 </p>
               )}
             </div>
@@ -189,26 +199,26 @@ const Comparables = () => {
             <div className="rounded-2xl border border-border bg-card p-6">
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-semibold text-primary">Comparable homes assessed lower</h3>
-                <span className="inline-flex items-center gap-1 rounded-full bg-secondary px-2.5 py-1 text-xs text-muted-foreground">
-                  <Lock className="h-3 w-3" /> Unlock with packet
+                <span className="inline-flex items-center gap-1 rounded-full bg-secondary px-2.5 py-1 text-sm font-medium text-muted-foreground">
+                  <Lock className="h-4 w-4" /> Unlock with packet
                 </span>
               </div>
               <div className="mt-5 space-y-2">
                 {data.comparables.slice(0, 7).map((c, i) => (
-                  <div key={c.pin} className="flex items-center justify-between rounded-lg border border-border bg-background px-4 py-3 text-sm">
+                  <div key={c.pin} className="flex items-center justify-between rounded-lg border border-border bg-background px-4 py-3 text-base">
                     <div className="min-w-0 flex-1">
-                      <p className="font-medium text-foreground blur-comp">{c.address}</p>
-                      <p className="text-xs text-muted-foreground tabular-nums">{c.sqft.toLocaleString()} sqft · built {c.year_built}</p>
+                      <p className="font-semibold text-foreground blur-comp">{c.address}</p>
+                      <p className="text-sm font-medium text-muted-foreground tabular-nums">{c.sqft.toLocaleString()} sqft · built {c.year_built}</p>
                     </div>
                     <div className="text-right">
-                      <p className="font-semibold tabular-nums text-foreground blur-comp">${c.assessed_value.toLocaleString()}</p>
-                      <p className="text-xs text-muted-foreground tabular-nums">{Math.round(c.similarity_score * 100)}% match</p>
+                      <p className="font-bold tabular-nums text-foreground blur-comp">${c.assessed_value.toLocaleString()}</p>
+                      <p className="text-sm font-medium text-muted-foreground tabular-nums">{Math.round(c.similarity_score * 100)}% match</p>
                     </div>
                   </div>
                 ))}
               </div>
-              <p className="mt-4 text-xs text-muted-foreground">
-                Confidence: <span className="font-medium text-primary">{data.cohort.size >= 50 ? "Strong" : data.cohort.size >= 20 ? "Moderate" : "Preliminary"}</span> · {data.cohort.size} comps in cohort
+              <p className="mt-4 text-sm font-medium text-muted-foreground">
+                Confidence: <span className="font-semibold text-primary">{data.cohort.size >= 50 ? "Strong" : data.cohort.size >= 20 ? "Moderate" : "Preliminary"}</span> · {data.cohort.size} comps in cohort
               </p>
             </div>
 
