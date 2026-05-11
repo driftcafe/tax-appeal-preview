@@ -14,7 +14,7 @@ export const SiteHeader = ({ minimal = false }: { minimal?: boolean }) => (
           <Link to="/faq" className="hover:text-primary">FAQ</Link>
           <Link
             to="/"
-            className="rounded-md bg-accent px-3.5 py-2 font-medium text-accent-foreground hover:bg-accent-hover"
+            className="rounded-md bg-electric px-3.5 py-2 font-medium text-electric-foreground hover:bg-electric-hover transition-colors"
           >
             Check my property
           </Link>

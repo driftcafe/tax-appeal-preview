@@ -6,7 +6,7 @@ import { saveLookup } from "@/lib/lookupCache";
 
 const PIN_RE = /^\d{2}-?\d{2}-?\d{3}-?\d{3}-?\d{4}$/;
 
-export const PropertySearch = () => {
+export const PropertySearch = ({ variant = "default" }: { variant?: "default" | "hero" }) => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<ParcelSearchResult[]>([]);
   const [open, setOpen] = useState(false);
@@ -142,11 +142,17 @@ export const PropertySearch = () => {
     }
   };
 
+  const isHero = variant === "hero";
+
   return (
     <div ref={wrapRef} className="relative">
       <form onSubmit={onSubmit} className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
         <div className="relative flex-1">
-          <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground/70" />
+          <Search
+            className={`pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 ${
+              isHero ? "text-navy-muted" : "text-muted-foreground/70"
+            }`}
+          />
           <input
             type="text"
             value={query}
@@ -155,15 +161,23 @@ export const PropertySearch = () => {
             placeholder="Property address or PIN — e.g. 619 Roger Ave, Kenilworth or 16-19-213-035-0000"
             aria-label="Property address or PIN"
             autoComplete="off"
-            className="h-14 w-full rounded-lg border border-input bg-card pl-12 pr-4 text-base text-foreground placeholder:text-muted-foreground/60 focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30 sm:text-lg"
+            className={`h-14 w-full rounded-lg border pl-12 pr-4 text-base placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 sm:text-lg ${
+              isHero
+                ? "border-white/20 bg-white/10 text-white placeholder:text-white/40 focus:border-white/40 focus:ring-white/20 backdrop-blur-sm"
+                : "border-input bg-card text-foreground focus:border-primary focus:ring-ring/30"
+            }`}
           />
         </div>
         <button
           type="submit"
           disabled={submitting}
-          className="inline-flex h-14 items-center justify-center gap-2 rounded-lg bg-accent px-7 text-base font-semibold text-accent-foreground shadow-sm transition-colors hover:bg-accent-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:text-lg"
+          className={`inline-flex h-14 items-center justify-center gap-2 rounded-lg px-7 text-base font-semibold shadow-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 sm:text-lg ${
+            isHero
+              ? "bg-electric text-electric-foreground hover:bg-electric-hover focus-visible:ring-electric focus-visible:ring-offset-navy"
+              : "bg-accent text-accent-foreground hover:bg-accent-hover focus-visible:ring-ring"
+          }`}
         >
-          {submitting ? "Checking…" : "Check my property"}
+          {submitting ? "Checking\u2026" : "Check my property"}
           <ArrowRight className="h-5 w-5" />
         </button>
       </form>

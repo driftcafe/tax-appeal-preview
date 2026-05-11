@@ -24,9 +24,24 @@ const trustBullets = [
 ];
 
 const steps = [
-  { icon: Home, h: "Enter your PIN.", p: "We pull your assessor record and find comparable homes in your township." },
-  { icon: BarChart3, h: "Get your Fairness Score.", p: "We score your assessment against your township and surface every comp that supports a lower valuation." },
-  { icon: FileText, h: "Download a county-ready packet.", p: "File it yourself, online, in minutes. Pre-filled forms, step-by-step instructions." },
+  {
+    icon: Home,
+    h: "Enter your address or PIN.",
+    p: "We pull your assessor record instantly and identify comparable homes in your township.",
+    deliverables: [] as string[],
+  },
+  {
+    icon: BarChart3,
+    h: "See your Fairness Score.",
+    p: "We compare your assessed value per sq ft against your neighbors. You'll see exactly how much higher you're paying — and why it qualifies for appeal.",
+    deliverables: [] as string[],
+  },
+  {
+    icon: FileText,
+    h: "Download your Editable Appeal Package.",
+    p: "Everything pre-filled, county-ready, and organized. File it yourself in minutes — no lawyer needed.",
+    deliverables: ["Pre-filled appeal forms", "County-specific filing instructions", "Comparable home evidence"],
+  },
 ];
 
 const tiers = [
@@ -92,27 +107,56 @@ const Index = () => {
       <SiteHeader />
       <main>
         {/* HERO */}
-        <section id="hero" aria-labelledby="hero-heading" className="relative overflow-hidden">
-          <div className="container mx-auto max-w-5xl px-6 pt-16 pb-16 sm:pt-24">
-            <h1 id="hero-heading" className="text-4xl font-bold leading-[1.05] tracking-tight text-primary sm:text-5xl md:text-6xl">
-              Your home may be assessed unfairly.<br className="hidden sm:block" />
-              <span className="text-accent">Find out in 60 seconds.</span>
-            </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
-              Get your free Fairness Score for any property in Cook County or the collar counties.
-              If you're overpaying, keep 100% of the savings — not 35% to a law firm.
-              The average homeowner keeps <span className="font-semibold text-primary">$3,701</span> using us instead.
+        <section id="hero" aria-labelledby="hero-heading" className="relative overflow-hidden bg-navy">
+          {/* Subtle grid texture overlay */}
+          <div
+            className="pointer-events-none absolute inset-0 opacity-[0.04]"
+            style={{
+              backgroundImage:
+                "linear-gradient(hsl(var(--navy-foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--navy-foreground)) 1px, transparent 1px)",
+              backgroundSize: "48px 48px",
+            }}
+          />
+          <div className="container relative mx-auto max-w-5xl px-6 pt-16 pb-20 sm:pt-28 sm:pb-24">
+            {/* Eyebrow */}
+            <p className="animate-fade-up text-xs font-semibold uppercase tracking-widest text-success [animation-delay:0ms]">
+              Free &middot; No account required &middot; Illinois homeowners
             </p>
 
-            <div className="mt-8">
-              <PropertySearch />
+            <h1
+              id="hero-heading"
+              className="animate-fade-up mt-4 font-display text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl md:text-[3.75rem] [animation-delay:80ms]"
+            >
+              Your home may be assessed unfairly.
+              <br className="hidden sm:block" />
+              <span className="text-success">Find out in 60 seconds.</span>
+            </h1>
+
+            <p className="animate-fade-up mt-5 max-w-2xl text-lg leading-relaxed text-navy-muted sm:text-xl [animation-delay:160ms]">
+              Get your free Fairness Score for any property in Cook County or the collar counties.
+              Keep 100% of your savings&nbsp;&mdash; not 35% to a law firm.
+            </p>
+
+            {/* Address bar */}
+            <div className="animate-fade-up mt-8 [animation-delay:240ms]">
+              <PropertySearch variant="hero" />
+            </div>
+
+            {/* Savings badge */}
+            <div className="animate-fade-up mt-5 [animation-delay:320ms]">
+              <span className="inline-flex items-center gap-2 rounded-full border border-success/30 bg-success/10 px-4 py-1.5 text-sm font-medium text-success">
+                <span className="inline-block h-2 w-2 animate-pulse-green rounded-full bg-success" />
+                Avg. homeowner keeps{" "}
+                <span className="font-bold tabular-nums text-white">$3,701</span>
+                {" "}&mdash; flat $149 vs. 35% contingency fee
+              </span>
             </div>
 
             {/* Trust strip */}
-            <ul className="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground">
+            <ul className="animate-fade-up mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm text-navy-muted [animation-delay:400ms]">
               {trustBullets.map((b) => (
                 <li key={b} className="inline-flex items-center gap-1.5">
-                  <Check className="h-4 w-4 text-accent" /> {b}
+                  <Check className="h-4 w-4 text-success" /> {b}
                 </li>
               ))}
             </ul>
@@ -138,18 +182,63 @@ const Index = () => {
 
         {/* HOW IT WORKS */}
         <section className="container mx-auto max-w-5xl px-6 py-20">
-          <h2 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">How it works</h2>
-          <div className="mt-10 grid gap-8 md:grid-cols-3">
-            {steps.map((s, i) => (
-              <div key={s.h}>
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                  <s.icon className="h-5 w-5" />
+          <p className="text-xs font-semibold uppercase tracking-widest text-electric">Simple process</p>
+          <h2 className="mt-2 text-3xl font-bold tracking-tight text-primary sm:text-4xl">Three steps to a lower tax bill.</h2>
+
+          <div className="mt-12 grid gap-0 md:grid-cols-3">
+            {steps.map((s, i) => {
+              const isLast = i === steps.length - 1;
+              return (
+                <div key={s.h} className="relative">
+                  {/* Connector line between steps (desktop) */}
+                  {!isLast && (
+                    <div className="absolute left-[calc(50%+24px)] top-5 hidden h-px w-[calc(100%-48px)] border-t-2 border-dashed border-electric/25 md:block" />
+                  )}
+
+                  <div className={`flex flex-col rounded-2xl border p-6 h-full ${
+                    isLast
+                      ? "border-2 border-success bg-success/5 shadow-md"
+                      : "border-border bg-card"
+                  }`}>
+                    {/* Step circle */}
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-electric text-electric-foreground text-sm font-bold shadow-sm">
+                        {i + 1}
+                      </div>
+                      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary/8 text-primary">
+                        <s.icon className="h-5 w-5" />
+                      </div>
+                    </div>
+
+                    <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-electric">Step {i + 1}</p>
+                    <h3 className={`mt-1 text-lg font-semibold text-primary leading-tight ${
+                      isLast ? "text-xl" : ""
+                    }`}>{s.h}</h3>
+                    <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{s.p}</p>
+
+                    {/* Deliverables list (Step 3 only) */}
+                    {s.deliverables.length > 0 && (
+                      <>
+                        <ul className="mt-4 space-y-1.5">
+                          {s.deliverables.map((d) => (
+                            <li key={d} className="inline-flex items-center gap-2 text-sm font-medium text-foreground/90">
+                              <Check className="h-4 w-4 flex-shrink-0 text-success" />
+                              {d}
+                            </li>
+                          ))}
+                        </ul>
+                        <a
+                          href="#hero"
+                          className="mt-5 inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-electric px-5 text-sm font-semibold text-electric-foreground hover:bg-electric-hover transition-colors"
+                        >
+                          Start my appeal &mdash; $149 <ArrowRight className="h-4 w-4" />
+                        </a>
+                      </>
+                    )}
+                  </div>
                 </div>
-                <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-accent">Step {i + 1}</p>
-                <h3 className="mt-1 text-xl font-semibold text-primary">{s.h}</h3>
-                <p className="mt-2 text-base leading-relaxed text-muted-foreground">{s.p}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
 
@@ -163,9 +252,9 @@ const Index = () => {
                   Why the gap between you and your neighbors matters.
                 </h2>
                 <ul className="mt-6 space-y-3 text-base text-foreground/90">
-                  <li className="flex gap-3"><Check className="mt-1 h-5 w-5 flex-shrink-0 text-accent" /> Illinois law allows property tax appeals based on assessment uniformity.</li>
-                  <li className="flex gap-3"><Check className="mt-1 h-5 w-5 flex-shrink-0 text-accent" /> Your home shouldn't be assessed higher than similar nearby homes.</li>
-                  <li className="flex gap-3"><Check className="mt-1 h-5 w-5 flex-shrink-0 text-accent" /> We surface that gap with hard data — sqft, lot size, age, and assessed value per square foot.</li>
+                  <li className="flex gap-3"><Check className="mt-1 h-5 w-5 flex-shrink-0 text-success" /> Illinois law allows property tax appeals based on assessment uniformity.</li>
+                  <li className="flex gap-3"><Check className="mt-1 h-5 w-5 flex-shrink-0 text-success" /> Your home shouldn't be assessed higher than similar nearby homes.</li>
+                  <li className="flex gap-3"><Check className="mt-1 h-5 w-5 flex-shrink-0 text-success" /> We surface that gap with hard data — sqft, lot size, age, and assessed value per square foot.</li>
                 </ul>
               </div>
               <UniformityHeatmap />
@@ -230,7 +319,7 @@ const Index = () => {
                   ) : (
                     <a
                       href={t.href}
-                      className={`mt-6 inline-flex h-11 items-center justify-center gap-2 rounded-md px-5 text-sm font-semibold ${t.popular ? "bg-accent text-accent-foreground hover:bg-accent-hover" : "bg-primary text-primary-foreground hover:opacity-90"}`}
+                      className={`mt-6 inline-flex h-11 items-center justify-center gap-2 rounded-md px-5 text-sm font-semibold ${t.popular ? "bg-electric text-electric-foreground hover:bg-electric-hover" : "bg-primary text-primary-foreground hover:opacity-90"}`}
                     >
                       {t.cta} <ArrowRight className="h-4 w-4" />
                     </a>
@@ -281,7 +370,7 @@ const Index = () => {
                   { name: "Select downstate", url: "/counties" },
                 ].map((c) => (
                   <li key={c.name} className="inline-flex items-center gap-1.5">
-                    <Check className="h-4 w-4 text-accent" />
+                    <Check className="h-4 w-4 text-success" />
                     <a
                       href={c.url}
                       target={c.url.startsWith("http") ? "_blank" : undefined}
@@ -348,10 +437,10 @@ const Index = () => {
               </AccordionItem>
             ))}
           </Accordion>
-          <div className="mt-10 rounded-2xl border-2 border-accent bg-card p-6 text-center">
+          <div className="mt-10 rounded-2xl border-2 border-electric/40 bg-card p-6 text-center">
             <p className="text-lg font-semibold text-primary">Ready to see your Fairness Score?</p>
             <p className="mt-1 text-sm text-muted-foreground">Free. Takes 60 seconds.</p>
-            <a href="#hero" className="mt-4 inline-flex h-12 items-center justify-center gap-2 rounded-md bg-accent px-6 text-base font-semibold text-accent-foreground hover:bg-accent-hover">
+            <a href="#hero" className="mt-4 inline-flex h-12 items-center justify-center gap-2 rounded-md bg-electric px-6 text-base font-semibold text-electric-foreground hover:bg-electric-hover transition-colors">
               Check my property <ArrowRight className="h-5 w-5" />
             </a>
           </div>

@@ -143,29 +143,46 @@ const Comparables = () => {
         {/* RESULT */}
         {phase === "result" && metrics && (
           <section className="mt-10 space-y-8">
-            {/* Gauge + headline */}
-            <div className="grid gap-8 rounded-2xl border border-border bg-card p-6 sm:p-8 md:grid-cols-[auto,1fr] md:items-center">
-              <FairnessGauge score={metrics.score} />
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-wider"
-                   style={{ color: metrics.band === "good" ? "hsl(var(--score-good))" : metrics.band === "mid" ? "hsl(var(--accent-hover))" : "hsl(var(--score-poor))" }}>
+            {/* Comparison meter */}
+            <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
+              <div className="mb-6">
+                <p
+                  className="text-sm font-semibold uppercase tracking-wider"
+                  style={{
+                    color:
+                      metrics.band === "good"
+                        ? "hsl(var(--score-good))"
+                        : metrics.band === "mid"
+                        ? "hsl(var(--accent-hover))"
+                        : "hsl(var(--score-poor))",
+                  }}
+                >
                   {scoreBandLabel(metrics.score)}
                 </p>
-                <h2 className="mt-2 text-2xl font-bold text-primary sm:text-3xl">
-                  Your score: <span className="tabular-nums">{metrics.score}</span>
-                  <span className="ml-2 text-base font-normal text-muted-foreground">— Neighborhood average: {NEIGHBORHOOD_BASELINE}</span>
+                <h2 className="mt-1 text-2xl font-bold text-primary sm:text-3xl">
+                  {data.subject.address}
                 </h2>
-                <div className="mt-5 rounded-xl bg-secondary/50 p-4">
-                  <p className="text-xs uppercase tracking-wider text-muted-foreground">Estimated annual overpayment</p>
-                  <p className="mt-1 text-4xl font-bold tabular-nums" style={{ color: "hsl(var(--accent-hover))" }}>
-                    ${metrics.overpayment.toLocaleString()}
-                  </p>
-                  <p className="mt-1 text-xs text-muted-foreground">Preliminary estimate at a 2.5% effective tax rate.</p>
-                </div>
-                <p className="mt-4 text-sm text-foreground/90">
-                  We found <span className="font-semibold text-primary">{metrics.compsBelow}</span> comparable homes assessed lower than yours.
-                </p>
               </div>
+
+              <FairnessGauge
+                mode="compare"
+                score={metrics.score}
+                subjectAV={data.subject.assessed_value}
+                subjectSqft={data.subject.sqft}
+                cohortMedianAVPerSqft={data.cohort.median_av_per_sqft}
+                overpayment={metrics.overpayment}
+              />
+
+              {/* Contextual explanation */}
+              {metrics.band === "poor" && (
+                <p className="mt-5 rounded-lg border border-border bg-secondary/40 px-4 py-3 text-sm leading-relaxed text-foreground/90">
+                  <span className="font-semibold text-primary">What this means:</span> Your home is assessed
+                  at a higher value per square foot than comparable homes in your township. Illinois law
+                  allows you to appeal on the basis of this lack of uniformity — and we found{" "}
+                  <span className="font-semibold text-primary">{metrics.compsBelow}</span> comparable homes
+                  assessed lower than yours to support your case.
+                </p>
+              )}
             </div>
 
             {/* Blurred comps */}
@@ -204,9 +221,9 @@ const Comparables = () => {
                 </div>
                 <Link
                   to={`/signup/${data.lookup_id}`}
-                  className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-accent px-6 font-semibold text-accent-foreground hover:bg-accent-hover"
+                  className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-electric px-6 font-semibold text-electric-foreground hover:bg-electric-hover transition-colors"
                 >
-                  Continue — $149 <ArrowRight className="h-4 w-4" />
+                  Continue &mdash; $149 <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
               <button

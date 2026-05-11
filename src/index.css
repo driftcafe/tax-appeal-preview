@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* TaxAppeal.app — Slate + amber. Fairness-first. */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap');
+/* TaxAppeal.app — FinTech palette. Deep Navy · Success Green · Electric Blue. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap');
 
 @layer base {
   :root {
@@ -26,27 +26,45 @@
     --muted: 210 40% 96%;
     --muted-foreground: 215 16% 47%;
 
-    /* Amber accent (#F59E0B) */
+    /* Amber accent (#F59E0B) — savings/money callouts ONLY */
     --accent: 38 92% 50%;
     --accent-foreground: 222 47% 11%;
     --accent-hover: 32 95% 44%;
+
+    /* Electric Blue (#1D6AFF) — primary CTA actions */
+    --electric: 221 100% 56%;
+    --electric-hover: 221 100% 46%;
+    --electric-foreground: 0 0% 100%;
+
+    /* Success Green (#2ECC71) — confirmed savings, positive outcomes */
+    --success: 145 63% 49%;
+    --success-hover: 145 63% 40%;
+    --success-foreground: 0 0% 100%;
+    --success-muted: 145 63% 49% / 0.15;
+
+    /* Deep Navy (#0A1A2F) — hero background */
+    --navy: 211 67% 11%;
+    --navy-card: 213 50% 16%;
+    --navy-border: 213 40% 22%;
+    --navy-foreground: 210 60% 95%;
+    --navy-muted: 213 30% 65%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 214 32% 91%;
     --input: 214 32% 91%;
-    --ring: 222 47% 11%;
+    --ring: 221 100% 56%;
 
     --radius: 0.5rem;
 
     /* Fairness gauge bands */
     --score-poor: 0 72% 51%;
     --score-mid: 38 92% 50%;
-    --score-good: 142 71% 38%;
+    --score-good: 145 63% 49%;
 
     /* Confidence pills (kept) */
-    --confidence-strong: 142 71% 38%;
+    --confidence-strong: 145 63% 49%;
     --confidence-strong-bg: 142 60% 94%;
     --confidence-moderate: 38 92% 40%;
     --confidence-moderate-bg: 42 90% 94%;
@@ -60,7 +78,7 @@
     --sidebar-accent: 240 4.8% 95.9%;
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-ring: 221 100% 56%;
   }
 
   .dark {
@@ -89,12 +107,25 @@
 @layer base {
   * { @apply border-border; }
   body { @apply bg-background text-foreground font-sans antialiased; }
-  h1, h2, h3 { @apply font-sans tracking-tight; }
+  h1, h2, h3 { @apply font-display tracking-tight; }
 }
 
 @layer utilities {
   .blur-comp { filter: blur(7px); user-select: none; pointer-events: none; }
+
+  /* Hero navy section utilities */
+  .text-navy-muted { color: hsl(var(--navy-muted)); }
+  .bg-success-pill { background: hsl(145 63% 49% / 0.15); }
+  .text-success { color: hsl(var(--success)); }
+  .border-navy-subtle { border-color: hsl(var(--navy-border)); }
+
+  /* Bar chart animation helper */
+  .bar-animate {
+    transition: width 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .reduce-motion-fast { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    .bar-animate { transition: none !important; }
   }
 }

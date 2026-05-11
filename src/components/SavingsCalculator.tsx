@@ -45,7 +45,7 @@ export const SavingsCalculator = () => {
         </div>
 
         {/* TaxAppeal */}
-        <div className="rounded-xl border-2 border-accent bg-card p-5">
+        <div className="rounded-xl border-2 border-success bg-card p-5">
           <p className="text-sm font-semibold text-primary">Use TaxAppeal.app</p>
           <dl className="mt-4 space-y-2 text-sm">
             <Row label="Estimated savings" value={fmt(savings)} />
@@ -53,7 +53,7 @@ export const SavingsCalculator = () => {
             <div className="border-t border-border pt-3">
               <div className="flex items-baseline justify-between">
                 <span className="text-sm text-muted-foreground">You keep</span>
-                <span className="text-3xl font-bold tabular-nums" style={{ color: "hsl(var(--accent-hover))" }}>
+                <span className="text-3xl font-bold tabular-nums text-success">
                   {fmt(ourKeep)}
                 </span>
               </div>

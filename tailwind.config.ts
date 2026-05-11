@@ -15,7 +15,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        serif: ['Fraunces', 'ui-serif', 'Georgia', 'serif'],
+        display: ['Poppins', 'Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -43,6 +43,23 @@ export default {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
           hover: "hsl(var(--accent-hover))",
+        },
+        electric: {
+          DEFAULT: "hsl(var(--electric))",
+          hover: "hsl(var(--electric-hover))",
+          foreground: "hsl(var(--electric-foreground))",
+        },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          hover: "hsl(var(--success-hover))",
+          foreground: "hsl(var(--success-foreground))",
+        },
+        navy: {
+          DEFAULT: "hsl(var(--navy))",
+          card: "hsl(var(--navy-card))",
+          border: "hsl(var(--navy-border))",
+          foreground: "hsl(var(--navy-foreground))",
+          muted: "hsl(var(--navy-muted))",
         },
         score: {
           poor: "hsl(var(--score-poor))",
@@ -83,25 +100,32 @@ export default {
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+        "fade-up": {
+          from: { opacity: "0", transform: "translateY(14px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        "pulse-green": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.65" },
+        },
+        "slide-in": {
+          from: { opacity: "0", transform: "translateX(-8px)" },
+          to: { opacity: "1", transform: "translateX(0)" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "fade-up": "fade-up 0.5s ease-out both",
+        "pulse-green": "pulse-green 2.5s ease-in-out infinite",
+        "slide-in": "slide-in 0.4s ease-out both",
       },
     },
   },
