@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export const SiteHeader = ({ minimal = false }: { minimal?: boolean }) => (
   <header className="border-b border-border/60 bg-background">
-    <div className="container mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+    <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-8 md:px-12 lg:px-20">
       <Link to="/" className="text-lg font-bold tracking-tight text-primary">
         TaxAppeal<span className="text-accent">.app</span>
       </Link>

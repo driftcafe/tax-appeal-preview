@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 
 export const SiteFooter = ({ extraDisclaimer }: { extraDisclaimer?: string }) => (
-  <footer className="mt-24 border-t border-border/60 bg-secondary/30">
-    <div className="container mx-auto max-w-6xl px-6 py-10 text-sm text-muted-foreground">
+  <footer className="mt-24 border-t border-border/60 bg-[#F7F9FB]">
+    <div className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-20 py-10 text-sm text-muted-foreground">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <p className="text-base font-bold tracking-tight text-primary">
           TaxAppeal<span className="text-accent">.app</span>

@@ -149,33 +149,30 @@ export const PropertySearch = ({ variant = "default" }: { variant?: "default" | 
       <form onSubmit={onSubmit} className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
         <div className="relative flex-1">
           <Search
-            className={`pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 ${
-              isHero ? "text-navy-muted" : "text-muted-foreground/70"
-            }`}
+            className={`pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 ${isHero ? "text-navy-muted" : "text-muted-foreground/70"
+              }`}
           />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => results.length > 0 && setOpen(true)}
-            placeholder="Property address or PIN — e.g. 619 Roger Ave, Kenilworth or 16-19-213-035-0000"
+            placeholder="Your property address — e.g. 619 Roger Ave, Kenilworth"
             aria-label="Property address or PIN"
             autoComplete="off"
-            className={`h-14 w-full rounded-lg border pl-12 pr-4 text-base placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 sm:text-lg ${
-              isHero
+            className={`h-14 w-full rounded-lg border pl-12 pr-4 text-base placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 sm:text-lg ${isHero
                 ? "border-white/20 bg-white/10 text-white placeholder:text-white/40 focus:border-white/40 focus:ring-white/20 backdrop-blur-sm"
                 : "border-input bg-card text-foreground focus:border-primary focus:ring-ring/30"
-            }`}
+              }`}
           />
         </div>
         <button
           type="submit"
           disabled={submitting}
-          className={`inline-flex h-14 items-center justify-center gap-2 rounded-lg px-7 text-base font-semibold shadow-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 sm:text-lg ${
-            isHero
+          className={`inline-flex h-14 items-center justify-center gap-2 rounded-lg px-7 text-base font-semibold shadow-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 sm:text-lg ${isHero
               ? "bg-electric text-electric-foreground hover:bg-electric-hover focus-visible:ring-electric focus-visible:ring-offset-navy"
               : "bg-accent text-accent-foreground hover:bg-accent-hover focus-visible:ring-ring"
-          }`}
+            }`}
         >
           {submitting ? "Checking\u2026" : "Check my property"}
           <ArrowRight className="h-5 w-5" />
@@ -193,9 +190,8 @@ export const PropertySearch = ({ variant = "default" }: { variant?: "default" | 
           <ul className="max-h-80 overflow-auto">
             {results.map((r) => {
               const disabled = !r.serviceable;
-              const meta = `${r.display_name} County · PIN ${r.pin_formatted}${
-                r.assessed_value != null ? ` · AV $${r.assessed_value.toLocaleString()}` : ""
-              }`;
+              const meta = `${r.display_name} County · PIN ${r.pin_formatted}${r.assessed_value != null ? ` · AV $${r.assessed_value.toLocaleString()}` : ""
+                }`;
               return (
                 <li key={r.pin}>
                   <button
@@ -203,11 +199,10 @@ export const PropertySearch = ({ variant = "default" }: { variant?: "default" | 
                     onClick={() => pickResult(r)}
                     disabled={disabled}
                     title={disabled ? "We don't yet file appeals in this county." : undefined}
-                    className={`flex w-full flex-col items-start gap-0.5 border-b border-border px-4 py-2.5 text-left last:border-b-0 ${
-                      disabled
+                    className={`flex w-full flex-col items-start gap-0.5 border-b border-border px-4 py-2.5 text-left last:border-b-0 ${disabled
                         ? "cursor-not-allowed opacity-50"
                         : "hover:bg-secondary/60"
-                    }`}
+                      }`}
                   >
                     <div className="flex w-full items-center justify-between gap-2">
                       <span className="text-sm font-semibold text-primary">{r.site_address}</span>

@@ -26,10 +26,10 @@
     --muted: 210 40% 96%;
     --muted-foreground: 215 19% 35%;
 
-    /* Amber accent (#F59E0B) — savings/money callouts ONLY */
-    --accent: 38 92% 50%;
-    --accent-foreground: 222 47% 11%;
-    --accent-hover: 32 95% 44%;
+    /* Success Green accent (#2ECC71) */
+    --accent: 145 63% 49%;
+    --accent-foreground: 0 0% 100%;
+    --accent-hover: 145 63% 40%;
 
     /* Electric Blue (#1D6AFF) — primary CTA actions */
     --electric: 221 100% 56%;
@@ -161,5 +161,19 @@
       animation: none !important;
       opacity: 1;
     }
+  }
+
+  /* Apple-inspired Typography System */
+  .apple-eyebrow {
+    @apply font-semibold text-[15px] sm:text-[17px] lg:text-[20px] text-[#6E6E73] tracking-wider leading-[1.2];
+  }
+  .apple-headline {
+    @apply font-bold text-[32px] sm:text-[40px] lg:text-[48px] text-[#1D1D1F] tracking-tight leading-[1.2];
+  }
+  .apple-body {
+    @apply font-medium text-[16px] sm:text-[18px] lg:text-[20px] text-[#6E6E73] leading-[1.5];
+  }
+  .apple-body-emph {
+    @apply font-medium text-[16px] sm:text-[18px] lg:text-[20px] text-[#1D1D1F] leading-[1.5];
   }
 }

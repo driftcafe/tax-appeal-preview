@@ -4,7 +4,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { PropertySearch } from "@/components/PropertySearch";
 import { SavingsCalculator } from "@/components/SavingsCalculator";
-import { UniformityHeatmap } from "@/components/UniformityHeatmap";
+import { UniformityComparison } from "@/components/UniformityComparison";
 import { WaitlistModal } from "@/components/WaitlistModal";
 import {
   Accordion,
@@ -108,48 +108,33 @@ const Index = () => {
       <main>
         {/* HERO */}
         <section id="hero" aria-labelledby="hero-heading" className="relative overflow-hidden bg-navy">
-          {/* Subtle grid texture overlay */}
+          {/* Soft radial gradient + Grid texture */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1a365d] via-navy to-navy opacity-80" />
           <div
-            className="pointer-events-none absolute inset-0 opacity-[0.04]"
+            className="pointer-events-none absolute inset-0 opacity-[0.03]"
             style={{
               backgroundImage:
                 "linear-gradient(hsl(var(--navy-foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--navy-foreground)) 1px, transparent 1px)",
-              backgroundSize: "48px 48px",
+              backgroundSize: "64px 64px",
             }}
           />
-          <div className="container relative mx-auto max-w-5xl px-6 pt-16 pb-20 sm:pt-28 sm:pb-24">
-            {/* Eyebrow */}
-            <p className="animate-fade-up text-xs font-semibold uppercase tracking-widest text-success [animation-delay:0ms]">
-              Free &middot; No account required &middot; Illinois homeowners
-            </p>
+          <div className="container relative mx-auto flex max-w-5xl flex-col items-center px-8 md:px-12 lg:px-20 pt-24 pb-28 text-center sm:pt-36 sm:pb-32">
 
             <h1
               id="hero-heading"
               className="animate-fade-up mt-4 font-display text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl md:text-[3.75rem] [animation-delay:80ms]"
             >
-              Your home may be assessed unfairly.
+              Your property tax may be wrong.
               <br className="hidden sm:block" />
-              <span className="text-success">Find out in 60 seconds.</span>
+              <span className="text-success">Check it free.</span>
             </h1>
 
-            <p className="animate-fade-up mt-5 max-w-2xl text-lg leading-relaxed text-navy-muted sm:text-xl [animation-delay:160ms]">
-              Get your free Fairness Score for any property in Cook County or the collar counties.
-              Keep 100% of your savings&nbsp;&mdash; not 35% to a law firm.
+            <p className="animate-fade-up mt-5 max-w-2xl text-lg leading-relaxed text-navy-muted sm:text-xl [animation-delay:160ms]">The average homeowner saves $3,701 — and keeps all of it.
             </p>
 
             {/* Address bar */}
-            <div className="animate-fade-up mt-8 [animation-delay:240ms]">
+            <div className="animate-fade-up mt-10 w-full [animation-delay:240ms]">
               <PropertySearch variant="hero" />
-            </div>
-
-            {/* Savings badge */}
-            <div className="animate-fade-up mt-5 [animation-delay:320ms]">
-              <span className="inline-flex items-center gap-2 rounded-full border border-success/30 bg-success/10 px-4 py-1.5 text-sm font-medium text-success">
-                <span className="inline-block h-2 w-2 animate-pulse-green rounded-full bg-success" />
-                Avg. homeowner keeps{" "}
-                <span className="font-bold tabular-nums text-white">$3,701</span>
-                {" "}&mdash; flat $149 vs. 35% contingency fee
-              </span>
             </div>
 
             {/* Trust strip */}
@@ -164,15 +149,14 @@ const Index = () => {
         </section>
 
         {/* CALCULATOR */}
-        <section className="border-t border-border/60 bg-secondary/30">
-          <div className="container mx-auto max-w-5xl px-6 py-20">
-            <p className="text-sm font-semibold uppercase tracking-wider text-accent">Keep your savings</p>
-            <h2 className="mt-2 text-3xl font-bold tracking-tight text-primary sm:text-4xl">
+        <section className="border-t border-border/60 bg-[#F7F9FB]">
+          <div className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-20 py-24">
+            <p className="apple-eyebrow">Keep your Savings</p>
+            <h2 className="apple-headline mt-4">
               The contingency-firm math, in one place.
             </h2>
-            <p className="mt-3 max-w-2xl text-base text-muted-foreground">
-              Most appeal firms take 35–40% of your year-one savings. We charge a flat $149.
-              Move the slider to your situation.
+            <p className="apple-body mt-6 max-w-3xl">
+              Most appeal firms take 35–40% of your year-one savings. <span className="apple-body-emph">We charge a flat $149.</span> Move the slider to your situation.
             </p>
             <div className="mt-8">
               <SavingsCalculator />
@@ -180,41 +164,41 @@ const Index = () => {
           </div>
         </section>
 
-        {/* HOW IT WORKS */}
-        <section className="container mx-auto max-w-5xl px-6 py-20">
-          <p className="text-xs font-semibold uppercase tracking-widest text-electric">Simple process</p>
-          <h2 className="mt-2 text-3xl font-bold tracking-tight text-primary sm:text-4xl">Three steps to a lower tax bill.</h2>
+        {/* HOW IT WORKS (TRUST ARCHITECTURE) */}
+        <section className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-20 py-32">
+          <div className="text-center">
+            <p className="apple-eyebrow">How it Works</p>
+            <h2 className="apple-headline mt-4">
+              Data-backed appeals. Zero legal fees.
+            </h2>
+            <p className="apple-body mx-auto mt-6 max-w-3xl">
+              Our engine analyzes millions of county records to build <span className="apple-body-emph">an airtight case for your home</span> in three simple steps.
+            </p>
+          </div>
 
-          <div className="mt-12 grid gap-0 md:grid-cols-3">
+          <div className="mt-12 grid gap-[30px] md:grid-cols-3">
             {steps.map((s, i) => {
               const isLast = i === steps.length - 1;
               return (
                 <div key={s.h} className="relative">
-                  {/* Connector line between steps (desktop) */}
-                  {!isLast && (
-                    <div className="absolute left-[calc(50%+24px)] top-5 hidden h-px w-[calc(100%-48px)] border-t-2 border-dashed border-electric/25 md:block" />
-                  )}
 
-                  <div className={`flex flex-col rounded-2xl border p-6 h-full ${
-                    isLast
-                      ? "border-2 border-success bg-success/5 shadow-md"
-                      : "border-border bg-card"
-                  }`}>
+                  <div className={`flex flex-col rounded-2xl border p-8 h-full transition-all duration-300 hover:shadow-lg ${isLast
+                    ? "border-success bg-success/[0.03] shadow-md ring-1 ring-success/10"
+                    : "border-border/60 bg-card shadow-sm hover:border-border"
+                    }`}>
                     {/* Step circle */}
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-electric text-electric-foreground text-sm font-bold shadow-sm">
+                    <div className="flex items-center gap-4">
+                      <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-electric/10 text-electric text-lg font-extrabold shadow-sm">
                         {i + 1}
                       </div>
-                      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary/8 text-primary">
-                        <s.icon className="h-5 w-5" />
+                      <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-secondary text-primary">
+                        <s.icon className="h-6 w-6" />
                       </div>
                     </div>
 
-                    <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-electric">Step {i + 1}</p>
-                    <h3 className={`mt-1 text-lg font-semibold text-primary leading-tight ${
-                      isLast ? "text-xl" : ""
-                    }`}>{s.h}</h3>
-                    <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{s.p}</p>
+                    <p className="mt-6 text-[18px] font-bold tracking-wider text-[#6E6E73]">Phase {i + 1}</p>
+                    <h3 className="mt-2 text-[22px] font-bold leading-tight text-[#1D1D1F]">{s.h}</h3>
+                    <p className="apple-body mt-3 flex-1">{s.p}</p>
 
                     {/* Deliverables list (Step 3 only) */}
                     {s.deliverables.length > 0 && (
@@ -242,30 +226,29 @@ const Index = () => {
           </div>
         </section>
 
-        {/* UNIFORMITY */}
-        <section className="border-t border-border/60 bg-secondary/30">
-          <div className="container mx-auto max-w-5xl px-6 py-20">
-            <div className="grid gap-10 md:grid-cols-2 md:items-center">
+        <section className="border-t border-border/60 bg-[#F7F9FB]">
+          <div className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-20 py-24">
+            <div className="grid gap-16 md:grid-cols-2 md:items-center">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-wider text-accent">The Uniformity Score, explained</p>
-                <h2 className="mt-2 text-3xl font-bold tracking-tight text-primary sm:text-4xl">
+                <p className="apple-eyebrow">The Uniformity Score, explained</p>
+                <h2 className="apple-headline mt-4">
                   Why the gap between you and your neighbors matters.
                 </h2>
-                <ul className="mt-6 space-y-3 text-base text-foreground/90">
+                <ul className="apple-body mt-8 space-y-4">
                   <li className="flex gap-3"><Check className="mt-1 h-5 w-5 flex-shrink-0 text-success" /> Illinois law allows property tax appeals based on assessment uniformity.</li>
                   <li className="flex gap-3"><Check className="mt-1 h-5 w-5 flex-shrink-0 text-success" /> Your home shouldn't be assessed higher than similar nearby homes.</li>
-                  <li className="flex gap-3"><Check className="mt-1 h-5 w-5 flex-shrink-0 text-success" /> We surface that gap with hard data — sqft, lot size, age, and assessed value per square foot.</li>
+                  <li className="flex gap-3"><Check className="mt-1 h-5 w-5 flex-shrink-0 text-success" /> We surface that gap with hard data (sqft, lot size, age, and assessed value per square foot).</li>
                 </ul>
               </div>
-              <UniformityHeatmap />
+              <UniformityComparison />
             </div>
           </div>
         </section>
 
         {/* WINNETKA EXAMPLE */}
-        <section className="container mx-auto max-w-4xl px-6 py-20">
-          <p className="text-sm font-semibold uppercase tracking-wider text-accent">Real-world example</p>
-          <h2 className="mt-2 text-3xl font-bold tracking-tight text-primary sm:text-4xl">Winnetka single-family home</h2>
+        <section className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-20 py-24">
+          <p className="apple-eyebrow">Real-world example</p>
+          <h2 className="apple-headline mt-4">Winnetka single-family home</h2>
           <div className="mt-8 overflow-hidden rounded-2xl border border-border bg-card">
             <dl className="divide-y divide-border">
               <ExRow label="Original assessment" value="$1,420,000" />
@@ -273,42 +256,44 @@ const Index = () => {
               <ExRow label="Estimated annual reduction" value="$3,850" />
               <ExRow label="Contingency law firm fee (35%)" value="−$1,347" negative />
               <ExRow label="TaxAppeal.app flat fee" value="−$149" negative />
-              <div className="flex items-baseline justify-between gap-4 bg-secondary/40 px-6 py-6">
-                <dt className="text-base font-semibold text-primary">Homeowner kept</dt>
-                <dd className="text-3xl font-bold tabular-nums sm:text-4xl" style={{ color: "hsl(var(--accent-hover))" }}>$3,701</dd>
+              <div className="flex items-center justify-between gap-4 bg-secondary/40 px-6 py-6">
+                <dt className="text-[18px] font-normal text-[#1D1D1F]">Homeowner kept</dt>
+                <dd className="text-[18px] font-bold tabular-nums text-[#1D1D1F]">$3,701</dd>
               </div>
             </dl>
           </div>
         </section>
 
-        {/* PRICING */}
-        <section className="border-t border-border/60 bg-secondary/30">
-          <div className="container mx-auto max-w-6xl px-6 py-20">
-            <div className="flex flex-wrap items-end justify-between gap-3">
+        <section className="border-t border-border/60 bg-[#F7F9FB]">
+          <div className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-20 py-24">
+            <div className="flex flex-wrap items-end justify-between gap-6">
               <div>
-                <h2 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">Pricing</h2>
-                <p className="mt-2 text-base text-muted-foreground">Three ways to use TaxAppeal.app. No subscriptions required.</p>
+                <h2 className="apple-headline mt-4">Pricing</h2>
+                <p className="apple-body mt-6 max-w-3xl">
+                  Three ways to use TaxAppeal.app.<br />
+                  <span className="apple-body-emph">No subscriptions, no hidden fees, no contingency cuts.</span>
+                </p>
               </div>
-              <a href="/pricing" className="text-sm font-medium text-primary hover:underline">See full details →</a>
+              <a href="/pricing" className="text-[18px] font-medium text-electric hover:underline underline-offset-4">See full details →</a>
             </div>
 
-            <div className="mt-10 grid gap-5 md:grid-cols-3">
+            <div className="mt-16 grid gap-8 md:grid-cols-3">
               {tiers.map((t) => (
                 <div
                   key={t.name}
-                  className={`relative flex flex-col rounded-2xl border bg-card p-6 ${t.popular ? "border-2 border-accent shadow-lg md:scale-[1.02]" : "border-border"}`}
+                  className={`relative flex flex-col rounded-[24px] bg-white p-8 shadow-[0_0_20px_0_rgba(29,29,31,0.08)] border transition-all duration-300 hover:shadow-xl ${t.popular ? "border-electric/40 ring-1 ring-electric/5 md:scale-[1.05] z-10" : "border-border/60"}`}
                 >
                   {t.popular && (
-                    <span className="absolute -top-3 left-6 rounded-full bg-accent px-3 py-0.5 text-xs font-semibold uppercase tracking-wider text-accent-foreground">
+                    <span className="absolute -top-3 left-8 rounded-full bg-electric px-4 py-1 text-[12px] font-bold uppercase tracking-widest text-white shadow-sm">
                       Most popular
                     </span>
                   )}
-                  <p className="text-sm font-semibold text-primary">{t.name}</p>
-                  <p className="mt-3">
-                    <span className="text-4xl font-bold tracking-tight text-primary">{t.price}</span>{" "}
-                    {t.suffix && <span className="text-sm text-muted-foreground">{t.suffix}</span>}
+                  <p className="text-[18px] font-bold text-[#1D1D1F]">{t.name}</p>
+                  <p className="mt-4">
+                    <span className="text-[38px] font-bold tracking-tight text-[#1D1D1F]">{t.price}</span>{" "}
+                    {t.suffix && <span className="text-[16px] font-medium text-[#6E6E73]">{t.suffix}</span>}
                   </p>
-                  <p className="mt-4 flex-1 text-sm leading-relaxed text-muted-foreground">{t.body}</p>
+                  <p className="mt-6 flex-1 text-[16px] leading-[1.6] text-[#6E6E73]">{t.body}</p>
                   {t.waitlist ? (
                     <button
                       onClick={() => setPremiumOpen(true)}
@@ -329,14 +314,14 @@ const Index = () => {
             </div>
 
             {/* Tax Watch */}
-            <div className="mt-6 rounded-2xl border border-border bg-card p-6 sm:flex sm:items-center sm:justify-between sm:gap-6">
-              <div className="flex items-start gap-4">
-                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                  <ShieldCheck className="h-5 w-5" />
+            <div className="mt-12 rounded-[24px] border border-border/60 bg-white p-8 shadow-[0_0_20px_0_rgba(29,29,31,0.08)] sm:flex sm:items-center sm:justify-between sm:gap-8">
+              <div className="flex items-start gap-5">
+                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-electric/10 text-electric shadow-sm">
+                  <ShieldCheck className="h-6 w-6" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-primary">Tax Watch — $29/year</p>
-                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                  <p className="text-[18px] font-bold text-[#1D1D1F]">Tax Watch — $29/year</p>
+                  <p className="mt-2 text-[16px] leading-[1.6] text-[#6E6E73]">
                     We monitor your assessment every reassessment cycle, send township deadline reminders,
                     and re-run your Fairness Score automatically. Alerts when comparable homes are reassessed lower.
                   </p>
@@ -344,7 +329,7 @@ const Index = () => {
               </div>
               <button
                 onClick={() => setTaxWatchOpen(true)}
-                className="mt-4 inline-flex h-11 items-center justify-center gap-2 rounded-md border border-primary bg-background px-5 text-sm font-medium text-primary hover:bg-secondary/60 sm:mt-0 sm:flex-shrink-0"
+                className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-lg border-2 border-electric bg-white px-6 text-[16px] font-bold text-electric hover:bg-electric/5 transition-colors sm:mt-0 sm:flex-shrink-0"
               >
                 <Zap className="h-4 w-4" /> Add Tax Watch
               </button>
@@ -352,14 +337,13 @@ const Index = () => {
           </div>
         </section>
 
-        {/* COVERAGE */}
-        <section className="container mx-auto max-w-5xl px-6 py-20">
-          <h2 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">Where we operate</h2>
-          <div className="mt-10 grid gap-6 md:grid-cols-2">
-            <div className="rounded-2xl border border-border bg-card p-6">
-              <p className="text-xs font-semibold uppercase tracking-wider text-accent">Available now</p>
-              <p className="mt-2 text-lg font-semibold text-primary">Illinois</p>
-              <ul className="mt-4 grid grid-cols-2 gap-2 text-sm text-foreground/90">
+        <section className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-20 py-32">
+          <h2 className="apple-headline mt-4">Where we Operate</h2>
+          <div className="mt-16 grid gap-[30px] md:grid-cols-2">
+            <div className="rounded-[24px] bg-white p-[30px] shadow-[0_0_20px_0_rgba(29,29,31,0.08)] border border-border/60">
+              <p className="text-[18px] font-bold tracking-wider text-[#6E6E73]">Available now</p>
+              <p className="mt-2 text-[22px] font-bold text-[#1D1D1F]">Illinois</p>
+              <ul className="mt-6 grid grid-cols-2 gap-y-3 gap-x-4">
                 {[
                   { name: "Cook", url: "https://www.cookcountyassessoril.gov/" },
                   { name: "DuPage", url: "https://propertylookup.dupagecounty.gov/forms/htmlframe.aspx?mode=content/home.htm" },
@@ -383,64 +367,63 @@ const Index = () => {
                 ))}
               </ul>
             </div>
-            <div className="rounded-2xl border border-dashed border-border bg-secondary/40 p-6">
-              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Coming 2027</p>
-              <p className="mt-2 text-lg font-semibold text-primary">Three new states</p>
-              <ul className="mt-4 grid grid-cols-3 gap-2 text-sm text-foreground/90">
+            <div className="rounded-[24px] border border-dashed border-border/60 bg-[#F7F9FB] p-[30px]">
+              <p className="text-[18px] font-bold tracking-wider text-[#6E6E73]">Coming 2027</p>
+              <p className="mt-2 text-[22px] font-bold text-[#1D1D1F]">Three new states</p>
+              <ul className="mt-6 grid grid-cols-3 gap-3 text-sm text-[#1D1D1F]">
                 {["Georgia", "Texas", "Florida"].map((s) => (
                   <li key={s} className="rounded-md border border-border bg-card px-3 py-2 text-center">{s}</li>
                 ))}
               </ul>
-              <p className="mt-4 text-xs text-muted-foreground">
-                Don't see your county? <a href="/counties" className="text-primary hover:underline">Join the notify list →</a>
+              <p className="mt-8 text-[16px] font-normal text-[#6E6E73]">
+                Don't see your county? <a href="/counties" className="font-bold text-electric hover:underline underline-offset-4">Join the notify list →</a>
               </p>
             </div>
           </div>
         </section>
 
-        {/* TRUST */}
-        <section className="border-t border-border/60 bg-secondary/30">
-          <div className="container mx-auto max-w-5xl px-6 py-20">
-            <div className="flex flex-wrap items-center justify-between gap-4">
+        <section className="border-t border-border/60 bg-[#F7F9FB]">
+          <div className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-20 py-32">
+            <div className="flex flex-wrap items-start justify-between gap-6">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-wider text-accent">Built on public data</p>
-                <h2 className="mt-2 text-3xl font-bold tracking-tight text-primary sm:text-4xl">Trusted by Illinois homeowners.</h2>
+                <p className="apple-eyebrow">Built on public data</p>
+                <h2 className="apple-headline mt-4">Trusted by Illinois homeowners.</h2>
               </div>
-              <div className="rounded-full border border-border bg-card px-4 py-2 text-sm text-muted-foreground">
-                <span className="font-semibold tabular-nums text-primary">1,247</span> homes checked this week
+              <div className="rounded-full border border-[#63C879] bg-[#FAFDFB] px-5 py-2.5 text-sm font-medium text-[#6E6E73]">
+                <span className="font-bold tabular-nums text-[#1D1D1F]">1,247</span> homes checked this week
               </div>
             </div>
 
-            <div className="mt-10 grid gap-5 md:grid-cols-3">
+            <div className="mt-16 grid gap-[30px] md:grid-cols-3">
               {[
                 { q: "Saved us $2,840 the first year. Took maybe 30 minutes total.", a: "K. Patel — Skokie, IL" },
                 { q: "I almost called a law firm — glad I didn't. Same outcome, paid $149 instead of a third of my savings.", a: "M. Whelan — Oak Park, IL" },
                 { q: "The Fairness Score showed exactly why our neighbors paid less. Made the appeal a no-brainer.", a: "R. Diaz — Elmhurst, IL" },
               ].map((t) => (
-                <figure key={t.a} className="rounded-2xl border border-border bg-card p-5">
-                  <blockquote className="text-sm leading-relaxed text-foreground/90">"{t.q}"</blockquote>
-                  <figcaption className="mt-3 text-xs text-muted-foreground">{t.a}</figcaption>
+                <figure key={t.a} className="rounded-[24px] border border-border/60 bg-white p-8 shadow-[0_0_20px_0_rgba(29,29,31,0.08)]">
+                  <blockquote className="text-[16px] leading-[1.6] text-[#6E6E73]">"{t.q}"</blockquote>
+                  <figcaption className="mt-6 text-[14px] font-bold text-[#1D1D1F]">{t.a}</figcaption>
                 </figure>
               ))}
             </div>
           </div>
         </section>
 
-        {/* FAQ */}
-        <section className="container mx-auto max-w-3xl px-6 py-20">
-          <h2 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">Common questions</h2>
-          <Accordion type="single" collapsible className="mt-8 divide-y divide-border border-y border-border">
+        <section className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-20 py-32">
+          <p className="apple-eyebrow">FAQ</p>
+          <h2 className="apple-headline mt-4 text-center sm:text-left">Common questions</h2>
+          <Accordion type="single" collapsible className="mt-12 divide-y divide-border/60 border-y border-border/60">
             {faqs.map((f) => (
               <AccordionItem key={f.q} value={f.q} className="border-0">
-                <AccordionTrigger className="text-left text-base font-medium text-primary">{f.q}</AccordionTrigger>
-                <AccordionContent className="text-base leading-relaxed text-muted-foreground">{f.a}</AccordionContent>
+                <AccordionTrigger className="py-6 text-left text-[18px] font-bold text-[#1D1D1F] hover:no-underline">{f.q}</AccordionTrigger>
+                <AccordionContent className="pb-6 text-[18px] font-normal leading-relaxed text-[#6E6E73]">{f.a}</AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>
-          <div className="mt-10 rounded-2xl border-2 border-electric/40 bg-card p-6 text-center">
-            <p className="text-lg font-semibold text-primary">Ready to see your Fairness Score?</p>
-            <p className="mt-1 text-sm text-muted-foreground">Free. Takes 60 seconds.</p>
-            <a href="#hero" className="mt-4 inline-flex h-12 items-center justify-center gap-2 rounded-md bg-electric px-6 text-base font-semibold text-electric-foreground hover:bg-electric-hover transition-colors">
+          <div className="mt-16 rounded-[24px] border border-electric/30 bg-white p-8 text-center shadow-[0_0_20px_0_rgba(29,29,31,0.08)]">
+            <p className="text-[22px] font-bold text-[#1D1D1F]">Ready to see your Fairness Score?</p>
+            <p className="mt-2 text-[18px] font-normal text-[#6E6E73]">Free. Takes 60 seconds.</p>
+            <a href="#hero" className="mt-8 inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-electric px-8 text-[18px] font-bold text-white hover:bg-electric-hover transition-all">
               Check my property <ArrowRight className="h-5 w-5" />
             </a>
           </div>
@@ -456,8 +439,8 @@ const Index = () => {
 
 const ExRow = ({ label, value, negative }: { label: string; value: string; negative?: boolean }) => (
   <div className="flex items-baseline justify-between gap-4 px-6 py-4">
-    <dt className="text-sm text-muted-foreground">{label}</dt>
-    <dd className={`text-base tabular-nums ${negative ? "text-destructive" : "text-foreground"}`}>{value}</dd>
+    <dt className="text-[18px] font-normal text-[#1D1D1F]">{label}</dt>
+    <dd className={`text-[18px] font-bold tabular-nums ${negative ? "text-destructive" : "text-[#1D1D1F]"}`}>{value}</dd>
   </div>
 );
 
