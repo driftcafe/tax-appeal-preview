@@ -24,47 +24,37 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: "#1D1D1F",
+          foreground: "#FFFFFF",
         },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-          hover: "hsl(var(--accent-hover))",
+        slate: {
+          DEFAULT: "#6E6E73",
+          muted: "#6E6E73",
         },
         electric: {
-          DEFAULT: "hsl(var(--electric))",
-          hover: "hsl(var(--electric-hover))",
-          foreground: "hsl(var(--electric-foreground))",
+          DEFAULT: "#1D6AFF",
+          hover: "#1D59FF",
+          foreground: "#FFFFFF",
         },
         success: {
-          DEFAULT: "hsl(var(--success))",
-          hover: "hsl(var(--success-hover))",
-          foreground: "hsl(var(--success-foreground))",
+          DEFAULT: "#2ECC71",
+          hover: "#27AE60",
+          foreground: "#FFFFFF",
+        },
+        destructive: {
+          DEFAULT: "#FF3B30",
+          foreground: "#FFFFFF",
+        },
+        secondary: {
+          DEFAULT: "#F5F5F7",
+          foreground: "#1D1D1F",
         },
         navy: {
-          DEFAULT: "hsl(var(--navy))",
-          card: "hsl(var(--navy-card))",
-          border: "hsl(var(--navy-border))",
-          foreground: "hsl(var(--navy-foreground))",
-          muted: "hsl(var(--navy-muted))",
-        },
-        score: {
-          poor: "hsl(var(--score-poor))",
-          mid: "hsl(var(--score-mid))",
-          good: "hsl(var(--score-good))",
+          DEFAULT: "#0A1A2F",
+          card: "#0F1F35",
+          border: "#1A2C42",
+          foreground: "#F5F7FA",
+          muted: "#94A3B8",
         },
         confidence: {
           strong: "hsl(var(--confidence-strong))",

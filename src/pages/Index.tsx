@@ -118,11 +118,11 @@ const Index = () => {
               backgroundSize: "64px 64px",
             }}
           />
-          <div className="container relative mx-auto flex max-w-5xl flex-col items-center px-8 md:px-12 lg:px-20 pt-24 pb-28 text-center sm:pt-36 sm:pb-32">
+          <div className="container relative mx-auto flex max-w-5xl flex-col items-center pt-24 pb-28 text-center sm:pt-36 sm:pb-32">
 
             <h1
               id="hero-heading"
-              className="animate-fade-up mt-4 font-display text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl md:text-[3.75rem] [animation-delay:80ms]"
+              className="animate-fade-up mt-4 type-h1 [animation-delay:80ms]"
             >
               Your property tax may be wrong.
               <br className="hidden sm:block" />
@@ -151,12 +151,12 @@ const Index = () => {
         {/* CALCULATOR */}
         <section className="border-t border-border/60 bg-[#F7F9FB]">
           <div className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-20 py-24">
-            <p className="apple-eyebrow">Keep your Savings</p>
-            <h2 className="apple-headline mt-4">
+            <p className="type-eyebrow-lg">Keep your Savings</p>
+            <h2 className="type-h2 mt-4">
               The contingency-firm math, in one place.
             </h2>
-            <p className="apple-body mt-6 max-w-3xl">
-              Most appeal firms take 35–40% of your year-one savings. <span className="apple-body-emph">We charge a flat $149.</span> Move the slider to your situation.
+            <p className="type-body-lg mt-6 max-w-3xl">
+              Most appeal firms take 35–40% of your year-one savings. <span className="type-body-lg-emph">We charge a flat $149.</span>
             </p>
             <div className="mt-8">
               <SavingsCalculator />
@@ -167,12 +167,12 @@ const Index = () => {
         {/* HOW IT WORKS (TRUST ARCHITECTURE) */}
         <section className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-20 py-32">
           <div className="text-center">
-            <p className="apple-eyebrow">How it Works</p>
-            <h2 className="apple-headline mt-4">
+            <p className="type-eyebrow-lg">How it Works</p>
+            <h2 className="type-h2 mt-4">
               Data-backed appeals. Zero legal fees.
             </h2>
-            <p className="apple-body mx-auto mt-6 max-w-3xl">
-              Our engine analyzes millions of county records to build <span className="apple-body-emph">an airtight case for your home</span> in three simple steps.
+            <p className="type-body-lg mx-auto mt-6 max-w-3xl">
+              Our engine analyzes millions of county records to build <span className="type-body-lg-emph">an airtight case for your home</span> in three simple steps.
             </p>
           </div>
 
@@ -182,23 +182,23 @@ const Index = () => {
               return (
                 <div key={s.h} className="relative">
 
-                  <div className={`flex flex-col rounded-2xl border p-8 h-full transition-all duration-300 hover:shadow-lg ${isLast
+                  <div className={`flex flex-col rounded-[30px] border p-8 h-full transition-all duration-300 hover:shadow-lg ${isLast
                     ? "border-success bg-success/[0.03] shadow-md ring-1 ring-success/10"
                     : "border-border/60 bg-card shadow-sm hover:border-border"
                     }`}>
                     {/* Step circle */}
                     <div className="flex items-center gap-4">
-                      <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-electric/10 text-electric text-lg font-extrabold shadow-sm">
+                      <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-[18px] bg-electric/10 text-electric text-lg font-extrabold shadow-sm">
                         {i + 1}
                       </div>
-                      <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-secondary text-primary">
+                      <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-[18px] bg-secondary text-primary">
                         <s.icon className="h-6 w-6" />
                       </div>
                     </div>
 
-                    <p className="mt-6 text-[18px] font-bold tracking-wider text-[#6E6E73]">Phase {i + 1}</p>
-                    <h3 className="mt-2 text-[22px] font-bold leading-tight text-[#1D1D1F]">{s.h}</h3>
-                    <p className="apple-body mt-3 flex-1">{s.p}</p>
+                    <p className="mt-6 type-eyebrow-sm">Phase {i + 1}</p>
+                    <h3 className="mt-2 type-body-lg-emph">{s.h}</h3>
+                    <p className="type-body-lg mt-3 flex-1">{s.p}</p>
 
                     {/* Deliverables list (Step 3 only) */}
                     {s.deliverables.length > 0 && (
@@ -230,11 +230,11 @@ const Index = () => {
           <div className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-20 py-24">
             <div className="grid gap-16 md:grid-cols-2 md:items-center">
               <div>
-                <p className="apple-eyebrow">The Uniformity Score, explained</p>
-                <h2 className="apple-headline mt-4">
+                <p className="type-eyebrow-lg">The Uniformity Score, explained</p>
+                <h2 className="type-h2 mt-4">
                   Why the gap between you and your neighbors matters.
                 </h2>
-                <ul className="apple-body mt-8 space-y-4">
+                <ul className="type-body-lg mt-8 space-y-4">
                   <li className="flex gap-3"><Check className="mt-1 h-5 w-5 flex-shrink-0 text-success" /> Illinois law allows property tax appeals based on assessment uniformity.</li>
                   <li className="flex gap-3"><Check className="mt-1 h-5 w-5 flex-shrink-0 text-success" /> Your home shouldn't be assessed higher than similar nearby homes.</li>
                   <li className="flex gap-3"><Check className="mt-1 h-5 w-5 flex-shrink-0 text-success" /> We surface that gap with hard data (sqft, lot size, age, and assessed value per square foot).</li>
@@ -247,18 +247,18 @@ const Index = () => {
 
         {/* WINNETKA EXAMPLE */}
         <section className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-20 py-24">
-          <p className="apple-eyebrow">Real-world example</p>
-          <h2 className="apple-headline mt-4">Winnetka single-family home</h2>
-          <div className="mt-8 overflow-hidden rounded-2xl border border-border bg-card">
+          <p className="type-eyebrow-lg">Real-world example</p>
+          <h2 className="type-h2 mt-4">Winnetka single-family home</h2>
+          <div className="mt-8 overflow-hidden rounded-[30px] border border-border bg-card">
             <dl className="divide-y divide-border">
               <ExRow label="Original assessment" value="$1,420,000" />
               <ExRow label="Comparable homes supported" value="$1,190,000" />
               <ExRow label="Estimated annual reduction" value="$3,850" />
-              <ExRow label="Contingency law firm fee (35%)" value="−$1,347" negative />
-              <ExRow label="TaxAppeal.app flat fee" value="−$149" negative />
+              <ExRow label="Contingency law firm fee (35%)" value="−$1,347" />
+              <ExRow label="TaxAppeal.app flat fee" value="−$149" />
               <div className="flex items-center justify-between gap-4 bg-secondary/40 px-6 py-6">
-                <dt className="text-[18px] font-normal text-[#1D1D1F]">Homeowner kept</dt>
-                <dd className="text-[18px] font-bold tabular-nums text-[#1D1D1F]">$3,701</dd>
+                <dt className="type-body-sm">Homeowner kept</dt>
+                <dd className="type-h4 tabular-nums !text-success">$3,701</dd>
               </div>
             </dl>
           </div>
@@ -268,32 +268,32 @@ const Index = () => {
           <div className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-20 py-24">
             <div className="flex flex-wrap items-end justify-between gap-6">
               <div>
-                <h2 className="apple-headline mt-4">Pricing</h2>
-                <p className="apple-body mt-6 max-w-3xl">
+                <h2 className="type-h2 mt-4">Pricing</h2>
+                <p className="type-body-lg mt-6 max-w-3xl">
                   Three ways to use TaxAppeal.app.<br />
-                  <span className="apple-body-emph">No subscriptions, no hidden fees, no contingency cuts.</span>
+                  <span className="type-body-lg-emph">No subscriptions, no hidden fees, no contingency cuts.</span>
                 </p>
               </div>
-              <a href="/pricing" className="text-[18px] font-medium text-electric hover:underline underline-offset-4">See full details →</a>
+              <a href="/pricing" className="type-body-sm text-electric hover:underline underline-offset-4">See full details →</a>
             </div>
 
             <div className="mt-16 grid gap-8 md:grid-cols-3">
               {tiers.map((t) => (
                 <div
                   key={t.name}
-                  className={`relative flex flex-col rounded-[24px] bg-white p-8 shadow-[0_0_20px_0_rgba(29,29,31,0.08)] border transition-all duration-300 hover:shadow-xl ${t.popular ? "border-electric/40 ring-1 ring-electric/5 md:scale-[1.05] z-10" : "border-border/60"}`}
+                  className={`relative flex flex-col rounded-[30px] bg-white p-8 shadow-[0_0_20px_0_rgba(29,29,31,0.08)] border transition-all duration-300 hover:shadow-xl ${t.popular ? "border-electric/40 ring-1 ring-electric/5 md:scale-[1.05] z-10" : "border-border/60"}`}
                 >
                   {t.popular && (
                     <span className="absolute -top-3 left-8 rounded-full bg-electric px-4 py-1 text-[12px] font-bold uppercase tracking-widest text-white shadow-sm">
                       Most popular
                     </span>
                   )}
-                  <p className="text-[18px] font-bold text-[#1D1D1F]">{t.name}</p>
+                  <p className="type-body-lg-emph">{t.name}</p>
                   <p className="mt-4">
-                    <span className="text-[38px] font-bold tracking-tight text-[#1D1D1F]">{t.price}</span>{" "}
-                    {t.suffix && <span className="text-[16px] font-medium text-[#6E6E73]">{t.suffix}</span>}
+                    <span className="type-h3">{t.price}</span>{" "}
+                    {t.suffix && <span className="type-utility">{t.suffix}</span>}
                   </p>
-                  <p className="mt-6 flex-1 text-[16px] leading-[1.6] text-[#6E6E73]">{t.body}</p>
+                  <p className="mt-6 flex-1 type-body-lg">{t.body}</p>
                   {t.waitlist ? (
                     <button
                       onClick={() => setPremiumOpen(true)}
@@ -314,14 +314,14 @@ const Index = () => {
             </div>
 
             {/* Tax Watch */}
-            <div className="mt-12 rounded-[24px] border border-border/60 bg-white p-8 shadow-[0_0_20px_0_rgba(29,29,31,0.08)] sm:flex sm:items-center sm:justify-between sm:gap-8">
+            <div className="mt-12 rounded-[30px] border border-border/60 bg-white p-8 shadow-[0_0_20px_0_rgba(29,29,31,0.08)] sm:flex sm:items-center sm:justify-between sm:gap-8">
               <div className="flex items-start gap-5">
-                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-electric/10 text-electric shadow-sm">
+                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-[18px] bg-electric/10 text-electric shadow-sm">
                   <ShieldCheck className="h-6 w-6" />
                 </div>
                 <div>
-                  <p className="text-[18px] font-bold text-[#1D1D1F]">Tax Watch — $29/year</p>
-                  <p className="mt-2 text-[16px] leading-[1.6] text-[#6E6E73]">
+                  <p className="type-body-lg-emph">Tax Watch — $29/year</p>
+                  <p className="mt-2 type-body-lg">
                     We monitor your assessment every reassessment cycle, send township deadline reminders,
                     and re-run your Fairness Score automatically. Alerts when comparable homes are reassessed lower.
                   </p>
@@ -338,11 +338,11 @@ const Index = () => {
         </section>
 
         <section className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-20 py-32">
-          <h2 className="apple-headline mt-4">Where we Operate</h2>
+          <h2 className="type-h2 mt-4">Where we Operate</h2>
           <div className="mt-16 grid gap-[30px] md:grid-cols-2">
-            <div className="rounded-[24px] bg-white p-[30px] shadow-[0_0_20px_0_rgba(29,29,31,0.08)] border border-border/60">
-              <p className="text-[18px] font-bold tracking-wider text-[#6E6E73]">Available now</p>
-              <p className="mt-2 text-[22px] font-bold text-[#1D1D1F]">Illinois</p>
+            <div className="rounded-[30px] bg-white p-[30px] shadow-[0_0_20px_0_rgba(29,29,31,0.08)] border border-border/60">
+              <p className="type-eyebrow-sm">Available now</p>
+              <p className="mt-2 type-body-lg-emph">Illinois</p>
               <ul className="mt-6 grid grid-cols-2 gap-y-3 gap-x-4">
                 {[
                   { name: "Cook", url: "https://www.cookcountyassessoril.gov/" },
@@ -367,9 +367,9 @@ const Index = () => {
                 ))}
               </ul>
             </div>
-            <div className="rounded-[24px] border border-dashed border-border/60 bg-[#F7F9FB] p-[30px]">
-              <p className="text-[18px] font-bold tracking-wider text-[#6E6E73]">Coming 2027</p>
-              <p className="mt-2 text-[22px] font-bold text-[#1D1D1F]">Three new states</p>
+            <div className="rounded-[30px] border border-dashed border-border/60 bg-[#F7F9FB] p-[30px]">
+              <p className="type-eyebrow-sm">Coming 2027</p>
+              <p className="mt-2 type-body-lg-emph">Three new states</p>
               <ul className="mt-6 grid grid-cols-3 gap-3 text-sm text-[#1D1D1F]">
                 {["Georgia", "Texas", "Florida"].map((s) => (
                   <li key={s} className="rounded-md border border-border bg-card px-3 py-2 text-center">{s}</li>
@@ -386,8 +386,8 @@ const Index = () => {
           <div className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-20 py-32">
             <div className="flex flex-wrap items-start justify-between gap-6">
               <div>
-                <p className="apple-eyebrow">Built on public data</p>
-                <h2 className="apple-headline mt-4">Trusted by Illinois homeowners.</h2>
+                <p className="type-eyebrow-lg">Built on public data</p>
+                <h2 className="type-h2 mt-4">Trusted by Illinois homeowners.</h2>
               </div>
               <div className="rounded-full border border-[#63C879] bg-[#FAFDFB] px-5 py-2.5 text-sm font-medium text-[#6E6E73]">
                 <span className="font-bold tabular-nums text-[#1D1D1F]">1,247</span> homes checked this week
@@ -400,9 +400,9 @@ const Index = () => {
                 { q: "I almost called a law firm — glad I didn't. Same outcome, paid $149 instead of a third of my savings.", a: "M. Whelan — Oak Park, IL" },
                 { q: "The Fairness Score showed exactly why our neighbors paid less. Made the appeal a no-brainer.", a: "R. Diaz — Elmhurst, IL" },
               ].map((t) => (
-                <figure key={t.a} className="rounded-[24px] border border-border/60 bg-white p-8 shadow-[0_0_20px_0_rgba(29,29,31,0.08)]">
-                  <blockquote className="text-[16px] leading-[1.6] text-[#6E6E73]">"{t.q}"</blockquote>
-                  <figcaption className="mt-6 text-[14px] font-bold text-[#1D1D1F]">{t.a}</figcaption>
+                <figure key={t.a} className="rounded-[30px] border border-border/60 bg-white p-8 shadow-[0_0_20px_0_rgba(29,29,31,0.08)]">
+                  <blockquote className="type-body-lg">"{t.q}"</blockquote>
+                  <figcaption className="mt-6 type-body-sm">{t.a}</figcaption>
                 </figure>
               ))}
             </div>
@@ -410,20 +410,20 @@ const Index = () => {
         </section>
 
         <section className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-20 py-32">
-          <p className="apple-eyebrow">FAQ</p>
-          <h2 className="apple-headline mt-4 text-center sm:text-left">Common questions</h2>
+          <p className="type-eyebrow-lg">FAQ</p>
+          <h2 className="type-h2 mt-4 text-center sm:text-left">Common questions</h2>
           <Accordion type="single" collapsible className="mt-12 divide-y divide-border/60 border-y border-border/60">
             {faqs.map((f) => (
               <AccordionItem key={f.q} value={f.q} className="border-0">
-                <AccordionTrigger className="py-6 text-left text-[18px] font-bold text-[#1D1D1F] hover:no-underline">{f.q}</AccordionTrigger>
-                <AccordionContent className="pb-6 text-[18px] font-normal leading-relaxed text-[#6E6E73]">{f.a}</AccordionContent>
+                <AccordionTrigger className="py-6 text-left type-body-lg-emph hover:no-underline">{f.q}</AccordionTrigger>
+                <AccordionContent className="pb-6 type-body-lg">{f.a}</AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>
-          <div className="mt-16 rounded-[24px] border border-electric/30 bg-white p-8 text-center shadow-[0_0_20px_0_rgba(29,29,31,0.08)]">
-            <p className="text-[22px] font-bold text-[#1D1D1F]">Ready to see your Fairness Score?</p>
-            <p className="mt-2 text-[18px] font-normal text-[#6E6E73]">Free. Takes 60 seconds.</p>
-            <a href="#hero" className="mt-8 inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-electric px-8 text-[18px] font-bold text-white hover:bg-electric-hover transition-all">
+          <div className="mt-16 rounded-[30px] border border-electric/30 bg-white p-8 text-center shadow-[0_0_20px_0_rgba(29,29,31,0.08)]">
+            <p className="type-body-lg-emph">Ready to see your Fairness Score?</p>
+            <p className="mt-2 type-body-lg">Free. Takes 60 seconds.</p>
+            <a href="#hero" className="mt-8 inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-electric px-8 type-body-lg-emph !text-white hover:bg-electric-hover transition-all">
               Check my property <ArrowRight className="h-5 w-5" />
             </a>
           </div>
@@ -433,15 +433,18 @@ const Index = () => {
 
       <WaitlistModal open={premiumOpen} onOpenChange={setPremiumOpen} tier="premium" />
       <WaitlistModal open={taxWatchOpen} onOpenChange={setTaxWatchOpen} tier="tax_watch" />
-    </div>
+    </div >
   );
 };
 
-const ExRow = ({ label, value, negative }: { label: string; value: string; negative?: boolean }) => (
-  <div className="flex items-baseline justify-between gap-4 px-6 py-4">
-    <dt className="text-[18px] font-normal text-[#1D1D1F]">{label}</dt>
-    <dd className={`text-[18px] font-bold tabular-nums ${negative ? "text-destructive" : "text-[#1D1D1F]"}`}>{value}</dd>
-  </div>
-);
+const ExRow = ({ label, value }: { label: string; value: string }) => {
+  const isNegative = value.startsWith("−") || value.startsWith("-");
+  return (
+    <div className="flex items-baseline justify-between gap-4 px-6 py-4">
+      <dt className="type-body-sm">{label}</dt>
+      <dd className={`type-body-lg-emph tabular-nums ${isNegative ? "!text-destructive" : ""}`}>{value}</dd>
+    </div>
+  );
+};
 
 export default Index;
