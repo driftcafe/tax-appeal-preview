@@ -152,7 +152,7 @@ export const PropertySearch = () => {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => results.length > 0 && setOpen(true)}
-            placeholder="Property address or PIN — e.g. 619 Roger Ave, Kenilworth or 16-19-213-035-0000"
+            placeholder="Property address or PIN — e.g. 233 S Wacker Dr, Chicago, IL 60606 or 16-19-213-035-0000"
             aria-label="Property address or PIN"
             autoComplete="off"
             className="h-14 w-full rounded-lg border border-input bg-card pl-12 pr-4 text-base text-foreground placeholder:text-muted-foreground/60 focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30 sm:text-lg"
