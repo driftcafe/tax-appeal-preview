@@ -84,8 +84,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEO
-        title="TaxAppeal.app — Find out if your home is assessed unfairly"
-        description="Free Fairness Score for any property in Cook County and the collar counties. If you're overpaying, keep 100% of the savings — not 35% to a law firm."
+        title="Property Tax Appeal AI — Free Illinois Fairness Score"
+        description="Free Fairness Score for any home in Cook County and the Illinois collar counties. Keep 100% of the savings — no contingency fees."
         path="/"
         jsonLd={[orgJsonLd, faqJsonLd]}
       />
