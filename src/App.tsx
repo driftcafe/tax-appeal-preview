@@ -18,6 +18,7 @@ import Success from "./pages/Success.tsx";
 import CheckoutCancelled from "./pages/CheckoutCancelled.tsx";
 import Report from "./pages/Report.tsx";
 import Terms from "./pages/Terms.tsx";
+import Privacy from "./pages/Privacy.tsx";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,7 @@ const App = () => (
           <Route path="/counties" element={<Counties />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<Privacy />} />
           <Route path="/about" element={<ComingSoon />} />
           <Route path="/signin" element={<SignIn />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
