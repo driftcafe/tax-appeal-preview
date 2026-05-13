@@ -13,6 +13,7 @@ const schema = z.object({
   customer_name: z.string().trim().min(1, "Required").max(200),
   customer_email: z.string().trim().email("Enter a valid email").max(255),
   tos_accepted: z.literal(true, { errorMap: () => ({ message: "You must accept to continue" }) }),
+  liability_ack: z.literal(true, { errorMap: () => ({ message: "You must check the acknowledgement to continue" }) }),
 });
 
 const Signup = () => {
@@ -22,6 +23,7 @@ const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [tos, setTos] = useState(false);
+  const [liabilityAck, setLiabilityAck] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [serverError, setServerError] = useState<string | null>(null);
@@ -37,13 +39,14 @@ const Signup = () => {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setServerError(null);
-    const parsed = schema.safeParse({ customer_name: name, customer_email: email, tos_accepted: tos });
+    const parsed = schema.safeParse({ customer_name: name, customer_email: email, tos_accepted: tos, liability_ack: liabilityAck });
     if (!parsed.success) {
       const fieldErrors: Record<string, string> = {};
       parsed.error.issues.forEach((i) => { fieldErrors[i.path[0] as string] = i.message; });
       setErrors(fieldErrors);
       return;
     }
+    if (!liabilityAck) return; // belt-and-suspenders guard
     setErrors({});
     setSubmitting(true);
     try {
@@ -51,6 +54,7 @@ const Signup = () => {
         lookup_id: lookupId,
         customer_name: name.trim(),
         customer_email: email.trim(),
+        liability_ack_confirmed: true,
       });
       saveConsentEmail(consent.consent_id, email.trim());
       const origin = window.location.origin;
@@ -100,7 +104,8 @@ const Signup = () => {
           County Assessor's Office.
           <br /><br />
           The outcome of your appeal is determined by the Assessor's Office and is not guaranteed.
-          You have a <strong>3-business-day right to cancel</strong> for any reason, no charge.
+          <strong> $149 flat. Non-refundable, earned upon receipt</strong> — the packet is a complete
+          digital deliverable produced when you purchase.
         </div>
 
         <form onSubmit={onSubmit} className="mt-8 space-y-5">
@@ -141,6 +146,26 @@ const Signup = () => {
             {errors.tos_accepted && <p className="mt-1 text-sm text-destructive">{errors.tos_accepted}</p>}
           </div>
 
+          <div className="rounded-lg border-2 border-accent/60 bg-accent/5 p-4">
+            <label htmlFor="liability_ack" className="flex items-start gap-3 text-sm leading-relaxed text-foreground">
+              <input
+                id="liability_ack"
+                type="checkbox"
+                checked={liabilityAck}
+                onChange={(e) => setLiabilityAck(e.target.checked)}
+                className="mt-0.5 h-4 w-4 flex-shrink-0"
+              />
+              <span>
+                I have read, understood, and agree to the{" "}
+                <a href="/terms" target="_blank" rel="noopener noreferrer" className="underline font-medium text-primary hover:text-accent">Terms of Service</a>
+                {" "}and explicitly acknowledge the{" "}
+                <a href="/terms#limitation-of-liability" target="_blank" rel="noopener noreferrer" className="underline font-medium text-primary hover:text-accent">Limitation of Liability</a>
+                {" "}section, which caps all potential damages at the $149.00 fee paid. I understand this fee is non-refundable and earned upon receipt.
+              </span>
+            </label>
+            {errors.liability_ack && <p className="mt-2 text-sm text-destructive">{errors.liability_ack}</p>}
+          </div>
+
           {serverError && (
             <p className="rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">
               {serverError}
@@ -149,8 +174,9 @@ const Signup = () => {
 
           <button
             type="submit"
-            disabled={submitting}
-            className="inline-flex h-12 w-full items-center justify-center rounded-md bg-accent px-6 text-base font-medium text-accent-foreground hover:bg-accent-hover disabled:opacity-60"
+            disabled={submitting || !liabilityAck}
+            aria-disabled={submitting || !liabilityAck}
+            className="inline-flex h-12 w-full items-center justify-center rounded-md bg-accent px-6 text-base font-medium text-accent-foreground hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-50"
           >
             {submitting ? "Working…" : `Continue to checkout — $${fee}`}
           </button>
