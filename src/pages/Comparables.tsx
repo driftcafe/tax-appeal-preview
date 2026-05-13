@@ -1,232 +1,198 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { SEO } from "@/components/SEO";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
-import { FairnessGauge } from "@/components/FairnessGauge";
 import { WaitlistModal } from "@/components/WaitlistModal";
-import { loadLookup, loadEmail, saveEmail } from "@/lib/lookupCache";
-import {
-  computeFairnessScore,
-  estimateAnnualOverpayment,
-  countCompsBelow,
-  scoreBand,
-  scoreBandLabel,
-  NEIGHBORHOOD_BASELINE,
-} from "@/lib/fairness";
-import { supabase } from "@/integrations/supabase/client";
+import { loadLookup } from "@/lib/lookupCache";
 import type { ComparablesResponse } from "@/lib/api";
-import { ArrowRight, Lock, Sparkles, Loader2 } from "lucide-react";
-
-const STEPS = [
-  "Pulling assessor records…",
-  "Identifying comparable properties…",
-  "Calculating uniformity…",
-  "Comparing to township median…",
-];
-const STEP_MS = 4000;
+import { ArrowRight, Sparkles, TrendingUp } from "lucide-react";
 
 const Comparables = () => {
   const { lookupId = "" } = useParams<{ lookupId: string }>();
   const navigate = useNavigate();
   const [data, setData] = useState<ComparablesResponse | null>(null);
-  const [phase, setPhase] = useState<"email" | "analyzing" | "result">("email");
-  const [email, setEmail] = useState("");
-  const [emailErr, setEmailErr] = useState<string | null>(null);
-  const [submitting, setSubmitting] = useState(false);
-  const [stepIdx, setStepIdx] = useState(0);
   const [premiumOpen, setPremiumOpen] = useState(false);
 
   useEffect(() => {
     const cached = loadLookup(lookupId);
     if (!cached) { navigate("/", { replace: true }); return; }
     setData(cached);
-    const existing = loadEmail(lookupId);
-    if (existing) { setEmail(existing); setPhase("analyzing"); }
   }, [lookupId, navigate]);
-
-  // Animation sequence
-  useEffect(() => {
-    if (phase !== "analyzing") return;
-    if (stepIdx >= STEPS.length) {
-      const t = setTimeout(() => setPhase("result"), 600);
-      return () => clearTimeout(t);
-    }
-    const t = setTimeout(() => setStepIdx((i) => i + 1), STEP_MS);
-    return () => clearTimeout(t);
-  }, [phase, stepIdx]);
-
-  const metrics = useMemo(() => {
-    if (!data) return null;
-    const score = computeFairnessScore(data.subject, data.cohort);
-    return {
-      score,
-      overpayment: estimateAnnualOverpayment(data.subject, data.cohort),
-      compsBelow: countCompsBelow(data.subject, data.comparables),
-      band: scoreBand(score),
-    };
-  }, [data]);
 
   if (!data) return null;
 
-  const submitEmail = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!/^\S+@\S+\.\S+$/.test(email)) { setEmailErr("Enter a valid email."); return; }
-    setEmailErr(null);
-    setSubmitting(true);
-    saveEmail(lookupId, email);
-    await supabase.from("fairness_emails").insert({ email, lookup_id: data.lookup_id, pin: data.subject.pin });
-    setSubmitting(false);
-    setPhase("analyzing");
-  };
+  const { subject, cohort, comparables, price_cents } = data;
+  const overByPct = Math.round(cohort.uniformity_gap_pct * 100);
+  const fee = (price_cents / 100).toFixed(0);
+  const overAssessed = cohort.appears_over_assessed;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO title="Your Fairness Check" description="Your property's Fairness Score against comparable homes." path="/comparables" noindex />
+      <SEO title="Your assessment comparison" description="Your property's assessment compared to similar homes in your township." path="/comparables" noindex />
       <SiteHeader minimal />
-      <main className="container mx-auto max-w-4xl px-6 pt-12 pb-20">
+      <main className="container mx-auto max-w-5xl px-6 pt-12 pb-20">
         <p className="text-xs uppercase tracking-wider text-muted-foreground">
-          Fairness Check · {data.subject.county} County · {data.subject.township} Township
+          Assessment review · {subject.county.toUpperCase()} County · {subject.township} Township
         </p>
         <h1 className="mt-2 text-3xl font-bold tracking-tight text-primary sm:text-4xl">
-          {data.subject.address}
+          {subject.address}
         </h1>
-        <p className="mt-1 text-sm text-muted-foreground">PIN {data.subject.pin_formatted}</p>
+        <p className="mt-1 text-sm text-muted-foreground">PIN {subject.pin_formatted}</p>
 
-        {/* EMAIL GATE */}
-        {phase === "email" && (
-          <section className="mt-10 rounded-2xl border-2 border-accent bg-card p-8">
-            <p className="text-sm font-semibold uppercase tracking-wider text-accent">One step</p>
-            <h2 className="mt-2 text-2xl font-bold text-primary">Where should we send your Fairness Score?</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              We'll show your score on the next screen and email you a copy plus your township's appeal deadline.
-            </p>
-            <form onSubmit={submitEmail} className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                aria-label="Your email"
-                className="h-12 flex-1 rounded-md border border-input bg-background px-4 text-base focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30"
-              />
-              <button
-                type="submit"
-                disabled={submitting}
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-accent px-6 font-semibold text-accent-foreground hover:bg-accent-hover disabled:opacity-60"
-              >
-                Show my score <ArrowRight className="h-4 w-4" />
-              </button>
-            </form>
-            {emailErr && <p className="mt-2 text-sm text-destructive">{emailErr}</p>}
-            <p className="mt-3 text-xs text-muted-foreground">No spam. We only contact you about your assessment.</p>
-          </section>
-        )}
+        {/* SUBJECT HEADLINE STRIP */}
+        <section className="mt-8 grid gap-3 rounded-2xl border border-border bg-card p-6 sm:grid-cols-4">
+          <Stat label="Assessed value" value={`$${subject.assessed_value.toLocaleString()}`} />
+          <Stat label="Square feet" value={subject.sqft.toLocaleString()} />
+          <Stat label="Year built" value={String(subject.year_built)} />
+          <Stat label="Assessment per sqft" value={`$${subject.av_per_sqft.toFixed(2)}`} />
+        </section>
 
-        {/* ANALYZING */}
-        {phase === "analyzing" && (
-          <section className="mt-10 rounded-2xl border border-border bg-card p-10 text-center">
-            <Loader2 className="mx-auto h-10 w-10 animate-spin text-accent" />
-            <h2 className="mt-6 text-xl font-semibold text-primary">Running your Fairness Check</h2>
-            <ul className="mx-auto mt-6 max-w-md space-y-2 text-left text-sm">
-              {STEPS.map((s, i) => (
-                <li key={s} className={`flex items-center gap-2 ${i < stepIdx ? "text-foreground" : i === stepIdx ? "text-primary font-medium" : "text-muted-foreground/50"}`}>
-                  <span className={`inline-block h-2 w-2 rounded-full ${i < stepIdx ? "bg-accent" : i === stepIdx ? "bg-accent animate-pulse" : "bg-border"}`} />
-                  {s}
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
-
-        {/* RESULT */}
-        {phase === "result" && metrics && (
-          <section className="mt-10 space-y-8">
-            {/* Gauge + headline */}
-            <div className="grid gap-8 rounded-2xl border border-border bg-card p-6 sm:p-8 md:grid-cols-[auto,1fr] md:items-center">
-              <FairnessGauge score={metrics.score} />
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-wider"
-                   style={{ color: metrics.band === "good" ? "hsl(var(--score-good))" : metrics.band === "mid" ? "hsl(var(--accent-hover))" : "hsl(var(--score-poor))" }}>
-                  {scoreBandLabel(metrics.score)}
-                </p>
-                <h2 className="mt-2 text-2xl font-bold text-primary sm:text-3xl">
-                  Your score: <span className="tabular-nums">{metrics.score}</span>
-                  <span className="ml-2 text-base font-normal text-muted-foreground">— Neighborhood average: {NEIGHBORHOOD_BASELINE}</span>
-                </h2>
-                <div className="mt-5 rounded-xl bg-secondary/50 p-4">
-                  <p className="text-xs uppercase tracking-wider text-muted-foreground">Estimated annual overpayment</p>
-                  <p className="mt-1 text-4xl font-bold tabular-nums" style={{ color: "hsl(var(--accent-hover))" }}>
-                    ${metrics.overpayment.toLocaleString()}
-                  </p>
-                  <p className="mt-1 text-xs text-muted-foreground">Preliminary estimate at a 2.5% effective tax rate.</p>
-                </div>
-                <p className="mt-4 text-sm text-foreground/90">
-                  We found <span className="font-semibold text-primary">{metrics.compsBelow}</span> comparable homes assessed lower than yours.
-                </p>
+        {/* OVER-ASSESSMENT SIGNAL */}
+        <section
+          className={`mt-6 rounded-2xl border-2 p-6 sm:p-8 ${
+            overAssessed ? "border-accent bg-card" : "border-border bg-secondary/40"
+          }`}
+        >
+          {overAssessed ? (
+            <>
+              <div className="flex items-center gap-3">
+                <TrendingUp className="h-6 w-6 text-accent" />
+                <p className="text-sm font-semibold uppercase tracking-wider text-accent">Uniformity gap detected</p>
               </div>
+              <h2 className="mt-3 text-2xl font-bold leading-snug text-primary sm:text-3xl">
+                You appear to be over-assessed by{" "}
+                <span className="tabular-nums text-accent">{overByPct}%</span>{" "}
+                compared to {cohort.size.toLocaleString()} similar properties in your township.
+              </h2>
+              <p className="mt-3 text-sm text-muted-foreground">
+                Your assessment per square foot sits at the {Math.round(cohort.subject_av_per_sqft_percentile * 100)}th percentile.
+                Township median is ${cohort.median_av_per_sqft.toFixed(2)}/sqft.
+              </p>
+            </>
+          ) : (
+            <>
+              <h2 className="text-2xl font-bold text-primary">Your assessment looks fair</h2>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Compared to {cohort.size.toLocaleString()} similar properties in your township, your assessment is in line.
+                We won't charge for an appeal we don't think will help.
+              </p>
+            </>
+          )}
+        </section>
+
+        {/* COMPARABLES GRID */}
+        <section className="mt-10">
+          <div className="flex items-end justify-between">
+            <div>
+              <h3 className="text-xl font-semibold text-primary">Comparable properties</h3>
+              <p className="mt-1 text-sm text-muted-foreground">{comparables.length} closest matches by structure and location.</p>
             </div>
+          </div>
 
-            {/* Blurred comps */}
-            <div className="rounded-2xl border border-border bg-card p-6">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-primary">Comparable homes assessed lower</h3>
-                <span className="inline-flex items-center gap-1 rounded-full bg-secondary px-2.5 py-1 text-xs text-muted-foreground">
-                  <Lock className="h-3 w-3" /> Unlock with packet
-                </span>
-              </div>
-              <div className="mt-5 space-y-2">
-                {data.comparables.slice(0, 7).map((c, i) => (
-                  <div key={c.pin} className="flex items-center justify-between rounded-lg border border-border bg-background px-4 py-3 text-sm">
-                    <div className="min-w-0 flex-1">
-                      <p className="font-medium text-foreground blur-comp">{c.address}</p>
-                      <p className="text-xs text-muted-foreground tabular-nums">{c.sqft.toLocaleString()} sqft · built {c.year_built}</p>
+          <div className="mt-5 overflow-hidden rounded-2xl border border-border bg-card">
+            <div className="hidden grid-cols-12 gap-4 border-b border-border bg-secondary/40 px-5 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground sm:grid">
+              <div className="col-span-4">Address</div>
+              <div className="col-span-2 text-right">Sqft</div>
+              <div className="col-span-1 text-right">Year</div>
+              <div className="col-span-2 text-right">Assessed</div>
+              <div className="col-span-2 text-right">They pay less</div>
+              <div className="col-span-1 text-right">Match</div>
+            </div>
+            <ul>
+              {comparables.map((c) => {
+                const matchPct = Math.round(c.similarity_score * 100);
+                return (
+                  <li
+                    key={c.pin}
+                    className="grid grid-cols-2 gap-x-4 gap-y-1 border-b border-border px-5 py-4 text-sm last:border-b-0 sm:grid-cols-12 sm:items-center sm:gap-4"
+                  >
+                    <div className="col-span-2 sm:col-span-4">
+                      <p className="font-medium text-foreground">{c.address}</p>
+                      <p className="text-xs text-muted-foreground">PIN {c.pin_formatted}</p>
                     </div>
-                    <div className="text-right">
-                      <p className="font-semibold tabular-nums text-foreground blur-comp">${c.assessed_value.toLocaleString()}</p>
-                      <p className="text-xs text-muted-foreground tabular-nums">{Math.round(c.similarity_score * 100)}% match</p>
+                    <div className="text-left text-muted-foreground sm:hidden">Sqft</div>
+                    <div className="text-right tabular-nums sm:col-span-2">{c.sqft.toLocaleString()}</div>
+                    <div className="text-left text-muted-foreground sm:hidden">Year</div>
+                    <div className="text-right tabular-nums sm:col-span-1">{c.year_built}</div>
+                    <div className="text-left text-muted-foreground sm:hidden">Assessed</div>
+                    <div className="text-right font-medium tabular-nums sm:col-span-2">${c.assessed_value.toLocaleString()}</div>
+                    <div className="text-left text-muted-foreground sm:hidden">They pay less</div>
+                    <div className="text-right font-semibold tabular-nums text-accent sm:col-span-2">
+                      ${Math.abs(c.av_gap_dollars).toLocaleString()}
                     </div>
-                  </div>
-                ))}
-              </div>
-              <p className="mt-4 text-xs text-muted-foreground">
-                Confidence: <span className="font-medium text-primary">{data.cohort.size >= 50 ? "Strong" : data.cohort.size >= 20 ? "Moderate" : "Preliminary"}</span> · {data.cohort.size} comps in cohort
+                    <div className="text-left text-muted-foreground sm:hidden">Match</div>
+                    <div className="sm:col-span-1">
+                      <div className="flex items-center justify-end gap-2">
+                        <div className="hidden h-1.5 w-16 overflow-hidden rounded-full bg-secondary sm:block">
+                          <div className="h-full bg-accent" style={{ width: `${matchPct}%` }} />
+                        </div>
+                        <span className="text-xs tabular-nums text-muted-foreground">{matchPct}%</span>
+                      </div>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className={`mt-10 rounded-2xl border-2 ${overAssessed ? "border-accent" : "border-border"} bg-card p-6 sm:p-8`}>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h3 className="text-xl font-bold text-primary">
+                {overAssessed ? "Get my appeal packet" : "Your assessment looks fair — no charge"}
+              </h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                {overAssessed
+                  ? "Pre-filled forms, side-by-side analysis, filing instructions. You file it yourself."
+                  : "We only sell packets to homeowners with a uniformity gap supported by the data."}
               </p>
             </div>
-
-            {/* CTA */}
-            <div className="rounded-2xl border-2 border-accent bg-card p-6 sm:p-8">
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <div>
-                  <h3 className="text-xl font-bold text-primary">Unlock my full appeal packet</h3>
-                  <p className="mt-1 text-sm text-muted-foreground">Full comp data, pre-filled forms, filing instructions. Flat $149.</p>
-                </div>
-                <Link
-                  to={`/signup/${data.lookup_id}`}
-                  className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-accent px-6 font-semibold text-accent-foreground hover:bg-accent-hover"
-                >
-                  Continue — $149 <ArrowRight className="h-4 w-4" />
-                </Link>
-              </div>
-              <button
-                onClick={() => setPremiumOpen(true)}
-                className="mt-4 inline-flex items-center gap-2 text-sm text-primary hover:underline"
+            {overAssessed ? (
+              <Link
+                to={`/signup/${data.lookup_id}`}
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-accent px-6 font-semibold text-accent-foreground hover:bg-accent-hover"
               >
-                <Sparkles className="h-4 w-4" /> Want the AI Premium review? Join the waitlist
+                Get my appeal packet — ${fee} <ArrowRight className="h-4 w-4" />
+              </Link>
+            ) : (
+              <button
+                disabled
+                className="inline-flex h-12 cursor-not-allowed items-center justify-center gap-2 rounded-md bg-secondary px-6 font-semibold text-muted-foreground"
+              >
+                Not recommended
               </button>
-            </div>
+            )}
+          </div>
+          {overAssessed && (
+            <button
+              onClick={() => setPremiumOpen(true)}
+              className="mt-4 inline-flex items-center gap-2 text-sm text-primary hover:underline"
+            >
+              <Sparkles className="h-4 w-4" /> Want the AI Premium review? Join the waitlist
+            </button>
+          )}
+        </section>
 
-            <p className="text-xs text-muted-foreground">
-              The Fairness Score and overpayment estimate are preliminary, derived from public county data. The full $149 packet contains the official side-by-side analysis you submit with your appeal.
-            </p>
-          </section>
-        )}
+        <p className="mt-8 text-xs text-muted-foreground">
+          Property Tax Appeal AI LLC is not a law firm and does not provide legal advice.
+          Comparison is based on publicly available assessor data and uses uniformity (assessment per square foot) — not market valuation.
+          The outcome of any appeal is determined by the Assessor's Office and is not guaranteed.
+        </p>
       </main>
       <SiteFooter />
-      <WaitlistModal open={premiumOpen} onOpenChange={setPremiumOpen} tier="premium" pin={data.subject.pin} lookupId={data.lookup_id} />
+      <WaitlistModal open={premiumOpen} onOpenChange={setPremiumOpen} tier="premium" pin={subject.pin} lookupId={data.lookup_id} />
     </div>
   );
 };
+
+const Stat = ({ label, value }: { label: string; value: string }) => (
+  <div>
+    <p className="text-xs uppercase tracking-wider text-muted-foreground">{label}</p>
+    <p className="mt-1 text-xl font-semibold tabular-nums text-primary">{value}</p>
+  </div>
+);
 
 export default Comparables;
