@@ -14,7 +14,7 @@ export const SiteFooter = ({ extraDisclaimer }: { extraDisclaimer?: string }) =>
           <Link to="/faq" className="hover:text-primary">FAQ</Link>
           <Link to="/coming-soon" className="hover:text-primary">Terms</Link>
           <Link to="/coming-soon" className="hover:text-primary">Privacy</Link>
-          <a href="mailto:hello@taxappeal.app" className="hover:text-primary">Contact</a>
+          <a href="mailto:support@taxappeal.app" className="hover:text-primary">Support</a>
         </nav>
       </div>
       <p className="mt-6 max-w-3xl text-xs leading-relaxed">
