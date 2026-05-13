@@ -3,4 +3,4 @@ Allow: /
 Disallow: /r/
 Disallow: /coming-soon
 
-Sitemap: https://propertytaxappealai.com/sitemap.xml
+Sitemap: https://taxappeal.app/sitemap.xml

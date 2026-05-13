@@ -15,7 +15,7 @@ const Counties = () => (
   <div className="min-h-screen bg-background text-foreground">
     <SEO
       title="Counties we serve"
-      description="Property Tax Appeal AI launches in Cook County and the Illinois collar counties — DuPage, Lake, Will, Kane, and McHenry — in June 2026, with Midwest expansion to follow."
+      description="Coverage for Cook County and the Illinois collar counties — DuPage, Lake, Will, Kane, and McHenry. Launching June 2026."
       path="/counties"
     />
     <SiteHeader />

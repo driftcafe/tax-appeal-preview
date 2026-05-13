@@ -1,0 +1,17 @@
+# Tax Appeal AI
+
+> Flat-fee property tax appeal toolkit for Illinois homeowners. Compare your assessment to similar homes using public county records and file a county-ready appeal yourself.
+
+## Pages
+
+- [Home](/): Free Fairness Score and property search for Cook County and the Illinois collar counties.
+- [How it works](/how-it-works): Step-by-step explanation of the appeal process.
+- [Pricing](/pricing): Flat $149 Pro Se Toolkit and $399 AI Premium Review.
+- [Methodology](/methodology): How comparable properties are selected and scored.
+- [Counties](/counties): Coverage for Cook, DuPage, Lake, Will, Kane, and McHenry counties.
+- [FAQ](/faq): Common questions about pricing, refunds, deadlines, and scope.
+- [About](/about): About Tax Appeal AI.
+
+## Optional
+
+- [Sign in](/signin): Account access for existing customers.
