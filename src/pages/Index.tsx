@@ -64,7 +64,7 @@ const faqs = [
   { q: "Will the county punish me for appealing?", a: "No. Appeals are a routine, lawful process used by thousands of Illinois homeowners every year." },
   { q: "What if I miss the deadline?", a: "You'd have to wait until next year. Tax Watch sends township-specific reminders so you don't miss it." },
   { q: "What's the difference between $149 and $399?", a: "The $149 toolkit gives you everything you need to file. The $399 tier adds AI-driven analysis, comp quality ranking, risk flags, and a polished report — recommended if you want extra confidence before submitting." },
-  { q: "Can I get a refund?", a: "Yes, within 7 days if you haven't downloaded your packet." },
+  { q: "Can I get a refund?", a: "$149 flat. Non-refundable, earned upon receipt — the packet is a complete digital deliverable produced when you purchase." },
 ];
 
 const Index = () => {
