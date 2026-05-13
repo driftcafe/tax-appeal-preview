@@ -5,6 +5,7 @@ import { SEO } from "@/components/SEO";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { loadLookup } from "@/lib/lookupCache";
+import { saveConsentEmail } from "@/lib/lookupCache";
 import { api, ApiError } from "@/lib/api";
 import type { ComparablesResponse } from "@/lib/api";
 
@@ -51,6 +52,7 @@ const Signup = () => {
         customer_name: name.trim(),
         customer_email: email.trim(),
       });
+      saveConsentEmail(consent.consent_id, email.trim());
       const origin = window.location.origin;
       const checkout = await api.checkout({
         consent_id: consent.consent_id,
