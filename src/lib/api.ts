@@ -1,6 +1,6 @@
 // Typed API client for the Property Tax Appeal AI backend.
 export const API_BASE =
-  (import.meta.env.VITE_API_BASE as string | undefined) ?? "https://taxappeal.app";
+  (import.meta.env.VITE_API_BASE as string | undefined) ?? "https://tax-appeals-taxappealapp.vercel.app";
 
 export const TOS_VERSION = "2026-05-04";
 
