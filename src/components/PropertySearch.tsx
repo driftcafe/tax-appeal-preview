@@ -3,6 +3,7 @@ import { Search, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { api, ApiError, type ParcelSearchResult } from "@/lib/api";
 import { saveLookup } from "@/lib/lookupCache";
+import { Button } from "@/components/ui/button";
 
 const PIN_RE = /^\d{2}-?\d{2}-?\d{3}-?\d{3}-?\d{4}$/;
 
@@ -166,17 +167,17 @@ export const PropertySearch = ({ variant = "default" }: { variant?: "default" | 
               }`}
           />
         </div>
-        <button
+        <Button
           type="submit"
           disabled={submitting}
-          className={`inline-flex h-14 items-center justify-center gap-2 rounded-lg px-7 text-base font-semibold shadow-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 sm:text-lg ${isHero
-              ? "bg-electric text-electric-foreground hover:bg-electric-hover focus-visible:ring-electric focus-visible:ring-offset-navy"
-              : "bg-accent text-accent-foreground hover:bg-accent-hover focus-visible:ring-ring"
-            }`}
+          intent="primary"
+          size="large"
+          variant="filled"
+          trailingIcon={ArrowRight}
+          className="px-7"
         >
           {submitting ? "Checking\u2026" : "Check my property"}
-          <ArrowRight className="h-5 w-5" />
-        </button>
+        </Button>
       </form>
 
       {open && !isPin && trimmed.length >= 3 && (

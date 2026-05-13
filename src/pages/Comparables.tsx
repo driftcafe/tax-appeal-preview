@@ -7,16 +7,15 @@ import { FairnessGauge } from "@/components/FairnessGauge";
 import { WaitlistModal } from "@/components/WaitlistModal";
 import { loadLookup, loadEmail, saveEmail } from "@/lib/lookupCache";
 import {
-  computeFairnessScore,
-  estimateAnnualOverpayment,
-  countCompsBelow,
   scoreBand,
   scoreBandLabel,
-  NEIGHBORHOOD_BASELINE,
+  estimateAnnualOverpayment,
+  countCompsBelow,
 } from "@/lib/fairness";
 import { supabase } from "@/integrations/supabase/client";
 import type { ComparablesResponse } from "@/lib/api";
 import { ArrowRight, Lock, Sparkles, Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const STEPS = [
   "Pulling assessor records…",
@@ -45,7 +44,6 @@ const Comparables = () => {
     if (existing) { setEmail(existing); setPhase("analyzing"); }
   }, [lookupId, navigate]);
 
-  // Animation sequence
   useEffect(() => {
     if (phase !== "analyzing") return;
     if (stepIdx >= STEPS.length) {
@@ -84,24 +82,24 @@ const Comparables = () => {
     <div className="min-h-screen bg-background text-foreground">
       <SEO title="Your Fairness Check" description="Your property's Fairness Score against comparable homes." path="/comparables" noindex />
       <SiteHeader minimal />
-      <main className="container mx-auto max-w-4xl px-6 pt-12 pb-20">
-        <p className="text-sm uppercase tracking-wider text-muted-foreground font-medium">
+      <main className="container mx-auto max-w-4xl px-8 pt-16 pb-20 md:px-12">
+        <p className="type-eyebrow-lg">
           Fairness Check · {data.subject.county} County · {data.subject.township} Township
         </p>
-        <h1 className="mt-2 text-3xl font-bold tracking-tight text-primary sm:text-4xl">
+        <h1 className="mt-4 type-h1 text-primary">
           {data.subject.address}
         </h1>
-        <p className="mt-1 text-base font-medium text-muted-foreground">PIN {data.subject.pin_formatted}</p>
+        <p className="mt-1 type-body-lg text-slate">PIN <span className="font-semibold text-primary">{data.subject.pin_formatted}</span></p>
 
         {/* EMAIL GATE */}
         {phase === "email" && (
-          <section className="mt-10 rounded-2xl border-2 border-accent bg-card p-8">
-            <p className="text-sm font-semibold uppercase tracking-wider text-accent">One step</p>
-            <h2 className="mt-2 text-2xl font-bold text-primary">Where should we send your Fairness Score?</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              We'll show your score on the next screen and email you a copy plus your township's appeal deadline.
+          <section className="mt-12 rounded-[30px] border border-electric/30 bg-white p-10 shadow-[0_0_20px_0_rgba(29,29,31,0.08)]">
+            <p className="type-eyebrow-sm text-electric uppercase">Final Step</p>
+            <h2 className="mt-2 type-h2">Where should we send your results?</h2>
+            <p className="mt-4 type-body-lg">
+              We'll show your Fairness Score on the next screen and email you a breakdown of your township's appeal deadline.
             </p>
-            <form onSubmit={submitEmail} className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <form onSubmit={submitEmail} className="mt-8 flex flex-col gap-4 sm:flex-row">
               <input
                 type="email"
                 required
@@ -109,30 +107,34 @@ const Comparables = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
                 aria-label="Your email"
-                className="h-12 flex-1 rounded-md border border-input bg-background px-4 text-base focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30"
+                className="h-14 flex-1 rounded-xl border border-border bg-card px-4 text-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30"
               />
-              <button
+              <Button
                 type="submit"
                 disabled={submitting}
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-accent px-6 font-semibold text-accent-foreground hover:bg-accent-hover disabled:opacity-60"
+                intent="primary"
+                size="large"
+                variant="filled"
+                trailingIcon={ArrowRight}
+                className="sm:w-auto"
               >
-                Show my score <ArrowRight className="h-4 w-4" />
-              </button>
+                Show my score
+              </Button>
             </form>
             {emailErr && <p className="mt-2 text-sm text-destructive">{emailErr}</p>}
-            <p className="mt-3 text-xs text-muted-foreground">No spam. We only contact you about your assessment.</p>
+            <p className="mt-4 type-utility text-slate">No spam. We only contact you about your assessment.</p>
           </section>
         )}
 
         {/* ANALYZING */}
         {phase === "analyzing" && (
-          <section className="mt-10 rounded-2xl border border-border bg-card p-10 text-center">
-            <Loader2 className="mx-auto h-10 w-10 animate-spin text-electric" />
-            <h2 className="mt-6 text-xl font-semibold text-primary">Running your Fairness Check</h2>
-            <ul className="mx-auto mt-6 max-w-md space-y-2 text-left text-sm">
+          <section className="mt-12 rounded-[30px] border border-border/60 bg-white p-12 text-center shadow-[0_0_20px_0_rgba(29,29,31,0.08)]">
+            <Loader2 className="mx-auto h-12 w-12 animate-spin text-electric" />
+            <h2 className="mt-8 type-h3">Running your Fairness Check</h2>
+            <ul className="mx-auto mt-8 max-w-md space-y-3 text-left">
               {STEPS.map((s, i) => (
-                <li key={s} className={`flex items-center gap-2 ${i < stepIdx ? "text-foreground" : i === stepIdx ? "text-primary font-medium" : "text-muted-foreground/50"}`}>
-                  <span className={`inline-block h-2 w-2 rounded-full ${i < stepIdx ? "bg-accent" : i === stepIdx ? "bg-accent animate-pulse" : "bg-border"}`} />
+                <li key={s} className={`flex items-center gap-3 type-body-sm ${i < stepIdx ? "text-primary" : i === stepIdx ? "text-electric font-bold" : "text-slate/40"}`}>
+                  <span className={`inline-block h-2.5 w-2.5 rounded-full ${i < stepIdx ? "bg-success" : i === stepIdx ? "bg-electric animate-pulse" : "bg-border"}`} />
                   {s}
                 </li>
               ))}
@@ -142,32 +144,20 @@ const Comparables = () => {
 
         {/* RESULT */}
         {phase === "result" && metrics && (
-          <section className="mt-10 space-y-8">
-            {/* Comparison meter */}
-            <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
-              <div className="mb-5 flex items-center gap-3">
-                {/* Status chip — mirrors the band pill inside the gauge */}
+          <section className="mt-12 space-y-10">
+            <div className="rounded-[30px] border border-border/60 bg-white p-8 shadow-[0_0_20px_0_rgba(29,29,31,0.08)] sm:p-10">
+              <div className="mb-6 flex items-center gap-4">
                 <span
-                  className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold"
+                  className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-widest"
                   style={{
-                    color:
-                      metrics.band === "good"
-                        ? "hsl(var(--score-good))"
-                        : metrics.band === "mid"
-                        ? "hsl(var(--score-mid))"
-                        : "hsl(var(--score-poor))",
-                    background:
-                      metrics.band === "good"
-                        ? "hsl(var(--score-good) / 0.10)"
-                        : metrics.band === "mid"
-                        ? "hsl(var(--score-mid) / 0.10)"
-                        : "hsl(var(--score-poor) / 0.10)",
+                    color: metrics.band === "good" ? "hsl(var(--score-good))" : metrics.band === "mid" ? "hsl(var(--score-mid))" : "hsl(var(--score-poor))",
+                    background: metrics.band === "good" ? "hsl(var(--score-good) / 0.10)" : metrics.band === "mid" ? "hsl(var(--score-mid) / 0.10)" : "hsl(var(--score-poor) / 0.10)",
                   }}
                 >
-                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-current" />
+                  <span className="inline-block h-2 w-2 rounded-full bg-current" />
                   {scoreBandLabel(metrics.score)}
                 </span>
-                <span className="text-sm font-medium text-muted-foreground">
+                <span className="type-utility text-slate">
                   {data.cohort.size} comparable homes analyzed
                 </span>
               </div>
@@ -181,70 +171,69 @@ const Comparables = () => {
                 overpayment={metrics.overpayment}
               />
 
-              {/* Contextual explanation */}
               {metrics.band === "poor" && (
-                <p className="mt-5 rounded-lg border border-border bg-secondary/40 px-4 py-3 text-base leading-relaxed text-foreground/90">
-                  <span className="font-semibold text-primary">What this means:</span> Your home is assessed
-                  at a higher value per square foot than comparable homes in your township. Illinois law
-                  allows you to appeal on the basis of this lack of uniformity — and{" "}
-                  <strong className="font-semibold text-foreground">
-                    we found <span className="text-primary">{metrics.compsBelow}</span> comparable homes
-                    assessed lower than yours to support your case.
-                  </strong>
-                </p>
+                <div className="mt-8 rounded-2xl border border-border/60 bg-secondary/30 p-6">
+                  <p className="type-body-sm leading-relaxed text-slate">
+                    <span className="font-bold text-primary">What this means:</span> Your home is assessed
+                    at a higher value per square foot than comparable homes in your township. Illinois law
+                    allows you to appeal on the basis of this lack of uniformity — and{" "}
+                    <span className="font-bold text-primary">
+                      we found {metrics.compsBelow} comparable homes
+                      assessed lower than yours to support your case.
+                    </span>
+                  </p>
+                </div>
               )}
             </div>
 
-            {/* Blurred comps */}
-            <div className="rounded-2xl border border-border bg-card p-6">
+            <div className="rounded-[30px] border border-border/60 bg-white p-8 shadow-[0_0_20px_0_rgba(29,29,31,0.08)]">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-primary">Comparable homes assessed lower</h3>
-                <span className="inline-flex items-center gap-1 rounded-full bg-secondary px-2.5 py-1 text-sm font-medium text-muted-foreground">
-                  <Lock className="h-4 w-4" /> Unlock with packet
+                <h3 className="type-h3">Comparable evidence</h3>
+                <span className="inline-flex items-center gap-2 rounded-full bg-secondary px-3 py-1 text-xs font-bold uppercase tracking-wider text-slate">
+                  <Lock className="h-3.5 w-3.5" /> Unlock in Toolkit
                 </span>
               </div>
-              <div className="mt-5 space-y-2">
+              <div className="mt-6 space-y-3">
                 {data.comparables.slice(0, 7).map((c, i) => (
-                  <div key={c.pin} className="flex items-center justify-between rounded-lg border border-border bg-background px-4 py-3 text-base">
+                  <div key={c.pin} className="flex items-center justify-between rounded-xl border border-border/40 bg-[#F7F9FB] px-5 py-4">
                     <div className="min-w-0 flex-1">
-                      <p className="font-semibold text-foreground blur-comp">{c.address}</p>
-                      <p className="text-sm font-medium text-muted-foreground tabular-nums">{c.sqft.toLocaleString()} sqft · built {c.year_built}</p>
+                      <p className="type-body-lg-emph text-primary blur-comp">{c.address}</p>
+                      <p className="type-utility text-slate">{c.sqft.toLocaleString()} sqft · built {c.year_built}</p>
                     </div>
                     <div className="text-right">
-                      <p className="font-bold tabular-nums text-foreground blur-comp">${c.assessed_value.toLocaleString()}</p>
-                      <p className="text-sm font-medium text-muted-foreground tabular-nums">{Math.round(c.similarity_score * 100)}% match</p>
+                      <p className="type-body-lg-emph text-primary blur-comp">${c.assessed_value.toLocaleString()}</p>
+                      <p className="type-utility text-success font-bold">{Math.round(c.similarity_score * 100)}% match</p>
                     </div>
                   </div>
                 ))}
               </div>
-              <p className="mt-4 text-sm font-medium text-muted-foreground">
-                Confidence: <span className="font-semibold text-primary">{data.cohort.size >= 50 ? "Strong" : data.cohort.size >= 20 ? "Moderate" : "Preliminary"}</span> · {data.cohort.size} comps in cohort
-              </p>
             </div>
 
-            {/* CTA */}
-            <div className="rounded-2xl border-2 border-accent bg-card p-6 sm:p-8">
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="rounded-[30px] border-2 border-electric bg-white p-8 shadow-[0_0_30px_0_rgba(29,106,255,0.12)]">
+              <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <h3 className="text-xl font-bold text-primary">Unlock my full appeal packet</h3>
-                  <p className="mt-1 text-sm text-muted-foreground">Full comp data, pre-filled forms, filing instructions. Flat $149.</p>
+                  <h3 className="type-h3">Get your Pro Se Toolkit</h3>
+                  <p className="mt-2 type-body-lg text-slate">Full comp data, pre-filled forms, and filing instructions. Flat $149.</p>
                 </div>
-                <Link
-                  to={`/signup/${data.lookup_id}`}
-                  className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-electric px-6 font-semibold text-electric-foreground hover:bg-electric-hover transition-colors"
-                >
-                  Continue &mdash; $149 <ArrowRight className="h-4 w-4" />
-                </Link>
+                <Button asChild intent="primary" size="large" variant="filled" trailingIcon={ArrowRight} className="sm:w-auto">
+                  <Link to={`/signup/${data.lookup_id}`}>
+                    Continue &mdash; $149
+                  </Link>
+                </Button>
               </div>
-              <button
+              <Button
                 onClick={() => setPremiumOpen(true)}
-                className="mt-4 inline-flex items-center gap-2 text-sm text-primary hover:underline"
+                intent="primary"
+                variant="ghost"
+                size="small"
+                leadingIcon={Sparkles}
+                className="mt-6"
               >
-                <Sparkles className="h-4 w-4" /> Want the AI Premium review? Join the waitlist
-              </button>
+                Want the AI Premium review? Join the waitlist
+              </Button>
             </div>
 
-            <p className="text-xs text-muted-foreground">
+            <p className="text-center type-utility text-slate max-w-2xl mx-auto">
               The Fairness Score and overpayment estimate are preliminary, derived from public county data. The full $149 packet contains the official side-by-side analysis you submit with your appeal.
             </p>
           </section>

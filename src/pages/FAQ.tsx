@@ -23,19 +23,30 @@ const FAQ = () => (
     <SEO title="FAQ — TaxAppeal.app" description="Common questions about TaxAppeal.app — pricing, refunds, deadlines, and what we do and don't do." path="/faq" jsonLd={[faqJsonLd]} />
     <SiteHeader />
     <main>
-      <section className="container mx-auto max-w-3xl px-6 pt-16 pb-6 sm:pt-24">
-        <p className="text-sm font-semibold uppercase tracking-wider text-accent">FAQ</p>
-        <h1 className="mt-2 text-4xl font-bold tracking-tight text-primary sm:text-5xl">Questions, plainly answered.</h1>
+      <section className="container mx-auto max-w-7xl px-8 pt-16 pb-10 sm:pt-24 md:px-12 lg:px-20">
+        <p className="type-eyebrow-lg">FAQ</p>
+        <h2 className="mt-4 type-h2 text-primary">Questions, plainly answered.</h2>
       </section>
-      <section className="container mx-auto max-w-3xl px-6 py-10">
-        <Accordion type="single" collapsible className="divide-y divide-border border-y border-border">
-          {faqs.map((f) => (
-            <AccordionItem key={f.q} value={f.q} className="border-0">
-              <AccordionTrigger className="text-left text-base font-medium text-primary">{f.q}</AccordionTrigger>
-              <AccordionContent className="text-base leading-relaxed text-muted-foreground">{f.a}</AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
+
+      <section className="container mx-auto max-w-7xl px-8 py-10 md:px-12 lg:px-20">
+        <div className="max-w-3xl">
+          <Accordion type="single" collapsible className="space-y-4">
+            {faqs.map((f) => (
+              <AccordionItem 
+                key={f.q} 
+                value={f.q} 
+                className="overflow-hidden rounded-2xl border border-border/60 bg-white px-6 shadow-sm transition-all hover:shadow-md"
+              >
+                <AccordionTrigger className="py-5 text-left type-body-lg-emph text-primary hover:no-underline">
+                  {f.q}
+                </AccordionTrigger>
+                <AccordionContent className="pb-6 type-body-sm text-slate leading-relaxed">
+                  {f.a}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
       </section>
     </main>
     <SiteFooter />

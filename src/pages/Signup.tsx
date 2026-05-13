@@ -83,75 +83,79 @@ const Signup = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO title="Sign up — Property Tax Appeal AI" description="Confirm ownership and accept the Terms of Service to continue." path="/signup" noindex />
+      <SEO title="Sign up — TaxAppeal.app" description="Confirm ownership and accept the Terms of Service to continue." path="/signup" noindex />
       <SiteHeader />
-      <main className="container mx-auto max-w-2xl px-6 pt-12 pb-20">
-        <h1 className="font-serif text-3xl text-primary sm:text-4xl">Get your appeal packet</h1>
-        <p className="mt-3 text-base text-muted-foreground">
-          {lookup.subject.address} · PIN {lookup.subject.pin_formatted}
+      <main className="container mx-auto max-w-2xl px-8 pt-16 pb-20 md:px-12">
+        <h1 className="type-h2">Get your appeal toolkit</h1>
+        <p className="mt-3 type-body-lg text-slate">
+          {lookup.subject.address} · <span className="font-semibold text-primary">PIN {lookup.subject.pin_formatted}</span>
         </p>
 
-        <div className="mt-8 rounded-lg border border-border bg-secondary/40 p-5 text-sm leading-relaxed text-foreground/90">
-          By signing up, you confirm that you are the property owner. Property Tax Appeal AI LLC is{" "}
-          <strong>not a law firm and does not provide legal advice</strong>. We are a scrivener — we
-          prepare your appeal documents. <strong>You file the appeal yourself</strong> with the Cook
-          County Assessor's Office.
-          <br /><br />
-          The outcome of your appeal is determined by the Assessor's Office and is not guaranteed.
-          You have a <strong>3-business-day right to cancel</strong> for any reason, no charge.
+        <div className="mt-10 rounded-[30px] border border-border/60 bg-white p-8 shadow-[0_0_20px_0_rgba(29,29,31,0.08)]">
+          <p className="type-body-sm leading-relaxed text-slate">
+            By signing up, you confirm that you are the property owner. TaxAppeal.app is{" "}
+            <span className="font-bold text-primary">not a law firm and does not provide legal advice</span>. We prepare your appeal documents using public data and township-specific logic. <span className="font-bold text-primary">You file the appeal yourself</span> pro se.
+          </p>
+          <p className="mt-4 type-body-sm leading-relaxed text-slate">
+            The outcome is determined by the Assessor's Office. You have a <span className="font-bold text-primary">3-business-day right to cancel</span> for any reason, no charge.
+          </p>
         </div>
 
-        <form onSubmit={onSubmit} className="mt-8 space-y-5">
-          <div>
-            <label className="block text-sm font-medium text-primary" htmlFor="name">Full name</label>
+        <form onSubmit={onSubmit} className="mt-10 space-y-6">
+          <div className="space-y-2">
+            <label className="type-utility uppercase tracking-wider text-slate" htmlFor="name">Full name</label>
             <input
               id="name"
               type="text"
               value={name}
               maxLength={200}
               onChange={(e) => setName(e.target.value)}
-              className="mt-1 h-11 w-full rounded-md border border-input bg-card px-3 text-base text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30"
+              className="h-14 w-full rounded-xl border border-border bg-card px-4 text-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30"
             />
             {errors.customer_name && <p className="mt-1 text-sm text-destructive">{errors.customer_name}</p>}
           </div>
-          <div>
-            <label className="block text-sm font-medium text-primary" htmlFor="email">Email</label>
+          <div className="space-y-2">
+            <label className="type-utility uppercase tracking-wider text-slate" htmlFor="email">Email address</label>
             <input
               id="email"
               type="email"
               value={email}
               maxLength={255}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 h-11 w-full rounded-md border border-input bg-card px-3 text-base text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30"
+              className="h-14 w-full rounded-xl border border-border bg-card px-4 text-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30"
             />
             {errors.customer_email && <p className="mt-1 text-sm text-destructive">{errors.customer_email}</p>}
           </div>
-          <div>
-            <label className="flex items-start gap-3 text-sm text-foreground">
+          <div className="pt-2">
+            <label className="flex items-start gap-4 cursor-pointer group">
               <input
                 type="checkbox"
                 checked={tos}
                 onChange={(e) => setTos(e.target.checked)}
-                className="mt-0.5 h-4 w-4"
+                className="mt-1 h-5 w-5 rounded border-border text-electric focus:ring-electric/30"
               />
-              <span>I agree to the Terms of Service and Privacy Policy.</span>
+              <span className="type-body-sm text-slate group-hover:text-primary transition-colors">I agree to the Terms of Service and Privacy Policy.</span>
             </label>
             {errors.tos_accepted && <p className="mt-1 text-sm text-destructive">{errors.tos_accepted}</p>}
           </div>
 
           {serverError && (
-            <p className="rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">
+            <p className="rounded-xl border border-destructive/20 bg-destructive/5 p-4 type-body-sm text-destructive">
               {serverError}
             </p>
           )}
 
-          <button
+          <Button
             type="submit"
             disabled={submitting}
-            className="inline-flex h-12 w-full items-center justify-center rounded-md bg-accent px-6 text-base font-medium text-accent-foreground hover:bg-accent-hover disabled:opacity-60"
+            intent="primary"
+            size="large"
+            variant="filled"
+            trailingIcon={ArrowRight}
+            className="w-full"
           >
-            {submitting ? "Working…" : `Continue to checkout — $${fee}`}
-          </button>
+            {submitting ? "Preparing toolkit…" : `Continue to checkout — $${fee}`}
+          </Button>
         </form>
       </main>
       <SiteFooter />

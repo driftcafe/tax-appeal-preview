@@ -3,6 +3,7 @@ import { SEO } from "@/components/SEO";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const steps = [
   {
@@ -40,55 +41,51 @@ const steps = [
 const HowItWorks = () => (
   <div className="min-h-screen bg-background text-foreground">
     <SEO
-      title="How It Works"
+      title="How It Works — TaxAppeal.app"
       description="Six steps from PIN entry to a filed appeal: comparison report, editable template, and you stay in control. Flat $149."
       path="/how-it-works"
     />
     <SiteHeader />
     <main>
-      <section className="container mx-auto max-w-4xl px-6 pt-16 pb-10 sm:pt-24">
-        <p className="text-sm uppercase tracking-wider text-muted-foreground">How it works</p>
-        <h1 className="mt-3 font-serif text-4xl leading-tight text-primary sm:text-5xl">
+      <section className="container mx-auto max-w-7xl px-8 pt-16 pb-10 sm:pt-24 md:px-12 lg:px-20">
+        <p className="type-eyebrow-lg">How it works</p>
+        <h2 className="mt-4 type-h2 text-primary">
           Public data in. A report and an editable template out.
-        </h1>
-        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
+        </h2>
+        <p className="mt-6 type-body-lg text-slate max-w-2xl">
           We organize publicly available property records into a clear comparison and a pre-filled
           appeal template. You stay the decision-maker, the editor, and the filer.
         </p>
       </section>
 
-      <section className="container mx-auto max-w-4xl px-6 py-10">
-        <div className="space-y-10">
+      <section className="container mx-auto max-w-7xl px-8 py-10 md:px-12 lg:px-20">
+        <div className="space-y-12">
           {steps.map((s) => (
-            <div key={s.n} className="flex gap-6">
-              <div className="font-serif text-3xl text-accent tabular-nums">{s.n}</div>
+            <div key={s.n} className="flex gap-8">
+              <div className="type-h2 text-success/40 tabular-nums">{s.n}</div>
               <div>
-                <h2 className="font-serif text-xl text-primary sm:text-2xl">{s.h}</h2>
-                <p className="mt-2 text-base leading-relaxed text-muted-foreground">{s.p}</p>
+                <h2 className="type-body-lg-emph text-primary">{s.h}</h2>
+                <p className="mt-2 type-body-sm text-slate leading-relaxed">{s.p}</p>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      <section className="container mx-auto max-w-4xl px-6 py-16">
-        <div className="rounded-lg border border-border bg-secondary/40 p-6">
-          <h2 className="font-serif text-xl text-primary">Two kinds of documents — never blended</h2>
-          <div className="mt-4 grid gap-6 md:grid-cols-2">
+      <section className="container mx-auto max-w-7xl px-8 py-16 md:px-12 lg:px-20">
+        <div className="rounded-[30px] border border-border/60 bg-white p-8 shadow-[0_0_20px_0_rgba(29,29,31,0.08)]">
+          <h2 className="type-h3">Two kinds of documents — never blended</h2>
+          <div className="mt-8 grid gap-8 md:grid-cols-2">
             <div>
-              <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                Data Report
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-foreground/80">
+              <p className="type-eyebrow-sm text-electric">Data Report</p>
+              <p className="mt-3 type-body-sm text-slate">
                 Read-only PDF. Labeled "FOR INFORMATIONAL PURPOSES ONLY." Shows comparable properties,
                 ratios, and side-by-side comparisons. You don't file this with anyone.
               </p>
             </div>
             <div>
-              <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                Editable Template
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-foreground/80">
+              <p className="type-eyebrow-sm text-electric">Editable Template</p>
+              <p className="mt-3 type-body-sm text-slate">
                 Editable PDF or Word document. Labeled "HOMEOWNER MUST REVIEW, EDIT, AND FILE."
                 Only factual fields are pre-filled; you complete and submit it yourself.
               </p>
@@ -96,12 +93,16 @@ const HowItWorks = () => (
           </div>
         </div>
 
-        <Link
-          to="/"
-          className="mt-10 inline-flex items-center gap-2 rounded-md bg-accent px-6 py-3 text-base font-medium text-accent-foreground hover:bg-accent-hover"
+        <Button
+          asChild
+          intent="primary"
+          size="large"
+          variant="filled"
+          trailingIcon={ArrowRight}
+          className="mt-12"
         >
-          Enter your PIN to start <ArrowRight className="h-4 w-4" />
-        </Link>
+          <Link to="/">Enter your PIN to start</Link>
+        </Button>
       </section>
     </main>
     <SiteFooter />

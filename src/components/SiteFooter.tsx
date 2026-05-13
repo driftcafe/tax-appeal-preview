@@ -5,7 +5,7 @@ export const SiteFooter = ({ extraDisclaimer }: { extraDisclaimer?: string }) =>
     <div className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-20 py-10 text-sm text-muted-foreground">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <p className="text-base font-bold tracking-tight text-primary">
-          TaxAppeal<span className="text-accent">.app</span>
+          TaxAppeal<span className="text-success">.app</span>
         </p>
         <nav className="flex flex-wrap gap-x-5 gap-y-2 text-sm">
           <Link to="/about" className="hover:text-primary">About</Link>

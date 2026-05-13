@@ -15,6 +15,7 @@ import {
 import {
   ArrowRight, Check, Home, BarChart3, FileText, ShieldCheck, Zap, Sparkles,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const trustBullets = [
   "No legal knowledge required",
@@ -26,20 +27,20 @@ const trustBullets = [
 const steps = [
   {
     icon: Home,
-    h: "Enter your address or PIN.",
-    p: "We pull your assessor record instantly and identify comparable homes in your township.",
+    h: "Enter your PIN.",
+    p: "We pull your assessor record and find comparable homes in your township.",
     deliverables: [] as string[],
   },
   {
     icon: BarChart3,
-    h: "See your Fairness Score.",
-    p: "We compare your assessed value per sq ft against your neighbors. You'll see exactly how much higher you're paying — and why it qualifies for appeal.",
+    h: "Get your Fairness Score.",
+    p: "We score your assessment against your township and surface every comp that supports a lower valuation.",
     deliverables: [] as string[],
   },
   {
     icon: FileText,
-    h: "Download your Editable Appeal Package.",
-    p: "Everything pre-filled, county-ready, and organized. File it yourself in minutes — no lawyer needed.",
+    h: "Download a county-ready packet.",
+    p: "File it yourself, online, in minutes. Pre-filled forms, step-by-step instructions.",
     deliverables: ["Pre-filled appeal forms", "County-specific filing instructions", "Comparable home evidence"],
   },
 ];
@@ -118,7 +119,7 @@ const Index = () => {
               backgroundSize: "64px 64px",
             }}
           />
-          <div className="container relative mx-auto flex max-w-5xl flex-col items-center pt-24 pb-28 text-center sm:pt-36 sm:pb-32">
+          <div className="container relative mx-auto flex max-w-7xl flex-col items-center pt-24 pb-28 text-center sm:pt-36 sm:pb-32">
 
             <h1
               id="hero-heading"
@@ -133,7 +134,7 @@ const Index = () => {
             </p>
 
             {/* Address bar */}
-            <div className="animate-fade-up mt-10 w-full [animation-delay:240ms]">
+            <div className="animate-fade-up mt-10 w-full max-w-4xl [animation-delay:240ms]">
               <PropertySearch variant="hero" />
             </div>
 
@@ -155,7 +156,7 @@ const Index = () => {
             <h2 className="type-h2 mt-4">
               The contingency-firm math, in one place.
             </h2>
-            <p className="type-body-lg mt-6 max-w-3xl">
+            <p className="type-body-lg mt-6 max-w-5xl">
               Most appeal firms take 35–40% of your year-one savings. <span className="type-body-lg-emph">We charge a flat $149.</span>
             </p>
             <div className="mt-8">
@@ -165,61 +166,28 @@ const Index = () => {
         </section>
 
         {/* HOW IT WORKS (TRUST ARCHITECTURE) */}
-        <section className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-20 py-32">
-          <div className="text-center">
-            <p className="type-eyebrow-lg">How it Works</p>
-            <h2 className="type-h2 mt-4">
-              Data-backed appeals. Zero legal fees.
-            </h2>
-            <p className="type-body-lg mx-auto mt-6 max-w-3xl">
-              Our engine analyzes millions of county records to build <span className="type-body-lg-emph">an airtight case for your home</span> in three simple steps.
-            </p>
+        <section id="how-it-works" className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-20 py-32">
+          <div className="text-left">
+            <h2 className="type-h2">How it works</h2>
           </div>
 
-          <div className="mt-12 grid gap-[30px] md:grid-cols-3">
+          <div className="mt-16 grid gap-12 md:grid-cols-3">
             {steps.map((s, i) => {
               const isLast = i === steps.length - 1;
               return (
-                <div key={s.h} className="relative">
-
-                  <div className={`flex flex-col rounded-[30px] border p-8 h-full transition-all duration-300 hover:shadow-lg ${isLast
-                    ? "border-success bg-success/[0.03] shadow-md ring-1 ring-success/10"
-                    : "border-border/60 bg-card shadow-sm hover:border-border"
+                <div key={s.h} className="flex flex-col">
+                  {/* Icon & Step Label */}
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className={`flex h-12 w-12 items-center justify-center rounded-[10px] text-white shadow-sm ${
+                      i === 0 ? "bg-navy" : i === 1 ? "bg-electric" : "bg-success"
                     }`}>
-                    {/* Step circle */}
-                    <div className="flex items-center gap-4">
-                      <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-[18px] bg-electric/10 text-electric text-lg font-extrabold shadow-sm">
-                        {i + 1}
-                      </div>
-                      <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-[18px] bg-secondary text-primary">
-                        <s.icon className="h-6 w-6" />
-                      </div>
+                      <s.icon className="h-6 w-6" />
                     </div>
-
-                    <p className="mt-6 type-eyebrow-sm">Phase {i + 1}</p>
-                    <h3 className="mt-2 type-body-lg-emph">{s.h}</h3>
-                    <p className="type-body-lg mt-3 flex-1">{s.p}</p>
-
-                    {/* Deliverables list (Step 3 only) */}
-                    {s.deliverables.length > 0 && (
-                      <>
-                        <ul className="mt-4 space-y-1.5">
-                          {s.deliverables.map((d) => (
-                            <li key={d} className="inline-flex items-center gap-2 text-sm font-medium text-foreground/90">
-                              <Check className="h-4 w-4 flex-shrink-0 text-success" />
-                              {d}
-                            </li>
-                          ))}
-                        </ul>
-                        <a
-                          href="#hero"
-                          className="mt-5 inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-electric px-5 text-sm font-semibold text-electric-foreground hover:bg-electric-hover transition-colors"
-                        >
-                          Start my appeal &mdash; $149 <ArrowRight className="h-4 w-4" />
-                        </a>
-                      </>
-                    )}
+                    <p className="type-eyebrow-sm text-[#FF9F0A] tracking-wider font-bold">Step {i + 1}</p>
                   </div>
+
+                  <h3 className="type-h4 font-bold text-primary">{s.h}</h3>
+                  <p className="type-body-sm mt-3 text-slate leading-relaxed">{s.p}</p>
                 </div>
               );
             })}
@@ -295,19 +263,25 @@ const Index = () => {
                   </p>
                   <p className="mt-6 flex-1 type-body-lg">{t.body}</p>
                   {t.waitlist ? (
-                    <button
+                    <Button
                       onClick={() => setPremiumOpen(true)}
-                      className="mt-6 inline-flex h-11 items-center justify-center gap-2 rounded-md border border-primary bg-background px-5 text-sm font-medium text-primary hover:bg-secondary/60"
+                      intent="primary"
+                      size="small"
+                      variant="filled"
+                      leadingIcon={Sparkles}
+                      className="mt-6"
                     >
-                      <Sparkles className="h-4 w-4" /> {t.cta}
-                    </button>
+                      {t.cta}
+                    </Button>
                   ) : (
-                    <a
-                      href={t.href}
-                      className={`mt-6 inline-flex h-11 items-center justify-center gap-2 rounded-md px-5 text-sm font-semibold ${t.popular ? "bg-electric text-electric-foreground hover:bg-electric-hover" : "bg-primary text-primary-foreground hover:opacity-90"}`}
-                    >
-                      {t.cta} <ArrowRight className="h-4 w-4" />
-                    </a>
+                    <Button
+                      asChild
+                      intent={t.popular ? "primary" : "secondary"}
+                      size={t.popular ? "large" : "small"}
+                      variant="filled"
+                      trailingIcon={ArrowRight}
+                      className="mt-6"
+                    ><a href={t.href}>{t.cta}</a></Button>
                   )}
                 </div>
               ))}
@@ -327,12 +301,16 @@ const Index = () => {
                   </p>
                 </div>
               </div>
-              <button
+              <Button
                 onClick={() => setTaxWatchOpen(true)}
-                className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-lg border-2 border-electric bg-white px-6 text-[16px] font-bold text-electric hover:bg-electric/5 transition-colors sm:mt-0 sm:flex-shrink-0"
+                intent="primary"
+                size="small"
+                variant="outline"
+                leadingIcon={Zap}
+                className="mt-6 sm:mt-0 sm:flex-shrink-0"
               >
-                <Zap className="h-4 w-4" /> Add Tax Watch
-              </button>
+                Add Tax Watch
+              </Button>
             </div>
           </div>
         </section>
@@ -423,9 +401,14 @@ const Index = () => {
           <div className="mt-16 rounded-[30px] border border-electric/30 bg-white p-8 text-center shadow-[0_0_20px_0_rgba(29,29,31,0.08)]">
             <p className="type-body-lg-emph">Ready to see your Fairness Score?</p>
             <p className="mt-2 type-body-lg">Free. Takes 60 seconds.</p>
-            <a href="#hero" className="mt-8 inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-electric px-8 type-body-lg-emph !text-white hover:bg-electric-hover transition-all">
-              Check my property <ArrowRight className="h-5 w-5" />
-            </a>
+            <Button
+              asChild
+              intent="primary"
+              size="large"
+              variant="filled"
+              trailingIcon={ArrowRight}
+              className="mt-8"
+            ><a href="#hero">Check my property</a></Button>
           </div>
         </section>
       </main>

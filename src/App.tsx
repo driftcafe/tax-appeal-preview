@@ -16,6 +16,7 @@ import Comparables from "./pages/Comparables.tsx";
 import Signup from "./pages/Signup.tsx";
 import Success from "./pages/Success.tsx";
 import CheckoutCancelled from "./pages/CheckoutCancelled.tsx";
+import DesignSystem from "./pages/DesignSystem.tsx";
 import Report from "./pages/Report.tsx";
 
 const queryClient = new QueryClient();
@@ -33,6 +34,7 @@ const App = () => (
           <Route path="/success" element={<Success />} />
           <Route path="/checkout-cancelled" element={<CheckoutCancelled />} />
           <Route path="/r/:token" element={<Report />} />
+          <Route path="/design-system" element={<DesignSystem />} />
           <Route path="/coming-soon" element={<ComingSoon />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/pricing" element={<Pricing />} />
