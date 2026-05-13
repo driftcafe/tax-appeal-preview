@@ -146,6 +146,7 @@ export const api = {
     lookup_id: string;
     customer_name: string;
     customer_email: string;
+    liability_ack_confirmed: true;
   }) =>
     request<ConsentResponse>("/api/consent", {
       method: "POST",
