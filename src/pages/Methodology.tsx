@@ -32,12 +32,12 @@ const Methodology = () => (
       </header>
 
       <div className="divide-y divide-border/40">
-        <Section title="1. PIN entry">
+        <Section title="1. Address entry">
           <p>
-            You enter your Property Index Number (PIN) — the canonical key your county uses
-            to identify your parcel. It's printed on your most recent property tax bill or
-            assessment notice. We use the PIN directly because address-to-PIN matching is not 
-            reliable enough to drive a high-trust assessment comparison.
+            You enter your property address or PIN. We map your address to your Property Index 
+            Number (PIN) — the canonical key your county uses to identify your parcel.
+            We use the PIN directly because it is the most reliable way to drive a high-trust 
+            assessment comparison across government databases.
           </p>
         </Section>
 

@@ -46,7 +46,7 @@ const Pricing = () => {
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       <SEO
         title="Pricing — TaxAppeal.app"
-        description="Free Fairness Check, $149 Pro Se Toolkit, $399 AI Premium Review, and $29/year Tax Watch. No contingency fees, no percentage of savings."
+        description="Free Fairness Check, $149 Pro Se Toolkit, and $19/year Tax Watch. No contingency fees, no percentage of savings."
         path="/pricing"
       />
       <SiteHeader />
@@ -91,36 +91,15 @@ const Pricing = () => {
               </Button>
             </Card>
 
-            {/* Premium */}
-            <Card title="AI Premium Review" price="$399" suffix="one-time" body="Adds AI-driven analysis and a polished branded report." features={premium}>
-              <Button onClick={() => setPremiumOpen(true)} intent="primary" size="small" variant="outline" leadingIcon={Sparkles} className="mt-6">
-                Join the waitlist
+            {/* Tax Watch */}
+            <Card title="Tax Watch" price="$19" suffix="/ year" body="Never miss an appeal deadline. Automatic monitoring for your home." features={taxWatch}>
+              <Button onClick={() => setTaxWatchOpen(true)} intent="primary" size="small" variant="filled" leadingIcon={Zap} className="mt-6">
+                Join Waitlist
               </Button>
             </Card>
           </div>
 
-          {/* Tax Watch */}
-          <div className="mt-12 rounded-[30px] border border-border/60 bg-white p-8 shadow-[0_0_20px_0_rgba(29,29,31,0.08)] sm:flex sm:items-center sm:justify-between sm:gap-8">
-            <div className="flex items-start gap-5">
-              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-[18px] bg-electric/10 text-electric shadow-sm">
-                <ShieldCheck className="h-6 w-6" />
-              </div>
-              <div>
-                <p className="type-body-lg-emph text-primary">Tax Watch — $29/year</p>
-                <p className="mt-2 type-body-lg max-w-2xl">
-                  Keeps an eye on your assessment so you never miss a deadline or a chance to appeal again. re-runs your Fairness Score automatically.
-                </p>
-                <ul className="mt-4 grid gap-x-6 gap-y-2 type-body-sm text-foreground/90 sm:grid-cols-2">
-                  {taxWatch.map((t) => (
-                    <li key={t} className="flex gap-2"><Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-success" /> {t}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-            <Button onClick={() => setTaxWatchOpen(true)} intent="primary" size="small" variant="outline" leadingIcon={Zap} className="mt-6 sm:mt-0 sm:flex-shrink-0">
-              Add Tax Watch
-            </Button>
-          </div>
+
         </motion.section>
 
         <motion.section 

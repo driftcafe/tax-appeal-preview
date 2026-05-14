@@ -9,8 +9,8 @@ import { Button } from "@/components/ui/button";
 const steps = [
   {
     n: "01",
-    h: "Enter your PIN.",
-    p: "Enter your Property Index Number — found on your most recent property tax bill or assessment notice, or via your county assessor's lookup site. We pull your current assessed value, property characteristics, and recent sales history directly from public county records.",
+    h: "Enter your address.",
+    p: "Simply search for your property to start. We'll automatically identify your Property Index Number (PIN) and retrieve the official records. We pull your current assessed value, property characteristics, and recent sales history directly from public county records.",
   },
   {
     n: "02",
@@ -120,7 +120,7 @@ const HowItWorks = () => (
           trailingIcon={ArrowRight}
           className="mt-12"
         >
-          <Link to="/">Enter your PIN to start</Link>
+          <Link to="/">Enter your address to start</Link>
         </Button>
       </motion.section>
     </main>

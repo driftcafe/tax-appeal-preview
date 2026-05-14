@@ -29,8 +29,8 @@ const trustBullets = [
 const steps = [
   {
     icon: Home,
-    h: "Enter your PIN.",
-    p: "We pull your assessor record and find comparable homes in your township.",
+    h: "Enter your address.",
+    p: "Simply search for your property. We'll find your data directly from the county assessor's records.",
     deliverables: [] as string[],
   },
   {
@@ -66,12 +66,12 @@ const tiers = [
     popular: true,
   },
   {
-    name: "AI Premium Review",
-    price: "$399",
-    suffix: "one-time",
-    body: "Comp quality scoring, Appeal Strength Score, risk flag analysis, AI-generated summary, and a polished branded report (20–40 pages).",
-    cta: "Join the waitlist",
-    waitlist: "premium" as const,
+    name: "Tax Watch",
+    price: "$19",
+    suffix: "/ year",
+    body: "Never miss an appeal deadline. Get automatic alerts when your township opens, plus annual savings monitoring for your home.",
+    cta: "Join Waitlist",
+    waitlist: "tax_watch" as const,
   },
 ];
 
@@ -81,7 +81,7 @@ const faqs = [
   { q: "What does \"lack of uniformity\" mean?", a: "Your home may be assessed more aggressively than similar nearby homes. Illinois law allows appeals based on this." },
   { q: "Will the county punish me for appealing?", a: "No. Appeals are a routine, lawful process used by thousands of Illinois homeowners every year." },
   { q: "What if I miss the deadline?", a: "You'd have to wait until next year. Tax Watch sends township-specific reminders so you don't miss it." },
-  { q: "What's the difference between $149 and $399?", a: "The $149 toolkit gives you everything you need to file. The $399 tier adds AI-driven analysis, comp quality ranking, risk flags, and a polished report — recommended if you want extra confidence before submitting." },
+  { q: "What's the difference between $149 and $19?", a: "The $149 toolkit is a one-time purchase for your current appeal. Tax Watch is a $19/year monitoring service that alerts you every year when your township opens and re-runs your Fairness Score automatically." },
   { q: "Can I get a refund?", a: "$149 flat. Non-refundable, earned upon receipt — the packet is a complete digital deliverable produced when you purchase." },
 ];
 
@@ -356,11 +356,11 @@ const Index = () => {
                   <p className="mt-6 flex-1 type-body-lg">{t.body}</p>
                   {t.waitlist ? (
                     <Button
-                      onClick={() => setPremiumOpen(true)}
+                      onClick={() => t.waitlist === "premium" ? setPremiumOpen(true) : setTaxWatchOpen(true)}
                       intent="primary"
                       size="small"
                       variant="filled"
-                      leadingIcon={Sparkles}
+                      leadingIcon={t.waitlist === "premium" ? Sparkles : Zap}
                       className="mt-6"
                     >
                       {t.cta}
@@ -379,31 +379,6 @@ const Index = () => {
               ))}
             </div>
 
-            {/* Tax Watch */}
-            <div className="mt-12 rounded-[30px] border border-border/60 bg-white p-8 shadow-[0_0_20px_0_rgba(29,29,31,0.08)] sm:flex sm:items-center sm:justify-between sm:gap-8">
-              <div className="flex items-start gap-5">
-                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-[18px] bg-electric/10 text-electric shadow-sm">
-                  <ShieldCheck className="h-6 w-6" />
-                </div>
-                <div>
-                  <p className="type-body-lg-emph">Tax Watch — $29/year</p>
-                  <p className="mt-2 type-body-lg">
-                    We monitor your assessment every reassessment cycle, send township deadline reminders,
-                    and re-run your Fairness Score automatically. Alerts when comparable homes are reassessed lower.
-                  </p>
-                </div>
-              </div>
-              <Button
-                onClick={() => setTaxWatchOpen(true)}
-                intent="primary"
-                size="small"
-                variant="outline"
-                leadingIcon={Zap}
-                className="mt-6 sm:mt-0 sm:flex-shrink-0"
-              >
-                Add Tax Watch
-              </Button>
-            </div>
           </div>
         </motion.section>
 
