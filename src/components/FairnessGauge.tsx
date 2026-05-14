@@ -289,6 +289,15 @@ const CreditScoreGauge = ({
               Based on your uniformity gap vs. comparable homes in your township
             </p>
           </div>
+        ) : band === "mid" ? (
+          <div className="rounded-2xl bg-[hsl(var(--score-mid)/0.1)] border border-[hsl(var(--score-mid)/0.25)] px-6 py-5 flex items-center gap-4">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-orange-100 text-orange-600 font-bold text-lg">
+              !
+            </div>
+            <p className="text-sm font-medium text-orange-800 leading-snug">
+              Your assessment is borderline. While close to the median, it sits below the neighborhood baseline of {NEIGHBORHOOD_BASELINE}.
+            </p>
+          </div>
         ) : (
           <div className="rounded-2xl bg-[hsl(145_63%_49%_/_0.07)] border border-[hsl(145_63%_49%_/_0.25)] px-6 py-5 flex items-center gap-4">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-success/15 text-success font-bold text-lg">

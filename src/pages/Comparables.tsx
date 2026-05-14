@@ -9,6 +9,7 @@ import { loadLookup, loadEmail, saveEmail } from "@/lib/lookupCache";
 import {
   scoreBand,
   scoreBandLabel,
+  computeFairnessScore,
   estimateAnnualOverpayment,
   countCompsBelow,
 } from "@/lib/fairness";
@@ -56,7 +57,7 @@ const Comparables = () => {
 
   const metrics = useMemo(() => {
     if (!data) return null;
-    const score = 68; // Temporarily forced to 68 for preview
+    const score = computeFairnessScore(data.subject, data.cohort);
     return {
       score,
       overpayment: estimateAnnualOverpayment(data.subject, data.cohort),
@@ -184,14 +185,23 @@ const Comparables = () => {
                 overpayment={metrics.overpayment}
               />
 
-              {overAssessed && (
+              {metrics.band !== "good" && (
                 <div className="mt-8 rounded-2xl border border-electric/20 bg-electric/5 p-6">
                   <div className="flex items-center gap-3">
                     <TrendingUp className="h-5 w-5 text-electric" />
-                    <p className="type-utility font-bold uppercase tracking-wider text-electric">Uniformity gap detected</p>
+                    <p className="type-utility font-bold uppercase tracking-wider text-electric">
+                      {metrics.band === "poor" ? "Significant gap detected" : "Uniformity gap detected"}
+                    </p>
                   </div>
                   <p className="mt-4 type-body-sm leading-relaxed text-slate">
-                    You appear to be over-assessed by <span className="font-bold text-primary tabular-nums">{overByPct}%</span> compared to {cohort.size.toLocaleString()} similar properties in your township.
+                    {metrics.band === "poor" 
+                      ? `You appear to be over-assessed by `
+                      : `Your assessment is slightly higher (up to `}
+                    <span className="font-bold text-primary tabular-nums">{overByPct}%</span>
+                    {metrics.band === "poor" 
+                      ? ` compared to ` 
+                      : `) than `}
+                    {cohort.size.toLocaleString()} similar properties in your township.
                     Township median is ${cohort.median_av_per_sqft.toFixed(2)}/sqft.
                     <span className="block mt-2 font-bold text-primary">
                       We found {metrics.compsBelow} comparable homes assessed lower than yours to support your case.
@@ -256,19 +266,19 @@ const Comparables = () => {
             </div>
 
             {/* CTA Section */}
-            <div className={`rounded-[30px] border-2 p-8 shadow-[0_0_30px_0_rgba(29,106,255,0.12)] bg-white ${overAssessed ? "border-electric" : "border-border"}`}>
+            <div className={`rounded-[30px] border-2 p-8 shadow-[0_0_30px_0_rgba(29,106,255,0.12)] bg-white ${metrics.band !== "good" ? "border-electric" : "border-border"}`}>
               <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <h3 className="type-h3">
-                    {overAssessed ? "Get your Pro Se Toolkit" : "Your assessment looks fair"}
+                    {metrics.band === "good" ? "Your assessment looks fair" : metrics.band === "mid" ? "Borderline — Worth checking" : "Get your Pro Se Toolkit"}
                   </h3>
                   <p className="mt-2 type-body-lg text-slate">
-                    {overAssessed
-                      ? `Full comp data, pre-filled forms, and filing instructions. Flat $${fee}.`
-                      : "We only sell packets to homeowners where the data supports a uniformity gap."}
+                    {metrics.band === "good"
+                      ? "We only sell packets to homeowners where the data supports a uniformity gap."
+                      : `Full comp data, pre-filled forms, and filing instructions. Flat $${fee}.`}
                   </p>
                 </div>
-                {overAssessed ? (
+                {metrics.band !== "good" ? (
                   <Button asChild intent="primary" size="large" variant="filled" trailingIcon={ArrowRight} className="sm:w-auto">
                     <Link to={`/signup/${data.lookup_id}`}>
                       Continue &mdash; $${fee}
@@ -280,7 +290,7 @@ const Comparables = () => {
                   </Button>
                 )}
               </div>
-              {overAssessed && (
+              {metrics.band !== "good" && (
                 <Button
                   onClick={() => setPremiumOpen(true)}
                   intent="primary"
