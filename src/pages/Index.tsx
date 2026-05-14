@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { SEO } from "@/components/SEO";
@@ -333,7 +334,7 @@ const Index = () => {
                   <span className="type-body-lg-emph">No subscriptions, no hidden fees, no contingency cuts.</span>
                 </p>
               </div>
-              <a href="/pricing" className="type-body-sm text-electric hover:underline underline-offset-4">See full details →</a>
+              <Link to="/pricing" className="type-body-sm text-electric hover:underline underline-offset-4">See full details →</Link>
             </div>
 
             <div className="mt-16 grid gap-8 md:grid-cols-3">
@@ -372,7 +373,7 @@ const Index = () => {
                       variant="filled"
                       trailingIcon={ArrowRight}
                       className="mt-6"
-                    ><a href={t.href}>{t.cta}</a></Button>
+                    ><Link to={t.href}>{t.cta}</Link></Button>
                   )}
                 </div>
               ))}
@@ -429,7 +430,7 @@ const Index = () => {
                   { name: "Select downstate", url: "/counties" },
                 ].map((c) => (
                   <li key={c.name} className="inline-flex items-center gap-1.5">
-                    <Check className="h-4 w-4 text-success" />
+                    <Check className="h-4 w-4 flex-shrink-0 text-success" />
                     <a
                       href={c.url}
                       target={c.url.startsWith("http") ? "_blank" : undefined}

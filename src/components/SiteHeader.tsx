@@ -11,7 +11,7 @@ export const SiteHeader = ({ minimal = false }: { minimal?: boolean }) => {
   const closeMenu = () => setIsOpen(false);
 
   const navLinks = [
-    { label: "How it works", href: "/#how-it-works" },
+    { label: "How it works", href: "/how-it-works" },
     { label: "Pricing", href: "/pricing" },
     { label: "Coverage", href: "/counties" },
     { label: "FAQ", href: "/faq" },

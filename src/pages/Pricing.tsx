@@ -1,10 +1,11 @@
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { SEO } from "@/components/SEO";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { WaitlistModal } from "@/components/WaitlistModal";
-import { Check, ArrowRight, Sparkles, ShieldCheck, Zap } from "lucide-react";
+import { Check, ArrowRight, Sparkles, ShieldCheck, Zap, X } from "lucide-react";
 
 const free = [
   "Address / PIN lookup",
@@ -79,14 +80,14 @@ const Pricing = () => {
             {/* Free */}
             <Card title="Free — Fairness Check" price="$0" suffix="" body="Try it on any property in our coverage area." features={free}>
               <Button asChild intent="secondary" size="small" variant="filled" trailingIcon={ArrowRight} className="mt-6">
-                <a href="/">Get my free score</a>
+                <Link to="/">Get my free score</Link>
               </Button>
             </Card>
 
             {/* Pro Se — popular */}
             <Card title="Pro Se Toolkit" price="$149" suffix="one-time" body="Everything you need to file your own appeal." features={proSe} popular>
               <Button asChild intent="primary" size="large" variant="filled" trailingIcon={ArrowRight} className="mt-6">
-                <a href="/">Start my appeal</a>
+                <Link to="/">Start my appeal</Link>
               </Button>
             </Card>
 
@@ -140,8 +141,8 @@ const Pricing = () => {
                 "No charge if your data doesn't suggest an issue",
                 "No upsell to legal services",
               ].map((line) => (
-                <div key={line} className="flex items-center gap-3 type-body-lg">
-                  <span className="text-success font-bold">/</span> {line}
+                <div key={line} className="flex items-center gap-3 type-body-lg text-slate">
+                  <X className="h-5 w-5 text-destructive/60" strokeWidth={3} /> {line}
                 </div>
               ))}
             </div>
