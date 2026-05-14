@@ -86,7 +86,9 @@ const Comparables = () => {
           <div className="flex items-end justify-between">
             <div>
               <h3 className="text-xl font-semibold text-primary">Comparable properties</h3>
-              <p className="mt-1 text-sm text-muted-foreground">{comparables.length} closest matches by structure and location.</p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                {comparables.length} closest matches by structure and location. Addresses unlock with your appeal packet.
+              </p>
             </div>
           </div>
 
