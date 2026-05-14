@@ -1,18 +1,12 @@
-import { useEffect, useMemo, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { z } from "zod";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { SEO } from "@/components/SEO";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
-import { loadLookup } from "@/lib/lookupCache";
-import { api, ApiError } from "@/lib/api";
-import type { ComparablesResponse } from "@/lib/api";
-
-const schema = z.object({
-  customer_name: z.string().trim().min(1, "Required").max(200),
-  customer_email: z.string().trim().email("Enter a valid email").max(255),
-  tos_accepted: z.literal(true, { errorMap: () => ({ message: "You must accept to continue" }) }),
-});
+import { api, ApiError, ComparablesResponse } from "@/lib/api";
+import { loadLookup, saveConsentEmail } from "@/lib/lookupCache";
+import { ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Signup = () => {
   const { lookupId = "" } = useParams<{ lookupId: string }>();
@@ -21,26 +15,33 @@ const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [tos, setTos] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
+  const [liabilityAck, setLiabilityAck] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [serverError, setServerError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    const cached = loadLookup(lookupId);
-    if (!cached) navigate("/", { replace: true });
-    else setLookup(cached);
+    const data = loadLookup(lookupId);
+    if (!data) {
+      navigate("/");
+      return;
+    }
+    setLookup(data);
   }, [lookupId, navigate]);
 
-  const fee = useMemo(() => (lookup ? (lookup.price_cents / 100).toFixed(0) : "149"), [lookup]);
+  const fee = 149;
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setServerError(null);
-    const parsed = schema.safeParse({ customer_name: name, customer_email: email, tos_accepted: tos });
-    if (!parsed.success) {
-      const fieldErrors: Record<string, string> = {};
-      parsed.error.issues.forEach((i) => { fieldErrors[i.path[0] as string] = i.message; });
-      setErrors(fieldErrors);
+    if (submitting) return;
+
+    if (!name.trim() || !email.trim() || !tos || !liabilityAck) {
+      const newErrors: Record<string, string> = {};
+      if (!name.trim()) newErrors.customer_name = "Please enter your full name.";
+      if (!email.trim()) newErrors.customer_email = "Please enter your email address.";
+      if (!tos) newErrors.tos_accepted = "You must agree to the Terms of Service.";
+      if (!liabilityAck) newErrors.liability_ack = "You must explicitly acknowledge the limitation of liability.";
+      setErrors(newErrors);
       return;
     }
     setErrors({});
@@ -50,7 +51,9 @@ const Signup = () => {
         lookup_id: lookupId,
         customer_name: name.trim(),
         customer_email: email.trim(),
+        liability_ack_confirmed: true,
       });
+      saveConsentEmail(consent.consent_id, email.trim());
       const origin = window.location.origin;
       const checkout = await api.checkout({
         consent_id: consent.consent_id,
@@ -91,7 +94,7 @@ const Signup = () => {
           {lookup.subject.address} · <span className="font-semibold text-primary">PIN {lookup.subject.pin_formatted}</span>
         </p>
 
-        <div className="mt-10 rounded-[30px] border border-border/60 bg-white p-8 shadow-[0_0_20px_0_rgba(29,29,31,0.08)]">
+        <div className="mt-10 rounded-[30px] border border-border/60 bg-white p-8 shadow-[0_0_20px_0_rgba(29,29,31,0.09)]">
           <p className="type-body-sm leading-relaxed text-slate">
             By signing up, you confirm that you are the property owner. TaxAppeal.app is{" "}
             <span className="font-bold text-primary">not a law firm and does not provide legal advice</span>. We prepare your appeal documents using public data and township-specific logic. <span className="font-bold text-primary">You file the appeal yourself</span> pro se.
@@ -139,6 +142,26 @@ const Signup = () => {
             {errors.tos_accepted && <p className="mt-1 text-sm text-destructive">{errors.tos_accepted}</p>}
           </div>
 
+          <div className="rounded-[20px] border-2 border-electric/20 bg-electric/5 p-6">
+            <label htmlFor="liability_ack" className="flex items-start gap-4 cursor-pointer">
+              <input
+                id="liability_ack"
+                type="checkbox"
+                checked={liabilityAck}
+                onChange={(e) => setLiabilityAck(e.target.checked)}
+                className="mt-1 h-5 w-5 rounded border-border text-electric focus:ring-electric/30 flex-shrink-0"
+              />
+              <span className="type-body-sm text-slate leading-relaxed">
+                I have read, understood, and agree to the{" "}
+                <a href="/terms" target="_blank" rel="noopener noreferrer" className="underline font-bold text-primary hover:text-electric transition-colors">Terms of Service</a>
+                {" "}and explicitly acknowledge the{" "}
+                <a href="/terms#limitation-of-liability" target="_blank" rel="noopener noreferrer" className="underline font-bold text-primary hover:text-electric transition-colors">Limitation of Liability</a>
+                {" "}section, which caps all potential damages at the $149.00 fee paid. I understand this fee is non-refundable and earned upon receipt.
+              </span>
+            </label>
+            {errors.liability_ack && <p className="mt-2 text-sm text-destructive">{errors.liability_ack}</p>}
+          </div>
+
           {serverError && (
             <p className="rounded-xl border border-destructive/20 bg-destructive/5 p-4 type-body-sm text-destructive">
               {serverError}
@@ -147,7 +170,7 @@ const Signup = () => {
 
           <Button
             type="submit"
-            disabled={submitting}
+            disabled={submitting || !liabilityAck}
             intent="primary"
             size="large"
             variant="filled"

@@ -1,13 +1,17 @@
-import { useEffect, useRef, useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Search, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { api, ApiError, type ParcelSearchResult } from "@/lib/api";
+import { api, ApiError, ParcelSearchResult } from "@/lib/api";
 import { saveLookup } from "@/lib/lookupCache";
-import { Button } from "@/components/ui/button";
+import { Button } from "./ui/button";
 
-const PIN_RE = /^\d{2}-?\d{2}-?\d{3}-?\d{3}-?\d{4}$/;
+const PIN_RE = /^(\d{2}-?){4}\d{4}$/;
 
-export const PropertySearch = ({ variant = "default" }: { variant?: "default" | "hero" }) => {
+interface PropertySearchProps {
+  variant?: "hero" | "default";
+}
+
+export const PropertySearch = ({ variant = "default" }: PropertySearchProps) => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<ParcelSearchResult[]>([]);
   const [open, setOpen] = useState(false);
@@ -158,7 +162,7 @@ export const PropertySearch = ({ variant = "default" }: { variant?: "default" | 
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => results.length > 0 && setOpen(true)}
-            placeholder="Your property address — e.g. 619 Roger Ave, Kenilworth"
+            placeholder="Property address or PIN — e.g. 233 S Wacker Dr, Chicago, IL 60606 or 16-19-213-035-0000"
             aria-label="Property address or PIN"
             autoComplete="off"
             className={`h-14 w-full rounded-lg border pl-12 pr-4 text-base placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 sm:text-lg ${isHero
@@ -181,7 +185,7 @@ export const PropertySearch = ({ variant = "default" }: { variant?: "default" | 
       </form>
 
       {open && !isPin && trimmed.length >= 3 && (
-        <div className="absolute z-30 mt-2 w-full overflow-hidden rounded-lg border border-border bg-card shadow-lg sm:w-[calc(100%-12rem)]">
+        <div className="absolute z-30 mt-2 w-full overflow-hidden rounded-xl border border-border bg-card shadow-[0_0_20px_0_rgba(29,29,31,0.09)] sm:w-[calc(100%-12rem)]">
           {searching && results.length === 0 && (
             <div className="px-4 py-3 text-sm text-muted-foreground">Searching…</div>
           )}

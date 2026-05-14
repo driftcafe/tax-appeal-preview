@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 
-const SITE_URL = "https://propertytaxappealai.com";
+const SITE_URL = "https://taxappeal.app";
 const DEFAULT_OG = "https://county-tax-fix.lovable.app/og-image.png";
 
 type SEOProps = {

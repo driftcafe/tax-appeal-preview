@@ -46,7 +46,7 @@ const Counties = () => (
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <div className="overflow-hidden rounded-[30px] border border-border/60 bg-white shadow-[0_0_20px_0_rgba(29,29,31,0.08)]">
+        <div className="overflow-hidden rounded-[30px] border border-border/60 bg-white shadow-[0_0_20px_0_rgba(29,29,31,0.09)]">
           <ul className="divide-y divide-border/60">
             {launchCounties.map((c) => (
               <li key={c.name} className="flex flex-col gap-2 px-8 py-6 transition-colors hover:bg-slate/5 sm:flex-row sm:items-center sm:justify-between">

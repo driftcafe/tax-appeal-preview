@@ -14,7 +14,7 @@ import {
 } from "@/lib/fairness";
 import { supabase } from "@/integrations/supabase/client";
 import type { ComparablesResponse } from "@/lib/api";
-import { ArrowRight, Lock, Sparkles, Loader2 } from "lucide-react";
+import { ArrowRight, Lock, Sparkles, Loader2, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const STEPS = [
@@ -67,6 +67,11 @@ const Comparables = () => {
 
   if (!data) return null;
 
+  const { subject, cohort, comparables, price_cents } = data;
+  const overByPct = Math.round(cohort.uniformity_gap_pct * 100);
+  const fee = (price_cents / 100).toFixed(0);
+  const overAssessed = cohort.appears_over_assessed;
+
   const submitEmail = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!/^\S+@\S+\.\S+$/.test(email)) { setEmailErr("Enter a valid email."); return; }
@@ -93,7 +98,7 @@ const Comparables = () => {
 
         {/* EMAIL GATE */}
         {phase === "email" && (
-          <section className="mt-12 rounded-[30px] border border-electric/30 bg-white p-10 shadow-[0_0_20px_0_rgba(29,29,31,0.08)]">
+          <section className="mt-12 rounded-[30px] border border-electric/30 bg-white p-10 shadow-[0_0_20px_0_rgba(29,29,31,0.09)]">
             <p className="type-eyebrow-sm text-electric uppercase">Final Step</p>
             <h2 className="mt-2 type-h2">Where should we send your results?</h2>
             <p className="mt-4 type-body-lg">
@@ -118,7 +123,7 @@ const Comparables = () => {
                 trailingIcon={ArrowRight}
                 className="sm:w-auto"
               >
-                Show my score
+                {submitting ? "Checking\u2026" : "Show my score"}
               </Button>
             </form>
             {emailErr && <p className="mt-2 text-sm text-destructive">{emailErr}</p>}
@@ -128,7 +133,7 @@ const Comparables = () => {
 
         {/* ANALYZING */}
         {phase === "analyzing" && (
-          <section className="mt-12 rounded-[30px] border border-border/60 bg-white p-12 text-center shadow-[0_0_20px_0_rgba(29,29,31,0.08)]">
+          <section className="mt-12 rounded-[30px] border border-border/60 bg-white p-12 text-center shadow-[0_0_20px_0_rgba(29,29,31,0.09)]">
             <Loader2 className="mx-auto h-12 w-12 animate-spin text-electric" />
             <h2 className="mt-8 type-h3">Running your Fairness Check</h2>
             <ul className="mx-auto mt-8 max-w-md space-y-3 text-left">
@@ -145,7 +150,15 @@ const Comparables = () => {
         {/* RESULT */}
         {phase === "result" && metrics && (
           <section className="mt-12 space-y-10">
-            <div className="rounded-[30px] border border-border/60 bg-white p-8 shadow-[0_0_20px_0_rgba(29,29,31,0.08)] sm:p-10">
+            {/* Subject Highlights */}
+            <section className="grid gap-4 rounded-[30px] border border-border bg-white p-8 shadow-[0_0_20px_0_rgba(29,29,31,0.09)] sm:grid-cols-4">
+              <Stat label="Assessed value" value={`$${subject.assessed_value.toLocaleString()}`} />
+              <Stat label="Square feet" value={subject.sqft.toLocaleString()} />
+              <Stat label="Year built" value={String(subject.year_built)} />
+              <Stat label="Assessment per sqft" value={`$${subject.av_per_sqft.toFixed(2)}`} />
+            </section>
+
+            <div className="rounded-[30px] border border-border/60 bg-white p-8 shadow-[0_0_20px_0_rgba(29,29,31,0.09)] sm:p-10">
               <div className="mb-6 flex items-center gap-4">
                 <span
                   className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-widest"
@@ -171,70 +184,118 @@ const Comparables = () => {
                 overpayment={metrics.overpayment}
               />
 
-              {metrics.band === "poor" && (
-                <div className="mt-8 rounded-2xl border border-border/60 bg-secondary/30 p-6">
-                  <p className="type-body-sm leading-relaxed text-slate">
-                    <span className="font-bold text-primary">What this means:</span> Your home is assessed
-                    at a higher value per square foot than comparable homes in your township. Illinois law
-                    allows you to appeal on the basis of this lack of uniformity — and{" "}
-                    <span className="font-bold text-primary">
-                      we found {metrics.compsBelow} comparable homes
-                      assessed lower than yours to support your case.
+              {overAssessed && (
+                <div className="mt-8 rounded-2xl border border-electric/20 bg-electric/5 p-6">
+                  <div className="flex items-center gap-3">
+                    <TrendingUp className="h-5 w-5 text-electric" />
+                    <p className="type-utility font-bold uppercase tracking-wider text-electric">Uniformity gap detected</p>
+                  </div>
+                  <p className="mt-4 type-body-sm leading-relaxed text-slate">
+                    You appear to be over-assessed by <span className="font-bold text-primary tabular-nums">{overByPct}%</span> compared to {cohort.size.toLocaleString()} similar properties in your township.
+                    Township median is ${cohort.median_av_per_sqft.toFixed(2)}/sqft.
+                    <span className="block mt-2 font-bold text-primary">
+                      We found {metrics.compsBelow} comparable homes assessed lower than yours to support your case.
                     </span>
                   </p>
                 </div>
               )}
             </div>
 
-            <div className="rounded-[30px] border border-border/60 bg-white p-8 shadow-[0_0_20px_0_rgba(29,29,31,0.08)]">
+            <div className="rounded-[30px] border border-border/60 bg-white p-8 shadow-[0_0_20px_0_rgba(29,29,31,0.09)]">
               <div className="flex items-center justify-between">
-                <h3 className="type-h3">Comparable evidence</h3>
+                <div>
+                  <h3 className="type-h3">Comparable evidence</h3>
+                  <p className="mt-1 type-utility">
+                    {comparables.length} closest matches by structure and location. Addresses unlock in packet.
+                  </p>
+                </div>
                 <span className="inline-flex items-center gap-2 rounded-full bg-secondary px-3 py-1 text-xs font-bold uppercase tracking-wider text-slate">
                   <Lock className="h-3.5 w-3.5" /> Unlock in Toolkit
                 </span>
               </div>
-              <div className="mt-6 space-y-3">
-                {data.comparables.slice(0, 7).map((c, i) => (
-                  <div key={c.pin} className="flex items-center justify-between rounded-xl border border-border/40 bg-[#F7F9FB] px-5 py-4">
-                    <div className="min-w-0 flex-1">
-                      <p className="type-body-lg-emph text-primary blur-comp">{c.address}</p>
-                      <p className="type-utility text-slate">{c.sqft.toLocaleString()} sqft · built {c.year_built}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="type-body-lg-emph text-primary blur-comp">${c.assessed_value.toLocaleString()}</p>
-                      <p className="type-utility text-success font-bold">{Math.round(c.similarity_score * 100)}% match</p>
-                    </div>
-                  </div>
-                ))}
+              
+              <div className="mt-8 overflow-hidden rounded-2xl border border-border/40 bg-[#F7F9FB]">
+                <div className="hidden grid-cols-12 gap-4 border-b border-border/40 bg-secondary/40 px-5 py-3 type-utility font-bold uppercase tracking-wider text-slate sm:grid">
+                  <div className="col-span-5">Address</div>
+                  <div className="col-span-2 text-right">Sqft</div>
+                  <div className="col-span-2 text-right">Assessed</div>
+                  <div className="col-span-2 text-right">Match</div>
+                  <div className="col-span-1"></div>
+                </div>
+                <ul>
+                  {comparables.slice(0, 10).map((c) => {
+                    const matchPct = Math.round(c.similarity_score * 100);
+                    return (
+                      <li
+                        key={c.pin}
+                        className="grid grid-cols-2 gap-x-4 gap-y-1 border-b border-border/40 px-5 py-4 text-sm last:border-b-0 sm:grid-cols-12 sm:items-center sm:gap-4"
+                      >
+                        <div className="col-span-2 sm:col-span-5">
+                          <p className="type-body-lg-emph text-primary blur-comp select-none">
+                            {c.address}
+                          </p>
+                          <p className="type-utility blur-comp select-none">
+                            PIN {c.pin_formatted}
+                          </p>
+                        </div>
+                        <div className="text-left text-slate sm:hidden">Sqft</div>
+                        <div className="text-right tabular-nums sm:col-span-2 type-body-sm">{c.sqft.toLocaleString()}</div>
+                        <div className="text-left text-slate sm:hidden">Assessed</div>
+                        <div className="text-right font-bold tabular-nums sm:col-span-2 type-body-sm">${c.assessed_value.toLocaleString()}</div>
+                        <div className="text-left text-slate sm:hidden">Match</div>
+                        <div className="sm:col-span-2">
+                          <div className="flex items-center justify-end gap-3">
+                            <span className="type-utility font-bold text-success">{matchPct}%</span>
+                          </div>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
               </div>
             </div>
 
-            <div className="rounded-[30px] border-2 border-electric bg-white p-8 shadow-[0_0_30px_0_rgba(29,106,255,0.12)]">
+            {/* CTA Section */}
+            <div className={`rounded-[30px] border-2 p-8 shadow-[0_0_30px_0_rgba(29,106,255,0.12)] bg-white ${overAssessed ? "border-electric" : "border-border"}`}>
               <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <h3 className="type-h3">Get your Pro Se Toolkit</h3>
-                  <p className="mt-2 type-body-lg text-slate">Full comp data, pre-filled forms, and filing instructions. Flat $149.</p>
+                  <h3 className="type-h3">
+                    {overAssessed ? "Get your Pro Se Toolkit" : "Your assessment looks fair"}
+                  </h3>
+                  <p className="mt-2 type-body-lg text-slate">
+                    {overAssessed
+                      ? `Full comp data, pre-filled forms, and filing instructions. Flat $${fee}.`
+                      : "We only sell packets to homeowners where the data supports a uniformity gap."}
+                  </p>
                 </div>
-                <Button asChild intent="primary" size="large" variant="filled" trailingIcon={ArrowRight} className="sm:w-auto">
-                  <Link to={`/signup/${data.lookup_id}`}>
-                    Continue &mdash; $149
-                  </Link>
-                </Button>
+                {overAssessed ? (
+                  <Button asChild intent="primary" size="large" variant="filled" trailingIcon={ArrowRight} className="sm:w-auto">
+                    <Link to={`/signup/${data.lookup_id}`}>
+                      Continue &mdash; $${fee}
+                    </Link>
+                  </Button>
+                ) : (
+                  <Button disabled intent="secondary" size="large" variant="filled" className="sm:w-auto">
+                    Not recommended
+                  </Button>
+                )}
               </div>
-              <Button
-                onClick={() => setPremiumOpen(true)}
-                intent="primary"
-                variant="ghost"
-                size="small"
-                leadingIcon={Sparkles}
-                className="mt-6"
-              >
-                Want the AI Premium review? Join the waitlist
-              </Button>
+              {overAssessed && (
+                <Button
+                  onClick={() => setPremiumOpen(true)}
+                  intent="primary"
+                  variant="ghost"
+                  size="small"
+                  leadingIcon={Sparkles}
+                  className="mt-6"
+                >
+                  Want the AI Premium review? Join the waitlist
+                </Button>
+              )}
             </div>
 
             <p className="text-center type-utility text-slate max-w-2xl mx-auto">
-              The Fairness Score and overpayment estimate are preliminary, derived from public county data. The full $149 packet contains the official side-by-side analysis you submit with your appeal.
+              The Fairness Score and overpayment estimate are preliminary, derived from public county data. The full toolkit contains the official side-by-side analysis you submit with your appeal.
             </p>
           </section>
         )}
@@ -244,5 +305,12 @@ const Comparables = () => {
     </div>
   );
 };
+
+const Stat = ({ label, value }: { label: string; value: string }) => (
+  <div className="flex flex-col gap-1">
+    <p className="type-utility uppercase tracking-widest">{label}</p>
+    <p className="type-h4 tabular-nums">{value}</p>
+  </div>
+);
 
 export default Comparables;

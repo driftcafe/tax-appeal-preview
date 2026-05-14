@@ -5,11 +5,16 @@ import { SiteHeader } from "@/components/SiteHeader";
 
 const ComingSoon = () => {
   const { pathname } = useLocation();
+  const isAbout = pathname === "/about";
+  const title = isAbout ? "About Tax Appeal AI" : "Coming soon — new page";
+  const description = isAbout
+    ? "About Tax Appeal AI — a flat-fee toolkit helping Illinois homeowners file their own property tax appeals."
+    : "This page is coming soon to Property Tax Appeal AI.";
   return (
   <div className="min-h-screen bg-background text-foreground">
     <SEO
-      title="Coming Soon"
-      description="This page is coming soon to Property Tax Appeal AI."
+      title={title}
+      description={description}
       path={pathname}
       noindex
     />

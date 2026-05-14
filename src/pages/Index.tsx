@@ -81,7 +81,7 @@ const faqs = [
   { q: "Will the county punish me for appealing?", a: "No. Appeals are a routine, lawful process used by thousands of Illinois homeowners every year." },
   { q: "What if I miss the deadline?", a: "You'd have to wait until next year. Tax Watch sends township-specific reminders so you don't miss it." },
   { q: "What's the difference between $149 and $399?", a: "The $149 toolkit gives you everything you need to file. The $399 tier adds AI-driven analysis, comp quality ranking, risk flags, and a polished report — recommended if you want extra confidence before submitting." },
-  { q: "Can I get a refund?", a: "Yes, within 7 days if you haven't downloaded your packet." },
+  { q: "Can I get a refund?", a: "$149 flat. Non-refundable, earned upon receipt — the packet is a complete digital deliverable produced when you purchase." },
 ];
 
 const Index = () => {
@@ -101,8 +101,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEO
-        title="TaxAppeal.app — Find out if your home is assessed unfairly"
-        description="Free Fairness Score for any property in Cook County and the collar counties. If you're overpaying, keep 100% of the savings — not 35% to a law firm."
+        title="Property Tax Appeal AI — Free Illinois Fairness Score"
+        description="Free Fairness Score for any home in Cook County and the Illinois collar counties. Keep 100% of the savings — no contingency fees."
         path="/"
         jsonLd={[orgJsonLd, faqJsonLd]}
       />

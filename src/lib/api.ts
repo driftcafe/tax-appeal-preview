@@ -1,6 +1,6 @@
 // Typed API client for the Property Tax Appeal AI backend.
-// Hardcoded for now; swap to env later.
-export const API_BASE = "https://tax-appeals-git-main-taxappealapp.vercel.app";
+export const API_BASE =
+  (import.meta.env.VITE_API_BASE as string | undefined) ?? "https://tax-appeals-taxappealapp.vercel.app";
 
 export const TOS_VERSION = "2026-05-04";
 
@@ -105,6 +105,12 @@ export type ParcelSearchResponse = {
   results: ParcelSearchResult[];
 };
 
+export type ReportByConsentResponse =
+  | { status: "awaiting_payment" }
+  | { status: "generating" }
+  | { status: "payment_failed"; reason?: string }
+  | { status: "ready"; report: ReportResponse };
+
 export class ApiError extends Error {
   status: number;
   body: any;
@@ -140,6 +146,7 @@ export const api = {
     lookup_id: string;
     customer_name: string;
     customer_email: string;
+    liability_ack_confirmed: true;
   }) =>
     request<ConsentResponse>("/api/consent", {
       method: "POST",
@@ -156,6 +163,11 @@ export const api = {
     }),
   reportByToken: (share_token: string) =>
     request<ReportResponse>(`/api/reports/${encodeURIComponent(share_token)}`),
+  reportByConsent: (consent_id: string, signal?: AbortSignal) =>
+    request<ReportByConsentResponse>(
+      `/api/reports/by-consent/${encodeURIComponent(consent_id)}`,
+      { method: "GET", signal },
+    ),
   parcelSearch: (q: string, limit = 8, signal?: AbortSignal) =>
     request<ParcelSearchResponse>(
       `/api/parcels/search?q=${encodeURIComponent(q)}&limit=${limit}`,
