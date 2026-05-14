@@ -153,10 +153,6 @@ export const PropertySearch = ({ variant = "default" }: PropertySearchProps) => 
     <div ref={wrapRef} className="relative">
       <form onSubmit={onSubmit} className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
         <div className="relative flex-1">
-          <Search
-            className={`pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 ${isHero ? "text-navy-muted" : "text-muted-foreground/70"
-              }`}
-          />
           <input
             type="text"
             value={query}
@@ -165,7 +161,7 @@ export const PropertySearch = ({ variant = "default" }: PropertySearchProps) => 
             placeholder="Property address or PIN — e.g. 233 S Wacker Dr, Chicago, IL 60606 or 16-19-213-035-0000"
             aria-label="Property address or PIN"
             autoComplete="off"
-            className={`h-14 w-full rounded-lg border pl-12 pr-4 text-base placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 sm:text-lg ${isHero
+            className={`h-14 w-full rounded-lg border pl-6 pr-4 text-base placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 sm:text-lg ${isHero
                 ? "border-white/20 bg-white/10 text-white placeholder:text-white/40 focus:border-white/40 focus:ring-white/20 backdrop-blur-sm"
                 : "border-input bg-card text-foreground focus:border-primary focus:ring-ring/30"
               }`}
@@ -185,7 +181,7 @@ export const PropertySearch = ({ variant = "default" }: PropertySearchProps) => 
       </form>
 
       {open && !isPin && trimmed.length >= 3 && (
-        <div className="absolute z-30 mt-2 w-full overflow-hidden rounded-xl border border-border bg-card shadow-[0_0_20px_0_rgba(29,29,31,0.09)] sm:w-[calc(100%-12rem)]">
+        <div className="absolute z-50 mt-2 w-full overflow-hidden rounded-xl border border-border bg-card shadow-[0_0_20px_0_rgba(29,29,31,0.09)] sm:w-[calc(100%-12rem)]">
           {searching && results.length === 0 && (
             <div className="px-4 py-3 text-sm text-muted-foreground">Searching…</div>
           )}

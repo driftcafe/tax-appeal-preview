@@ -109,7 +109,7 @@ const Index = () => {
       <SiteHeader />
       <main>
         {/* HERO */}
-        <section id="hero" aria-labelledby="hero-heading" className="relative overflow-hidden bg-navy">
+        <section id="hero" aria-labelledby="hero-heading" className="relative bg-navy">
           {/* Background Image + Very Subtle Overlay */}
           <div 
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -198,7 +198,7 @@ const Index = () => {
             </motion.p>
 
             {/* Address bar */}
-            <div className="animate-fade-up mt-10 w-full max-w-4xl [animation-delay:240ms]">
+            <div className="animate-fade-up relative z-20 mt-10 w-full max-w-4xl [animation-delay:240ms]">
               <PropertySearch variant="hero" />
             </div>
 
@@ -218,7 +218,7 @@ const Index = () => {
           className="border-t border-border/60 bg-[#F7F9FB]"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: false, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <div className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-24 py-24">
@@ -241,7 +241,7 @@ const Index = () => {
           className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-24 py-32"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: false, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <div className="text-left">
@@ -271,7 +271,7 @@ const Index = () => {
           className="border-t border-border/60 bg-[#F7F9FB]"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: false, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <div className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-24 py-24">
@@ -297,7 +297,7 @@ const Index = () => {
           className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-24 py-24"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: false, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <p className="type-eyebrow-lg">Real-world example</p>
@@ -321,7 +321,7 @@ const Index = () => {
           className="border-t border-border/60 bg-[#F7F9FB]"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: false, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <div className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-24 py-24">
@@ -410,7 +410,7 @@ const Index = () => {
           className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-24 py-32"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: false, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <h2 className="type-h2 mt-4">Where we Operate</h2>
@@ -461,7 +461,7 @@ const Index = () => {
           className="border-t border-border/60 bg-[#F7F9FB]"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: false, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <div className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-24 py-32">
@@ -494,7 +494,7 @@ const Index = () => {
           className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-24 py-32"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: false, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <p className="type-eyebrow-lg">FAQ</p>

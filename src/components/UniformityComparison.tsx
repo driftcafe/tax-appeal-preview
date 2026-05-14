@@ -8,7 +8,7 @@ export const UniformityComparison = () => {
       <motion.div
         initial={{ opacity: 0, x: 0, y: 0, scale: 0.9, rotate: 0 }}
         whileInView={{ opacity: 0.8, x: 0, y: -145, scale: 1, rotate: 0 }}
-        viewport={{ once: true }}
+        viewport={{ once: false }}
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="absolute w-64 h-[110px] rounded-[24px] border border-border bg-white p-5 shadow-sm z-0 flex items-center"
       >
@@ -27,7 +27,7 @@ export const UniformityComparison = () => {
       <motion.div
         initial={{ opacity: 0, x: 0, y: 0, scale: 0.9, rotate: 0 }}
         whileInView={{ opacity: 0.8, x: 0, y: 145, scale: 1, rotate: 0 }}
-        viewport={{ once: true }}
+        viewport={{ once: false }}
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="absolute w-64 h-[110px] rounded-[24px] border border-border bg-white p-5 shadow-sm z-0 flex items-center"
       >
@@ -46,7 +46,7 @@ export const UniformityComparison = () => {
       <motion.div
         initial={{ opacity: 0, x: 0, y: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
-        viewport={{ once: true }}
+        viewport={{ once: false }}
         transition={{ type: "spring", damping: 15, stiffness: 100 }}
         className="relative z-10 w-72 rounded-[24px] border-2 border-destructive bg-white p-6 shadow-[0_20px_50px_rgba(0,0,0,0.1)] ring-8 ring-destructive/5"
       >
