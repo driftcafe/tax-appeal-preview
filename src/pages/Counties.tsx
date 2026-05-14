@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { SEO } from "@/components/SEO";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -20,7 +21,13 @@ const Counties = () => (
     />
     <SiteHeader />
     <main>
-      <section className="container mx-auto max-w-7xl px-8 pt-16 pb-10 sm:pt-24 md:px-12 lg:px-20">
+      <motion.section 
+        className="container mx-auto max-w-7xl px-8 pt-16 pb-10 sm:pt-24 md:px-12 lg:px-24"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
         <p className="type-eyebrow-lg">Coverage</p>
         <h2 className="mt-4 type-h2 text-primary">
           Launching in Illinois — June 2026.
@@ -30,9 +37,15 @@ const Counties = () => (
           expansion follows after the first appeal cycle. If your county isn't
           listed yet, you can join the waitlist on the home page.
         </p>
-      </section>
+      </motion.section>
 
-      <section className="container mx-auto max-w-7xl px-8 py-10 md:px-12 lg:px-20">
+      <motion.section 
+        className="container mx-auto max-w-7xl px-8 py-10 md:px-12 lg:px-24"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
         <div className="overflow-hidden rounded-[30px] border border-border/60 bg-white shadow-[0_0_20px_0_rgba(29,29,31,0.08)]">
           <ul className="divide-y divide-border/60">
             {launchCounties.map((c) => (
@@ -50,9 +63,15 @@ const Counties = () => (
             ))}
           </ul>
         </div>
-      </section>
+      </motion.section>
 
-      <section className="container mx-auto max-w-7xl px-8 py-16 md:px-12 lg:px-20">
+      <motion.section 
+        className="container mx-auto max-w-7xl px-8 py-16 md:px-12 lg:px-24"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
         <div className="max-w-3xl">
           <h3 className="type-h3 text-primary">What "supported" means</h3>
           <p className="mt-4 type-body-lg text-slate leading-relaxed">
@@ -63,7 +82,7 @@ const Counties = () => (
             deadline.
           </p>
         </div>
-      </section>
+      </motion.section>
     </main>
     <SiteFooter />
   </div>

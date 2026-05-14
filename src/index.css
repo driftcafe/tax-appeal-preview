@@ -106,13 +106,27 @@
 }
 
 @layer base {
-  * { @apply border-border; }
-  body { @apply bg-background text-foreground font-sans antialiased; }
-  h1, h2, h3 { @apply font-display tracking-tight; }
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display tracking-tight;
+  }
 }
 
 @layer utilities {
-  .blur-comp { filter: blur(7px); user-select: none; pointer-events: none; }
+  .blur-comp {
+    filter: blur(7px);
+    user-select: none;
+    pointer-events: none;
+  }
 
   /* Bar chart animation helper */
   .bar-animate {
@@ -121,14 +135,26 @@
 
   /* ── Gauge needle sweep ──────────────────────────────────────────────── */
   @keyframes needle-sweep {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(var(--needle-target-angle, 90deg)); }
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(var(--needle-target-angle, 90deg));
+    }
   }
 
   /* Score / overpayment fade-in */
   @keyframes gauge-fade-up {
-    from { opacity: 0; transform: translateY(6px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .gauge-needle {
@@ -137,6 +163,7 @@
     animation: needle-sweep 1200ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
     animation-play-state: paused;
   }
+
   .gauge-needle.is-visible {
     animation-play-state: running;
   }
@@ -147,11 +174,15 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .bar-animate { transition: none !important; }
+    .bar-animate {
+      transition: none !important;
+    }
+
     .gauge-needle {
       animation: none !important;
       transform: rotate(var(--needle-target-angle, 90deg));
     }
+
     .gauge-score-appear {
       animation: none !important;
       opacity: 1;
@@ -160,39 +191,63 @@
 
   /* Centralized Typography System — TaxAppeal.app Production Design System */
   .type-h1 {
-    @apply font-bold text-[48px] md:text-[62px] leading-[1.05] tracking-tight text-white;
+    @apply font-bold text-[44px] md:text-[58px] leading-[1.05] tracking-tight text-white;
   }
+
   .type-h2 {
-    @apply font-bold text-[36px] md:text-[48px] leading-[1.2] tracking-tight text-primary;
+    @apply font-bold text-[32px] md:text-[42px] leading-[1.2] tracking-tight text-primary;
   }
+
   .type-h3 {
-    @apply font-bold text-[30px] md:text-[38px] leading-[1.2] tracking-tight text-primary;
+    @apply font-bold text-[26px] md:text-[32px] leading-[1.2] tracking-tight text-primary;
   }
+
   .type-h4 {
-    @apply font-bold text-[24px] md:text-[28px] leading-[1.2] tracking-tight text-primary;
+    @apply font-bold text-[20px] md:text-[24px] leading-[1.2] tracking-tight text-primary;
   }
+
   .type-eyebrow-lg {
-    @apply font-bold text-[18px] md:text-[20px] leading-[1.2] tracking-wider text-slate;
-  }
-  .type-eyebrow-sm {
     @apply font-bold text-[16px] md:text-[18px] leading-[1.2] tracking-wider text-slate;
   }
+
+  .type-eyebrow-sm {
+    @apply font-bold text-[14px] md:text-[16px] leading-[1.2] tracking-wider text-slate;
+  }
+
   .type-body-lg {
-    @apply font-medium text-[18px] md:text-[20px] leading-[1.5] text-slate;
+    @apply font-medium text-[16px] md:text-[18px] leading-[1.5] text-slate;
   }
+
   .type-body-lg-emph {
-    @apply font-bold text-[18px] md:text-[20px] leading-[1.5] text-primary;
+    @apply font-bold text-[16px] md:text-[18px] leading-[1.5] text-primary;
   }
+
   .type-body-sm {
-    @apply font-medium text-[16px] md:text-[18px] leading-[1.4] text-primary;
+    @apply font-medium text-[14px] md:text-[16px] leading-[1.4] text-primary;
   }
+
   .type-utility {
-    @apply font-medium text-[14px] md:text-[16px] leading-[1.4] text-slate;
+    @apply font-medium text-[12px] md:text-[14px] leading-[1.4] text-slate;
+  }
+
+  .type-footer {
+    @apply font-normal text-[10px] md:text-[12px] leading-[1.5] text-slate/70;
   }
 
   /* Legacy utility mapping (optional cleanup step) */
-  .apple-eyebrow { @apply type-eyebrow-lg; }
-  .apple-headline { @apply type-h2; }
-  .apple-body { @apply type-body-lg; }
-  .apple-body-emph { @apply type-body-lg-emph; }
+  .apple-eyebrow {
+    @apply type-eyebrow-lg;
+  }
+
+  .apple-headline {
+    @apply type-h2;
+  }
+
+  .apple-body {
+    @apply type-body-lg;
+  }
+
+  .apple-body-emph {
+    @apply type-body-lg-emph;
+  }
 }

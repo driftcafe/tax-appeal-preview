@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 
 export const SiteHeader = ({ minimal = false }: { minimal?: boolean }) => (
   <header className="border-b border-border/60 bg-background">
-    <div className="container mx-auto flex h-20 max-w-7xl items-center justify-between px-8 md:px-12 lg:px-20">
+    <div className="container mx-auto flex h-20 max-w-7xl items-center justify-between px-8 md:px-12 lg:px-24">
       <Link to="/" className="text-xl font-bold tracking-tight text-primary">
         TaxAppeal<span className="text-success">.app</span>
       </Link>

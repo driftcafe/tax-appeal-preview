@@ -16,22 +16,26 @@ const DesignSystem = () => {
 
         {/* TYPOGRAPHY */}
         <section className="space-y-8">
-          <h2 className="type-eyebrow-lg border-b border-border pb-4">Typography Scale</h2>
+          <h2 className="type-eyebrow-lg border-b border-border pb-4">Typography Scale (Reduced by 1 step)</h2>
           <div className="space-y-12">
             {[
-              { label: "type-h1", class: "type-h1" },
-              { label: "type-h2", class: "type-h2" },
-              { label: "type-h3", class: "type-h3" },
-              { label: "type-h4", class: "type-h4" },
-              { label: "eyebrow-lg", class: "type-eyebrow-lg" },
-              { label: "eyebrow-sm", class: "type-eyebrow-sm" },
-              { label: "body-lg-emph", class: "type-body-lg-emph" },
-              { label: "body-lg", class: "type-body-lg" },
-              { label: "body-sm", class: "type-body-sm" },
-              { label: "utility", class: "type-utility" },
+              { label: "type-h1", class: "type-h1 bg-navy p-6 rounded-xl", details: "Inter Bold / 44px Mobile · 58px Desktop / White" },
+              { label: "type-h2", class: "type-h2", details: "Inter Bold / 32px Mobile · 42px Desktop / Primary" },
+              { label: "type-h3", class: "type-h3", details: "Inter Bold / 26px Mobile · 32px Desktop / Primary" },
+              { label: "type-h4", class: "type-h4", details: "Inter Bold / 20px Mobile · 24px Desktop / Primary" },
+              { label: "eyebrow-lg", class: "type-eyebrow-lg", details: "Inter Bold / 16px Mobile · 18px Desktop / Slate" },
+              { label: "eyebrow-sm", class: "type-eyebrow-sm", details: "Inter Bold / 14px Mobile · 16px Desktop / Slate" },
+              { label: "body-lg-emph", class: "type-body-lg-emph", details: "Inter Bold / 16px Mobile · 18px Desktop / Primary" },
+              { label: "body-lg", class: "type-body-lg", details: "Inter Medium / 16px Mobile · 18px Desktop / Slate" },
+              { label: "body-sm", class: "type-body-sm", details: "Inter Medium / 14px Mobile · 16px Desktop / Primary" },
+              { label: "utility", class: "type-utility", details: "Inter Medium / 12px Mobile · 14px Desktop / Slate" },
+              { label: "footer", class: "type-footer", details: "Inter Normal / 10px Mobile · 12px Desktop / Slate 70%" },
             ].map((t) => (
-              <div key={t.label} className="grid grid-cols-[150px_1fr] items-baseline gap-8">
-                <span className="type-utility text-slate uppercase">{t.label}</span>
+              <div key={t.label} className="grid grid-cols-[200px_1fr] items-start gap-8">
+                <div>
+                  <span className="type-utility text-slate uppercase font-bold block">{t.label}</span>
+                  <span className="type-utility text-slate/60 block mt-1">{t.details}</span>
+                </div>
                 <div className={t.class}>The quick brown fox jumps over the lazy dog</div>
               </div>
             ))}

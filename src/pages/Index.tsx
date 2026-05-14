@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { SEO } from "@/components/SEO";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -109,29 +110,92 @@ const Index = () => {
       <main>
         {/* HERO */}
         <section id="hero" aria-labelledby="hero-heading" className="relative overflow-hidden bg-navy">
-          {/* Soft radial gradient + Grid texture */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1a365d] via-navy to-navy opacity-80" />
-          <div
-            className="pointer-events-none absolute inset-0 opacity-[0.03]"
-            style={{
-              backgroundImage:
-                "linear-gradient(hsl(var(--navy-foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--navy-foreground)) 1px, transparent 1px)",
-              backgroundSize: "64px 64px",
-            }}
+          {/* Background Image + Very Subtle Overlay */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: "url('/bg-img3.png')" }}
           />
+          <div 
+            className="absolute inset-0 bg-gradient-to-b from-navy/30 via-navy/80 to-navy" 
+            style={{ opacity: 0.15 }}
+          />
+          
           <div className="container relative mx-auto flex max-w-7xl flex-col items-center pt-24 pb-28 text-center sm:pt-36 sm:pb-32">
 
-            <h1
+            <motion.h1
               id="hero-heading"
-              className="animate-fade-up mt-4 type-h1 [animation-delay:80ms]"
+              className="mt-4 type-h1"
+              initial="hidden"
+              animate="visible"
             >
-              Your property tax may be wrong.
+              <motion.span
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: {
+                    opacity: 1,
+                    transition: { staggerChildren: 0.03 }
+                  }
+                }}
+              >
+                {"Your property tax may be wrong.".split("").map((char, i) => (
+                  <motion.span
+                    key={i}
+                    variants={{
+                      hidden: { opacity: 0 },
+                      visible: { opacity: 1 }
+                    }}
+                  >
+                    {char}
+                  </motion.span>
+                ))}
+              </motion.span>
               <br className="hidden sm:block" />
-              <span className="text-success">Check it free.</span>
-            </h1>
-
-            <p className="animate-fade-up mt-5 max-w-2xl text-lg leading-relaxed text-navy-muted sm:text-xl [animation-delay:160ms]">The average homeowner saves $3,701 — and keeps all of it.
-            </p>
+              <motion.span
+                className="text-success"
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: {
+                    opacity: 1,
+                    transition: { delay: 1, staggerChildren: 0.04 }
+                  }
+                }}
+              >
+                {"Check it free.".split("").map((char, i) => (
+                  <motion.span
+                    key={i}
+                    variants={{
+                      hidden: { opacity: 0 },
+                      visible: { opacity: 1 }
+                    }}
+                  >
+                    {char}
+                  </motion.span>
+                ))}
+              </motion.span>
+            </motion.h1>
+ 
+            <motion.p 
+              className="mt-5 max-w-2xl text-lg leading-relaxed text-navy-muted sm:text-xl"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 2.2, duration: 0.8, ease: "easeOut" }}
+            >
+              <span className="relative inline-block">
+                {/* Base Slate Layer */}
+                <span className="text-navy-muted opacity-100">The average homeowner saves $3,701</span>
+                
+                {/* White Typing Layer */}
+                <motion.span 
+                  className="absolute top-0 left-0 text-white overflow-hidden whitespace-nowrap"
+                  initial={{ width: 0 }}
+                  animate={{ width: "100%" }}
+                  transition={{ delay: 3.5, duration: 1.2, ease: "linear" }}
+                >
+                  The average homeowner saves $3,701
+                </motion.span>
+              </span>
+              {" "}— and keeps all of it.
+            </motion.p>
 
             {/* Address bar */}
             <div className="animate-fade-up mt-10 w-full max-w-4xl [animation-delay:240ms]">
@@ -139,7 +203,7 @@ const Index = () => {
             </div>
 
             {/* Trust strip */}
-            <ul className="animate-fade-up mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm text-navy-muted [animation-delay:400ms]">
+            <ul className="animate-fade-up mt-6 flex flex-wrap gap-x-5 gap-y-2 type-utility !text-navy-muted [animation-delay:400ms]">
               {trustBullets.map((b) => (
                 <li key={b} className="inline-flex items-center gap-1.5">
                   <Check className="h-4 w-4 text-success" /> {b}
@@ -150,8 +214,14 @@ const Index = () => {
         </section>
 
         {/* CALCULATOR */}
-        <section className="border-t border-border/60 bg-[#F7F9FB]">
-          <div className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-20 py-24">
+        <motion.section 
+          className="border-t border-border/60 bg-[#F7F9FB]"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <div className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-24 py-24">
             <p className="type-eyebrow-lg">Keep your Savings</p>
             <h2 className="type-h2 mt-4">
               The contingency-firm math, in one place.
@@ -163,10 +233,17 @@ const Index = () => {
               <SavingsCalculator />
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* HOW IT WORKS (TRUST ARCHITECTURE) */}
-        <section id="how-it-works" className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-20 py-32">
+        <motion.section 
+          id="how-it-works" 
+          className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-24 py-32"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <div className="text-left">
             <h2 className="type-h2">How it works</h2>
           </div>
@@ -178,11 +255,7 @@ const Index = () => {
                 <div key={s.h} className="flex flex-col">
                   {/* Icon & Step Label */}
                   <div className="flex items-center gap-4 mb-6">
-                    <div className={`flex h-12 w-12 items-center justify-center rounded-[10px] text-white shadow-sm ${
-                      i === 0 ? "bg-navy" : i === 1 ? "bg-electric" : "bg-success"
-                    }`}>
-                      <s.icon className="h-6 w-6" />
-                    </div>
+                    <s.icon className="h-8 w-8 text-success" />
                     <p className="type-eyebrow-sm text-[#FF9F0A] tracking-wider font-bold">Step {i + 1}</p>
                   </div>
 
@@ -192,10 +265,16 @@ const Index = () => {
               );
             })}
           </div>
-        </section>
+        </motion.section>
 
-        <section className="border-t border-border/60 bg-[#F7F9FB]">
-          <div className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-20 py-24">
+        <motion.section 
+          className="border-t border-border/60 bg-[#F7F9FB]"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <div className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-24 py-24">
             <div className="grid gap-16 md:grid-cols-2 md:items-center">
               <div>
                 <p className="type-eyebrow-lg">The Uniformity Score, explained</p>
@@ -211,10 +290,16 @@ const Index = () => {
               <UniformityComparison />
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* WINNETKA EXAMPLE */}
-        <section className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-20 py-24">
+        <motion.section 
+          className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-24 py-24"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <p className="type-eyebrow-lg">Real-world example</p>
           <h2 className="type-h2 mt-4">Winnetka single-family home</h2>
           <div className="mt-8 overflow-hidden rounded-[30px] border border-border bg-card">
@@ -230,10 +315,16 @@ const Index = () => {
               </div>
             </dl>
           </div>
-        </section>
+        </motion.section>
 
-        <section className="border-t border-border/60 bg-[#F7F9FB]">
-          <div className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-20 py-24">
+        <motion.section 
+          className="border-t border-border/60 bg-[#F7F9FB]"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <div className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-24 py-24">
             <div className="flex flex-wrap items-end justify-between gap-6">
               <div>
                 <h2 className="type-h2 mt-4">Pricing</h2>
@@ -259,7 +350,7 @@ const Index = () => {
                   <p className="type-body-lg-emph">{t.name}</p>
                   <p className="mt-4">
                     <span className="type-h3">{t.price}</span>{" "}
-                    {t.suffix && <span className="type-utility">{t.suffix}</span>}
+                    {t.suffix && <span className="type-body-sm">{t.suffix}</span>}
                   </p>
                   <p className="mt-6 flex-1 type-body-lg">{t.body}</p>
                   {t.waitlist ? (
@@ -313,9 +404,15 @@ const Index = () => {
               </Button>
             </div>
           </div>
-        </section>
+        </motion.section>
 
-        <section className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-20 py-32">
+        <motion.section 
+          className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-24 py-32"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <h2 className="type-h2 mt-4">Where we Operate</h2>
           <div className="mt-16 grid gap-[30px] md:grid-cols-2">
             <div className="rounded-[30px] bg-white p-[30px] shadow-[0_0_20px_0_rgba(29,29,31,0.08)] border border-border/60">
@@ -348,7 +445,7 @@ const Index = () => {
             <div className="rounded-[30px] border border-dashed border-border/60 bg-[#F7F9FB] p-[30px]">
               <p className="type-eyebrow-sm">Coming 2027</p>
               <p className="mt-2 type-body-lg-emph">Three new states</p>
-              <ul className="mt-6 grid grid-cols-3 gap-3 text-sm text-[#1D1D1F]">
+              <ul className="mt-6 grid grid-cols-3 gap-3 type-body-sm text-[#1D1D1F]">
                 {["Georgia", "Texas", "Florida"].map((s) => (
                   <li key={s} className="rounded-md border border-border bg-card px-3 py-2 text-center">{s}</li>
                 ))}
@@ -358,10 +455,16 @@ const Index = () => {
               </p>
             </div>
           </div>
-        </section>
+        </motion.section>
 
-        <section className="border-t border-border/60 bg-[#F7F9FB]">
-          <div className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-20 py-32">
+        <motion.section 
+          className="border-t border-border/60 bg-[#F7F9FB]"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <div className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-24 py-32">
             <div className="flex flex-wrap items-start justify-between gap-6">
               <div>
                 <p className="type-eyebrow-lg">Built on public data</p>
@@ -385,21 +488,35 @@ const Index = () => {
               ))}
             </div>
           </div>
-        </section>
+        </motion.section>
 
-        <section className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-20 py-32">
+        <motion.section 
+          className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-24 py-32"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <p className="type-eyebrow-lg">FAQ</p>
-          <h2 className="type-h2 mt-4 text-center sm:text-left">Common questions</h2>
-          <Accordion type="single" collapsible className="mt-12 divide-y divide-border/60 border-y border-border/60">
+          <h2 className="type-h2 mt-4">Questions, plainly answered.</h2>
+          <Accordion type="single" collapsible className="mt-12 space-y-4">
             {faqs.map((f) => (
-              <AccordionItem key={f.q} value={f.q} className="border-0">
-                <AccordionTrigger className="py-6 text-left type-body-lg-emph hover:no-underline">{f.q}</AccordionTrigger>
-                <AccordionContent className="pb-6 type-body-lg">{f.a}</AccordionContent>
+              <AccordionItem 
+                key={f.q} 
+                value={f.q} 
+                className="overflow-hidden rounded-2xl border border-border/60 bg-white px-6 shadow-sm transition-all hover:shadow-md"
+              >
+                <AccordionTrigger className="py-5 text-left type-body-lg-emph text-primary hover:no-underline">
+                  {f.q}
+                </AccordionTrigger>
+                <AccordionContent className="pb-6 type-body-sm text-slate leading-relaxed">
+                  {f.a}
+                </AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>
           <div className="mt-16 rounded-[30px] border border-electric/30 bg-white p-8 text-center shadow-[0_0_20px_0_rgba(29,29,31,0.08)]">
-            <p className="type-body-lg-emph">Ready to see your Fairness Score?</p>
+            <h3 className="type-h3">Ready to see your Fairness Score?</h3>
             <p className="mt-2 type-body-lg">Free. Takes 60 seconds.</p>
             <Button
               asChild
@@ -410,7 +527,7 @@ const Index = () => {
               className="mt-8"
             ><a href="#hero">Check my property</a></Button>
           </div>
-        </section>
+        </motion.section>
       </main>
       <SiteFooter />
 

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import { SEO } from "@/components/SEO";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -47,7 +48,13 @@ const HowItWorks = () => (
     />
     <SiteHeader />
     <main>
-      <section className="container mx-auto max-w-7xl px-8 pt-16 pb-10 sm:pt-24 md:px-12 lg:px-20">
+      <motion.section 
+        className="container mx-auto max-w-7xl px-8 pt-16 pb-10 sm:pt-24 md:px-12 lg:px-24"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
         <p className="type-eyebrow-lg">How it works</p>
         <h2 className="mt-4 type-h2 text-primary">
           Public data in. A report and an editable template out.
@@ -56,9 +63,15 @@ const HowItWorks = () => (
           We organize publicly available property records into a clear comparison and a pre-filled
           appeal template. You stay the decision-maker, the editor, and the filer.
         </p>
-      </section>
+      </motion.section>
 
-      <section className="container mx-auto max-w-7xl px-8 py-10 md:px-12 lg:px-20">
+      <motion.section 
+        className="container mx-auto max-w-7xl px-8 py-10 md:px-12 lg:px-24"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
         <div className="space-y-12">
           {steps.map((s) => (
             <div key={s.n} className="flex gap-8">
@@ -70,9 +83,15 @@ const HowItWorks = () => (
             </div>
           ))}
         </div>
-      </section>
+      </motion.section>
 
-      <section className="container mx-auto max-w-7xl px-8 py-16 md:px-12 lg:px-20">
+      <motion.section 
+        className="container mx-auto max-w-7xl px-8 py-16 md:px-12 lg:px-24"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
         <div className="rounded-[30px] border border-border/60 bg-white p-8 shadow-[0_0_20px_0_rgba(29,29,31,0.08)]">
           <h2 className="type-h3">Two kinds of documents — never blended</h2>
           <div className="mt-8 grid gap-8 md:grid-cols-2">
@@ -103,7 +122,7 @@ const HowItWorks = () => (
         >
           <Link to="/">Enter your PIN to start</Link>
         </Button>
-      </section>
+      </motion.section>
     </main>
     <SiteFooter />
   </div>

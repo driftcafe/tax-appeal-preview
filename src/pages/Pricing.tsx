@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { SEO } from "@/components/SEO";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -49,7 +50,13 @@ const Pricing = () => {
       />
       <SiteHeader />
       <main>
-        <section className="container mx-auto max-w-7xl px-8 pt-16 pb-10 sm:pt-24 md:px-12 lg:px-20">
+        <motion.section 
+          className="container mx-auto max-w-7xl px-8 pt-16 pb-10 sm:pt-24 md:px-12 lg:px-24"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <p className="type-eyebrow-lg">Pricing</p>
           <h2 className="mt-4 type-h2 text-primary">
             Flat fees. You keep the savings.
@@ -59,9 +66,15 @@ const Pricing = () => {
             <br className="hidden sm:block" />
             <span className="type-body-lg-emph">Pay once, file yourself, keep 100% of any reduction.</span>
           </p>
-        </section>
+        </motion.section>
 
-        <section className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-20 py-10">
+        <motion.section 
+          className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-24 py-10"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <div className="grid gap-8 md:grid-cols-3">
             {/* Free */}
             <Card title="Free — Fairness Check" price="$0" suffix="" body="Try it on any property in our coverage area." features={free}>
@@ -96,7 +109,7 @@ const Pricing = () => {
                 <p className="mt-2 type-body-lg max-w-2xl">
                   Keeps an eye on your assessment so you never miss a deadline or a chance to appeal again. re-runs your Fairness Score automatically.
                 </p>
-                <ul className="mt-4 grid gap-x-6 gap-y-2 text-sm text-foreground/90 sm:grid-cols-2">
+                <ul className="mt-4 grid gap-x-6 gap-y-2 type-body-sm text-foreground/90 sm:grid-cols-2">
                   {taxWatch.map((t) => (
                     <li key={t} className="flex gap-2"><Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-success" /> {t}</li>
                   ))}
@@ -107,10 +120,16 @@ const Pricing = () => {
               Add Tax Watch
             </Button>
           </div>
-        </section>
+        </motion.section>
 
-        <section className="border-t border-border/60 bg-[#F7F9FB]">
-          <div className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-20 py-24">
+        <motion.section 
+          className="border-t border-border/60 bg-[#F7F9FB]"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <div className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-24 py-24">
             <h2 className="type-h2">What you'll never see on your bill</h2>
             <div className="mt-10 grid gap-6 sm:grid-cols-2">
               {[
@@ -127,7 +146,7 @@ const Pricing = () => {
               ))}
             </div>
           </div>
-        </section>
+        </motion.section>
       </main>
       <SiteFooter />
 
@@ -144,7 +163,7 @@ const Card = ({
 }) => (
   <div className={`relative flex flex-col rounded-[30px] bg-white p-8 transition-all duration-300 shadow-[0_0_20px_0_rgba(29,29,31,0.08)] border ${popular ? "border-electric/40 ring-1 ring-electric/5 md:scale-[1.05] z-10" : "border-border/60"}`}>
     {popular && (
-      <span className="absolute -top-3 left-8 rounded-full bg-electric px-4 py-1 text-[12px] font-bold uppercase tracking-widest text-white shadow-sm">
+      <span className="absolute -top-3 left-8 rounded-full bg-electric px-4 py-1 type-utility font-bold uppercase tracking-widest text-white shadow-sm">
         Most popular
       </span>
     )}
@@ -154,7 +173,7 @@ const Card = ({
       {suffix && <span className="ml-2 type-utility text-slate">{suffix}</span>}
     </p>
     <p className="mt-4 type-body-lg text-slate">{body}</p>
-    <ul className="mt-6 flex-1 space-y-3 text-sm text-foreground/90">
+    <ul className="mt-6 flex-1 space-y-3 type-body-sm text-foreground/90">
       {features.map((f) => (
         <li key={f} className="flex gap-3"><Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-success" /> {f}</li>
       ))}

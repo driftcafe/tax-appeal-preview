@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { SEO } from "@/components/SEO";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -23,12 +24,24 @@ const FAQ = () => (
     <SEO title="FAQ — TaxAppeal.app" description="Common questions about TaxAppeal.app — pricing, refunds, deadlines, and what we do and don't do." path="/faq" jsonLd={[faqJsonLd]} />
     <SiteHeader />
     <main>
-      <section className="container mx-auto max-w-7xl px-8 pt-16 pb-10 sm:pt-24 md:px-12 lg:px-20">
+      <motion.section 
+        className="container mx-auto max-w-7xl px-8 pt-16 pb-10 sm:pt-24 md:px-12 lg:px-24"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
         <p className="type-eyebrow-lg">FAQ</p>
         <h2 className="mt-4 type-h2 text-primary">Questions, plainly answered.</h2>
-      </section>
+      </motion.section>
 
-      <section className="container mx-auto max-w-7xl px-8 py-10 md:px-12 lg:px-20">
+      <motion.section 
+        className="container mx-auto max-w-7xl px-8 py-10 md:px-12 lg:px-24"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
         <div className="max-w-3xl">
           <Accordion type="single" collapsible className="space-y-4">
             {faqs.map((f) => (
@@ -47,7 +60,7 @@ const FAQ = () => (
             ))}
           </Accordion>
         </div>
-      </section>
+      </motion.section>
     </main>
     <SiteFooter />
   </div>
