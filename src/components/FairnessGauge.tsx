@@ -79,12 +79,12 @@ const CreditScoreGauge = ({
   // The arc center (cx, cy) is at the BOTTOM of the SVG viewport.
   // We make the SVG tall enough that the 3-item text stack (number + label + pill)
   // sits comfortably in the upper dome, well above the needle hub.
-  const w = size * 1.5;             // widen SVG to 480px for horizontal label breathing room
-  const strokeW = 20;
-  const r = size / 2 - 36;          // arc radius remains constant based on original size
-  const cy = r + 70;                // extended headroom above for leader line text
+  const w = size * 1.3;             // Tighter horizontal canvas for better mobile filling
+  const strokeW = 22;               // Slightly bolder stroke
+  const r = size / 2 - 24;          // Larger radius relative to size
+  const cy = r + 60;                // Adjusted headroom
   const cx = w / 2;
-  const h = cy + strokeW / 2 + 30;  // clearance below hub for scale labels
+  const h = cy + strokeW / 2 + 25;  // Clearance below hub
 
   // Score / band
   const band = scoreBand(score);
@@ -259,7 +259,7 @@ const CreditScoreGauge = ({
         >
           {/* Score number */}
           <span
-            className={`text-[4.5rem] font-black tabular-nums leading-none tracking-tight
+            className={`text-[3.5rem] sm:text-[4.5rem] font-black tabular-nums leading-none tracking-tight
               ${visible ? "gauge-score-appear" : "opacity-0"}`}
             style={{ 
               color: scoreColor,
@@ -282,7 +282,7 @@ const CreditScoreGauge = ({
             <p className="text-[13px] font-bold uppercase tracking-[0.2em] text-[#229954]">
               Est. Annual Overpayment
             </p>
-            <p className="text-[4rem] font-extrabold tabular-nums leading-none tracking-tight text-[#1D8348] animate-pulse-green my-2">
+            <p className="text-[3rem] sm:text-[4rem] font-extrabold tabular-nums leading-none tracking-tight text-[#1D8348] animate-pulse-green my-2">
               ${overpayment.toLocaleString()}
             </p>
             <p className="text-base text-muted-foreground max-w-sm leading-relaxed">
@@ -291,7 +291,7 @@ const CreditScoreGauge = ({
           </div>
         ) : band === "mid" ? (
           <div className="rounded-2xl bg-[hsl(var(--score-mid)/0.1)] border border-[hsl(var(--score-mid)/0.25)] px-6 py-5 flex items-center gap-4">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-orange-100 text-orange-600 font-bold text-lg">
+            <div className="hidden h-10 w-10 shrink-0 items-center justify-center rounded-full bg-orange-100 text-orange-600 font-bold text-lg sm:flex">
               !
             </div>
             <p className="text-sm font-medium text-orange-800 leading-snug">
@@ -300,7 +300,7 @@ const CreditScoreGauge = ({
           </div>
         ) : (
           <div className="rounded-2xl bg-[hsl(145_63%_49%_/_0.07)] border border-[hsl(145_63%_49%_/_0.25)] px-6 py-5 flex items-center gap-4">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-success/15 text-success font-bold text-lg">
+            <div className="hidden h-10 w-10 shrink-0 items-center justify-center rounded-full bg-success/15 text-success font-bold text-lg sm:flex">
               ✓
             </div>
             <p className="text-sm font-medium text-success leading-snug">

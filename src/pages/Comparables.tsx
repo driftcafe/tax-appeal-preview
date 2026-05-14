@@ -160,7 +160,7 @@ const Comparables = () => {
             </section>
 
             <div className="rounded-[30px] border border-border/60 bg-white p-8 shadow-[0_0_20px_0_rgba(29,29,31,0.09)] sm:p-10">
-              <div className="mb-6 flex items-center gap-4">
+              <div className="mb-6 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
                 <span
                   className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-widest"
                   style={{
@@ -188,7 +188,7 @@ const Comparables = () => {
               {metrics.band !== "good" && (
                 <div className="mt-8 rounded-2xl border border-electric/20 bg-electric/5 p-6">
                   <div className="flex items-center gap-3">
-                    <TrendingUp className="h-5 w-5 text-electric" />
+                    <TrendingUp className="hidden h-5 w-5 text-electric sm:block" />
                     <p className="type-utility font-bold uppercase tracking-wider text-electric">
                       {metrics.band === "poor" ? "Significant gap detected" : "Uniformity gap detected"}
                     </p>
@@ -212,7 +212,7 @@ const Comparables = () => {
             </div>
 
             <div className="rounded-[30px] border border-border/60 bg-white p-8 shadow-[0_0_20px_0_rgba(29,29,31,0.09)]">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <h3 className="type-h3">Comparable evidence</h3>
                   <p className="mt-1 type-utility">
@@ -281,7 +281,7 @@ const Comparables = () => {
                 {metrics.band !== "good" ? (
                   <Button asChild intent="primary" size="large" variant="filled" trailingIcon={ArrowRight} className="sm:w-auto">
                     <Link to={`/signup/${data.lookup_id}`}>
-                      Continue &mdash; ${"$"}{fee}
+                      {`Continue — $${fee}`}
                     </Link>
                   </Button>
                 ) : (
@@ -296,15 +296,20 @@ const Comparables = () => {
                   intent="primary"
                   variant="ghost"
                   size="small"
-                  leadingIcon={Sparkles}
-                  className="mt-6"
+                  className="mt-6 h-auto py-3 text-left sm:text-center"
                 >
-                  Want the AI Premium review? Join the waitlist
+                  <span className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-2">
+                    <span className="flex items-center gap-2">
+                      <Sparkles className="hidden h-4 w-4 text-electric sm:inline-block" />
+                      <span>Want the AI Premium review?</span>
+                    </span>
+                    <span className="font-bold">Join the waitlist</span>
+                  </span>
                 </Button>
               )}
             </div>
 
-            <p className="text-center type-utility text-slate max-w-2xl mx-auto">
+            <p className="w-full text-center type-utility text-slate max-w-2xl mx-auto px-4">
               The Fairness Score and overpayment estimate are preliminary, derived from public county data. The full toolkit contains the official side-by-side analysis you submit with your appeal.
             </p>
           </section>
