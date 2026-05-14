@@ -343,7 +343,7 @@ const Index = () => {
                   className={`relative flex flex-col rounded-[30px] bg-white p-8 shadow-[0_0_20px_0_rgba(29,29,31,0.08)] border transition-all duration-300 hover:shadow-xl ${t.popular ? "border-electric/40 ring-1 ring-electric/5 md:scale-[1.05] z-10" : "border-border/60"}`}
                 >
                   {t.popular && (
-                    <span className="absolute -top-3 left-8 rounded-full bg-electric px-4 py-1 text-[12px] font-bold uppercase tracking-widest text-white shadow-sm">
+                    <span className="absolute -top-3 left-8 rounded-full bg-electric px-4 py-1 text-[12px] font-bold uppercase tracking-widest !text-white shadow-sm">
                       Most popular
                     </span>
                   )}

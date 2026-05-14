@@ -90,6 +90,7 @@ const CreditScoreGauge = ({
   const band = scoreBand(score);
   const label = scoreBandLabel(score);
   const scoreColor = BAND_COLOR[band];
+  const textColor = `hsl(var(--score-${band}-foreground))`;
 
   // Arc segment angles: Red 0-40, Yellow 41-70, Green 71-100
   const A_RED_END = 180 + 0.40 * 180; // 252°
@@ -198,11 +199,7 @@ const CreditScoreGauge = ({
             stroke="#94A3B8" strokeWidth={1} strokeDasharray="2,2"
           />
           <text x={notchLblPos.x} y={notchLblPos.y} textAnchor={lblAnchor} dominantBaseline="middle"
-            fill={
-              NEIGHBORHOOD_BASELINE <= 40 ? "#B91C1C" : // red-700
-              NEIGHBORHOOD_BASELINE <= 70 ? "#B45309" : // amber-700
-              "#15803D" // green-700
-            } 
+            fill={`hsl(var(--score-${NEIGHBORHOOD_BASELINE <= 40 ? "poor" : NEIGHBORHOOD_BASELINE <= 70 ? "mid" : "good"}-foreground))`} 
             fontSize={14}
             fontFamily="Inter, sans-serif" fontWeight={500} letterSpacing="0.02em">
             NBHD AVG: {NEIGHBORHOOD_BASELINE}
@@ -313,7 +310,7 @@ const CreditScoreGauge = ({
         >
           <div className="flex items-center justify-between px-5 py-3 text-sm">
             <span className="text-foreground font-semibold">Your Home</span>
-            <span className="font-bold tabular-nums text-base" style={{ color: scoreColor }}>
+            <span className="font-bold tabular-nums text-base" style={{ color: textColor }}>
               {fmtSqft(subjectAVPerSqft!)}
             </span>
           </div>
@@ -321,7 +318,7 @@ const CreditScoreGauge = ({
           <div className="flex items-center justify-between px-5 py-3 text-sm">
             <span className="flex items-center gap-1.5 text-foreground font-semibold">
               Neighborhood Avg
-              <span className="text-[12px] text-muted-foreground font-semibold uppercase tracking-wider ml-1">(▲ on gauge)</span>
+              <span className="text-[11px] text-muted-foreground font-semibold uppercase tracking-wider ml-1">(NBHD AVG ON GUAGE)</span>
             </span>
             <span className="font-semibold tabular-nums text-foreground">
               {fmtSqft(cohortMedianAVPerSqft!)}

@@ -64,6 +64,11 @@
     --score-mid: 38 92% 50%;
     --score-good: 145 63% 49%;
 
+    /* High-contrast variants for text readability (WCAG AA compliant) */
+    --score-poor-foreground: 0 85% 45%;
+    --score-mid-foreground: 30 100% 35%;
+    --score-good-foreground: 145 63% 30%;
+
     /* Confidence pills (kept) */
     --confidence-strong: 145 63% 49%;
     --confidence-strong-bg: 142 60% 94%;

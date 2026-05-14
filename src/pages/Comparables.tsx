@@ -86,9 +86,9 @@ const Comparables = () => {
         <p className="type-eyebrow-lg">
           Fairness Check · {data.subject.county} County · {data.subject.township} Township
         </p>
-        <h1 className="mt-4 type-h1 text-primary">
+        <h2 className="mt-4 type-h2 text-primary">
           {data.subject.address}
-        </h1>
+        </h2>
         <p className="mt-1 type-body-lg text-slate">PIN <span className="font-semibold text-primary">{data.subject.pin_formatted}</span></p>
 
         {/* EMAIL GATE */}
@@ -150,8 +150,8 @@ const Comparables = () => {
                 <span
                   className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-widest"
                   style={{
-                    color: metrics.band === "good" ? "hsl(var(--score-good))" : metrics.band === "mid" ? "hsl(var(--score-mid))" : "hsl(var(--score-poor))",
-                    background: metrics.band === "good" ? "hsl(var(--score-good) / 0.10)" : metrics.band === "mid" ? "hsl(var(--score-mid) / 0.10)" : "hsl(var(--score-poor) / 0.10)",
+                    color: `hsl(var(--score-${metrics.band}-foreground))`,
+                    background: `hsl(var(--score-${metrics.band}) / 0.10)`,
                   }}
                 >
                   <span className="inline-block h-2 w-2 rounded-full bg-current" />
