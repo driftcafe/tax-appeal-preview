@@ -42,19 +42,19 @@ const Pricing = () => {
   const [taxWatchOpen, setTaxWatchOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <SEO
         title="Pricing — TaxAppeal.app"
         description="Free Fairness Check, $149 Pro Se Toolkit, $399 AI Premium Review, and $29/year Tax Watch. No contingency fees, no percentage of savings."
         path="/pricing"
       />
       <SiteHeader />
-      <main>
+      <main className="flex-1">
         <motion.section 
           className="container mx-auto max-w-7xl px-8 pt-16 pb-10 sm:pt-24 md:px-12 lg:px-24"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: false, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <p className="type-eyebrow-lg">Pricing</p>
@@ -72,7 +72,7 @@ const Pricing = () => {
           className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-24 py-10"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: false, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <div className="grid gap-8 md:grid-cols-3">
@@ -126,7 +126,7 @@ const Pricing = () => {
           className="border-t border-border/60 bg-[#F7F9FB]"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: false, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <div className="container mx-auto max-w-7xl px-8 md:px-12 lg:px-24 py-24">

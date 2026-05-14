@@ -82,10 +82,10 @@ const Success = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <SEO title="Your appeal packet" description="Your appeal packet is ready." path="/success" noindex />
       <SiteHeader />
-      <main className="container mx-auto max-w-4xl px-6 pt-12 pb-20">
+      <main className="flex-1 container mx-auto max-w-4xl px-6 pt-12 pb-20">
         {!consentId && (
           <div className="text-center">
             <h1 className="text-2xl font-semibold text-primary">We couldn't find that order</h1>

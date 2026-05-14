@@ -99,7 +99,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <SEO
         title="Property Tax Appeal AI — Free Illinois Fairness Score"
         description="Free Fairness Score for any home in Cook County and the Illinois collar counties. Keep 100% of the savings — no contingency fees."
@@ -107,7 +107,7 @@ const Index = () => {
         jsonLd={[orgJsonLd, faqJsonLd]}
       />
       <SiteHeader />
-      <main>
+      <main className="flex-1">
         {/* HERO */}
         <section id="hero" aria-labelledby="hero-heading" className="relative bg-navy">
           {/* Background Image + Very Subtle Overlay */}
@@ -309,9 +309,9 @@ const Index = () => {
               <ExRow label="Estimated annual reduction" value="$3,850" />
               <ExRow label="Contingency law firm fee (35%)" value="−$1,347" />
               <ExRow label="TaxAppeal.app flat fee" value="−$149" />
-              <div className="flex items-center justify-between gap-4 bg-secondary/40 px-6 py-6">
+              <div className="flex items-center justify-between gap-4 bg-secondary/40 px-4 py-6 sm:px-6">
                 <dt className="type-body-sm">Homeowner kept</dt>
-                <dd className="type-h4 tabular-nums !text-success">$3,701</dd>
+                <dd className="type-h4 tabular-nums !text-success whitespace-nowrap">$3,701</dd>
               </div>
             </dl>
           </div>
@@ -540,9 +540,9 @@ const Index = () => {
 const ExRow = ({ label, value }: { label: string; value: string }) => {
   const isNegative = value.startsWith("−") || value.startsWith("-");
   return (
-    <div className="flex items-baseline justify-between gap-4 px-6 py-4">
+    <div className="flex items-baseline justify-between gap-4 px-4 py-4 sm:px-6">
       <dt className="type-body-sm">{label}</dt>
-      <dd className={`type-body-lg-emph tabular-nums ${isNegative ? "!text-destructive" : ""}`}>{value}</dd>
+      <dd className={`type-body-lg-emph tabular-nums whitespace-nowrap ${isNegative ? "!text-destructive" : ""}`}>{value}</dd>
     </div>
   );
 };

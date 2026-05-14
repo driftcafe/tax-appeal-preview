@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Search, ArrowRight } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { api, ApiError, ParcelSearchResult } from "@/lib/api";
 import { saveLookup } from "@/lib/lookupCache";
 import { Button } from "./ui/button";
@@ -147,6 +147,18 @@ export const PropertySearch = ({ variant = "default" }: PropertySearchProps) => 
     }
   };
 
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get("focus") === "true" && inputRef.current) {
+      inputRef.current.focus();
+      // Scroll to the input if it's not in view
+      inputRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [location]);
+
   const isHero = variant === "hero";
 
   return (
@@ -154,6 +166,8 @@ export const PropertySearch = ({ variant = "default" }: PropertySearchProps) => 
       <form onSubmit={onSubmit} className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
         <div className="relative flex-1">
           <input
+            ref={inputRef}
+            id="property-search-input"
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}

@@ -7,7 +7,7 @@ const DesignSystem = () => {
   const sizes = ["large", "small"] as const;
 
   return (
-    <div className="min-h-screen bg-[#F7F9FB] p-12">
+    <div className="flex min-h-screen flex-col bg-[#F7F9FB] p-12">
       <div className="mx-auto max-w-6xl space-y-24">
         <header>
           <h1 className="type-h1 text-primary">Design System</h1>

@@ -35,10 +35,10 @@ const SignIn = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <SEO title="Sign in — TaxAppeal.app" description="Sign in to access your property tax appeal reports." path="/signin" />
       <SiteHeader minimal />
-      <main className="container mx-auto max-w-md px-8 py-32 md:px-12">
+      <main className="flex-1 container mx-auto max-w-md px-8 py-32 md:px-12">
         <h1 className="type-h2">Welcome back</h1>
         <p className="mt-3 type-body-lg text-slate">
           Sign in to access your property tax appeal reports.

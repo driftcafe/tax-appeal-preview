@@ -40,19 +40,19 @@ const steps = [
 ];
 
 const HowItWorks = () => (
-  <div className="min-h-screen bg-background text-foreground">
+  <div className="flex min-h-screen flex-col bg-background text-foreground">
     <SEO
       title="How It Works — TaxAppeal.app"
       description="Six steps from PIN entry to a filed appeal: comparison report, editable template, and you stay in control. Flat $149."
       path="/how-it-works"
     />
     <SiteHeader />
-    <main>
+    <main className="flex-1">
       <motion.section 
         className="container mx-auto max-w-7xl px-8 pt-16 pb-10 sm:pt-24 md:px-12 lg:px-24"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: false, margin: "-100px" }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
         <p className="type-eyebrow-lg">How it works</p>
@@ -69,7 +69,7 @@ const HowItWorks = () => (
         className="container mx-auto max-w-7xl px-8 py-10 md:px-12 lg:px-24"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: false, margin: "-100px" }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
         <div className="space-y-12">
@@ -89,7 +89,7 @@ const HowItWorks = () => (
         className="container mx-auto max-w-7xl px-8 py-16 md:px-12 lg:px-24"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: false, margin: "-100px" }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
         <div className="rounded-[30px] border border-border/60 bg-white p-8 shadow-[0_0_20px_0_rgba(29,29,31,0.08)]">

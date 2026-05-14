@@ -85,10 +85,10 @@ const Signup = () => {
   if (!lookup) return null;
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <SEO title="Sign up — TaxAppeal.app" description="Confirm ownership and accept the Terms of Service to continue." path="/signup" noindex />
       <SiteHeader />
-      <main className="container mx-auto max-w-2xl px-8 pt-16 pb-20 md:px-12">
+      <main className="flex-1 container mx-auto max-w-2xl px-8 pt-16 pb-20 md:px-12">
         <h1 className="type-h2">Get your appeal toolkit</h1>
         <p className="mt-3 type-body-lg text-slate">
           {lookup.subject.address} · <span className="font-semibold text-primary">PIN {lookup.subject.pin_formatted}</span>

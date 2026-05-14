@@ -85,10 +85,10 @@ const Comparables = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <SEO title="Your Fairness Check" description="Your property's Fairness Score against comparable homes." path="/comparables" noindex />
       <SiteHeader minimal />
-      <main className="container mx-auto max-w-4xl px-8 pt-16 pb-20 md:px-12">
+      <main className="flex-1 container mx-auto max-w-4xl px-8 pt-16 pb-20 md:px-12">
         <p className="type-eyebrow-lg">
           Fairness Check · {data.subject.county} County · {data.subject.township} Township
         </p>
@@ -275,13 +275,13 @@ const Comparables = () => {
                   <p className="mt-2 type-body-lg text-slate">
                     {metrics.band === "good"
                       ? "We only sell packets to homeowners where the data supports a uniformity gap."
-                      : `Full comp data, pre-filled forms, and filing instructions. Flat $${fee}.`}
+                      : `Full comp data, pre-filled forms, and filing instructions. Flat ${"$"}${fee}.`}
                   </p>
                 </div>
                 {metrics.band !== "good" ? (
                   <Button asChild intent="primary" size="large" variant="filled" trailingIcon={ArrowRight} className="sm:w-auto">
                     <Link to={`/signup/${data.lookup_id}`}>
-                      Continue &mdash; $${fee}
+                      Continue &mdash; ${"$"}{fee}
                     </Link>
                   </Button>
                 ) : (
