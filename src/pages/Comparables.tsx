@@ -86,7 +86,9 @@ const Comparables = () => {
           <div className="flex items-end justify-between">
             <div>
               <h3 className="text-xl font-semibold text-primary">Comparable properties</h3>
-              <p className="mt-1 text-sm text-muted-foreground">{comparables.length} closest matches by structure and location.</p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                {comparables.length} closest matches by structure and location. Addresses unlock with your appeal packet.
+              </p>
             </div>
           </div>
 
@@ -108,8 +110,12 @@ const Comparables = () => {
                     className="grid grid-cols-2 gap-x-4 gap-y-1 border-b border-border px-5 py-4 text-sm last:border-b-0 sm:grid-cols-12 sm:items-center sm:gap-4"
                   >
                     <div className="col-span-2 sm:col-span-4">
-                      <p className="font-medium text-foreground">{c.address}</p>
-                      <p className="text-xs text-muted-foreground">PIN {c.pin_formatted}</p>
+                      <p className="font-medium text-foreground blur-sm select-none" aria-label="Address hidden until purchase">
+                        {c.address}
+                      </p>
+                      <p className="text-xs text-muted-foreground blur-sm select-none" aria-label="PIN hidden until purchase">
+                        PIN {c.pin_formatted}
+                      </p>
                     </div>
                     <div className="text-left text-muted-foreground sm:hidden">Sqft</div>
                     <div className="text-right tabular-nums sm:col-span-2">{c.sqft.toLocaleString()}</div>
