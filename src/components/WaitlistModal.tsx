@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { CheckCircle2 } from "lucide-react";
 
-type Tier = "premium" | "tax_watch";
+type Tier = "premium" | "tax_watch" | "referral";
 
 import { Button } from "@/components/ui/button";
 
@@ -18,6 +18,11 @@ const COPY: Record<Tier, { title: string; desc: string; cta: string }> = {
     title: "Get notified when Tax Watch launches",
     desc: "Annual monitoring, deadline reminders, and re-runs of your Fairness Score. We'll email you when it's live.",
     cta: "Add me to the list",
+  },
+  referral: {
+    title: "Professional Law Firm Connection",
+    desc: "Commercial, multifamily, or unusually complex properties require specialized legal representation. Enter your email and we'll connect you with a trusted property tax law firm.",
+    cta: "Connect me",
   },
 };
 
@@ -64,7 +69,11 @@ export const WaitlistModal = ({
         {done ? (
           <div className="flex items-start gap-4 rounded-2xl bg-success/10 p-6">
             <CheckCircle2 className="mt-0.5 h-6 w-6 text-success" />
-            <p className="type-body-sm text-primary font-medium">You're on the list. We'll be in touch as soon as we launch.</p>
+            <p className="type-body-sm text-primary font-medium">
+              {tier === "referral" 
+                ? "Request received. A representative from a partner law firm will be in touch shortly." 
+                : "You're on the list. We'll be in touch as soon as we launch."}
+            </p>
           </div>
         ) : (
           <form onSubmit={submit} className="mt-4 space-y-4">

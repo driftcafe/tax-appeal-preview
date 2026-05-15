@@ -67,7 +67,7 @@ const tiers = [
   },
   {
     name: "Tax Watch",
-    price: "$19",
+    price: "$29",
     suffix: "/ year",
     body: "Never miss an appeal deadline. Get automatic alerts when your township opens, plus annual savings monitoring for your home.",
     cta: "Join Waitlist",
@@ -81,7 +81,7 @@ const faqs = [
   { q: "What does \"lack of uniformity\" mean?", a: "Your home may be assessed more aggressively than similar nearby homes. Illinois law allows appeals based on this." },
   { q: "Will the county punish me for appealing?", a: "No. Appeals are a routine, lawful process used by thousands of Illinois homeowners every year." },
   { q: "What if I miss the deadline?", a: "You'd have to wait until next year. Tax Watch sends township-specific reminders so you don't miss it." },
-  { q: "What's the difference between $149 and $19?", a: "The $149 toolkit is a one-time purchase for your current appeal. Tax Watch is a $19/year monitoring service that alerts you every year when your township opens and re-runs your Fairness Score automatically." },
+  { q: "What's the difference between $149 and $29?", a: "The $149 toolkit is a one-time purchase for your current appeal. Tax Watch is a $29/year monitoring service that alerts you every year when your township opens and re-runs your Fairness Score automatically." },
   { q: "Can I get a refund?", a: "$149 flat. Non-refundable, earned upon receipt — the packet is a complete digital deliverable produced when you purchase." },
 ];
 
@@ -199,7 +199,7 @@ const Index = () => {
             </motion.p>
 
             {/* Address bar */}
-            <div className="animate-fade-up relative z-20 mt-10 w-full max-w-4xl [animation-delay:240ms]">
+            <div className="animate-fade-up relative z-20 mt-10 w-full max-w-5xl [animation-delay:240ms]">
               <PropertySearch variant="hero" />
             </div>
 

@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { api, ApiError, ParcelSearchResult } from "@/lib/api";
 import { saveLookup } from "@/lib/lookupCache";
 import { Button } from "./ui/button";
+import { WaitlistModal } from "./WaitlistModal";
 
 const PIN_RE = /^(\d{2}-?){4}\d{4}$/;
 
@@ -18,6 +19,9 @@ export const PropertySearch = ({ variant = "default" }: PropertySearchProps) => 
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [searching, setSearching] = useState(false);
+  const [showReferral, setShowReferral] = useState(false);
+  const [isComplex, setIsComplex] = useState(false);
+  const [lastPin, setLastPin] = useState<string | null>(null);
   const abortRef = useRef<AbortController | null>(null);
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
@@ -39,6 +43,10 @@ export const PropertySearch = ({ variant = "default" }: PropertySearchProps) => 
       setResults([]);
       setOpen(false);
       setSearching(false);
+      if (trimmed.length === 0) {
+        setError(null);
+        setIsComplex(false);
+      }
       return;
     }
     const handle = setTimeout(async () => {
@@ -77,6 +85,8 @@ export const PropertySearch = ({ variant = "default" }: PropertySearchProps) => 
 
   const proceedWithPin = async (pin: string) => {
     setError(null);
+    setIsComplex(false);
+    setLastPin(pin);
     setSubmitting(true);
     try {
       const data = await api.comparables(pin);
@@ -84,9 +94,12 @@ export const PropertySearch = ({ variant = "default" }: PropertySearchProps) => 
       navigate(`/comparables/${data.lookup_id}`);
     } catch (err) {
       if (err instanceof ApiError) {
-        if (err.status === 404) setError("We couldn't find that PIN. Double-check and try again.");
-        else if (err.status === 422) setError(err.body?.hint ?? "No structural characteristics on file for this PIN.");
-        else if (err.status === 400) setError("Please enter a valid PIN.");
+        if (err.status === 404) setError("We couldn't find that property. Double-check the address and try again.");
+        else if (err.status === 422) {
+          setError("Commercial, multifamily, or unusually complex properties require specialized legal representation.");
+          setIsComplex(true);
+        }
+        else if (err.status === 400) setError("Please enter a valid address.");
         else setError("Couldn't reach our servers — please try again.");
       } else {
         setError("Couldn't reach our servers — please try again.");
@@ -117,7 +130,7 @@ export const PropertySearch = ({ variant = "default" }: PropertySearchProps) => 
       abortRef.current?.abort();
       const data = await api.parcelSearch(trimmed, 1);
       if (data.count === 0) {
-        setError("We couldn't find a match. Try the full street address or your PIN.");
+        setError("We couldn't find a match. Try the full street address.");
         setSubmitting(false);
         return;
       }
@@ -139,7 +152,7 @@ export const PropertySearch = ({ variant = "default" }: PropertySearchProps) => 
       proceedWithPin(only.pin);
     } catch (err) {
       if (err instanceof ApiError && err.status === 400) {
-        setError("We couldn't find a match. Try the full street address or your PIN.");
+        setError("We couldn't find a match. Try the full street address.");
       } else {
         setError("Couldn't reach our servers — please try again.");
       }
@@ -172,8 +185,8 @@ export const PropertySearch = ({ variant = "default" }: PropertySearchProps) => 
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => results.length > 0 && setOpen(true)}
-            placeholder="Property address or PIN — e.g. 233 S Wacker Dr, Chicago, IL 60606 or 16-19-213-035-0000"
-            aria-label="Property address or PIN"
+            placeholder="Enter your property address — e.g. 233 S Wacker Dr, Chicago, IL"
+            aria-label="Property address"
             autoComplete="off"
             className={`h-14 w-full rounded-lg border pl-6 pr-4 text-base placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 sm:text-lg ${isHero
                 ? "border-white/20 bg-white/10 text-white placeholder:text-white/40 focus:border-white/40 focus:ring-white/20 backdrop-blur-sm"
@@ -236,7 +249,27 @@ export const PropertySearch = ({ variant = "default" }: PropertySearchProps) => 
         </div>
       )}
 
-      {error && <p className="mt-3 text-sm text-destructive">{error}</p>}
+      {error && (
+        <div className="mt-3 text-sm text-destructive flex flex-wrap items-center gap-1">
+          <span>{error}</span>
+          {isComplex && (
+            <button
+              type="button"
+              onClick={() => setShowReferral(true)}
+              className="font-bold text-white underline decoration-white/30 underline-offset-2 hover:decoration-white/100 transition-colors ml-0.5"
+            >
+              Connect me
+            </button>
+          )}
+        </div>
+      )}
+
+      <WaitlistModal
+        open={showReferral}
+        onOpenChange={setShowReferral}
+        tier="referral"
+        pin={lastPin || undefined}
+      />
     </div>
   );
 };

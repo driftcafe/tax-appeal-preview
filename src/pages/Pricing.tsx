@@ -46,7 +46,7 @@ const Pricing = () => {
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       <SEO
         title="Pricing — TaxAppeal.app"
-        description="Free Fairness Check, $149 Pro Se Toolkit, and $19/year Tax Watch. No contingency fees, no percentage of savings."
+        description="Free Fairness Check, $149 Pro Se Toolkit, and $29/year Tax Watch. No contingency fees, no percentage of savings."
         path="/pricing"
       />
       <SiteHeader />
@@ -92,7 +92,7 @@ const Pricing = () => {
             </Card>
 
             {/* Tax Watch */}
-            <Card title="Tax Watch" price="$19" suffix="/ year" body="Never miss an appeal deadline. Automatic monitoring for your home." features={taxWatch}>
+            <Card title="Tax Watch" price="$29" suffix="/ year" body="Never miss an appeal deadline. Automatic monitoring for your home." features={taxWatch}>
               <Button onClick={() => setTaxWatchOpen(true)} intent="primary" size="small" variant="filled" leadingIcon={Zap} className="mt-6">
                 Join Waitlist
               </Button>
