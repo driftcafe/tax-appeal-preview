@@ -185,7 +185,7 @@ export const PropertySearch = ({ variant = "default" }: PropertySearchProps) => 
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => results.length > 0 && setOpen(true)}
-            placeholder="Enter your property address — e.g. 233 S Wacker Dr, Chicago, IL"
+            placeholder="Enter your property address — e.g. 619 Roger Ave, Kenilworth, IL"
             aria-label="Property address"
             autoComplete="off"
             className={`h-14 w-full rounded-lg border pl-6 pr-4 text-base placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 sm:text-lg ${isHero
